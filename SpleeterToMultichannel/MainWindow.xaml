@@ -1,0 +1,35 @@
+﻿<Window x:Class="SpleeterToMultichannel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SpleeterToMultichannel"
+        mc:Ignorable="d"
+        Title="Spleeter to Multichannel" Height="270" Width="300">
+    <Grid>
+        <Button Content="Open Spleeter output" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="134" Click="OpenSpleeterOutput"/>
+        <Label x:Name="folder" Content="No folder selected." HorizontalAlignment="Left" Margin="149,7,0,0" VerticalAlignment="Top"/>
+        <GroupBox Header="Channel mapping" HorizontalAlignment="Left" Height="160" Margin="10,38,0,0" VerticalAlignment="Top" Width="246">
+            <Grid>
+                <Label Content="Vocals:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right"/>
+                <local:UpmixComboBox x:Name="vocals" HorizontalAlignment="Left" Margin="65,2,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
+                <CheckBox x:Name="vocalsLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,6,-33,0"/>
+                <Label Content="Bass:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,27,0,0"/>
+                <local:UpmixComboBox x:Name="bass" HorizontalAlignment="Left" Margin="65,29,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="4"/>
+                <CheckBox x:Name="bassLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,33,0,0" IsChecked="True"/>
+                <Label Content="Drums:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,54,0,0"/>
+                <local:UpmixComboBox x:Name="drums" HorizontalAlignment="Left" Margin="65,56,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="3"/>
+                <CheckBox x:Name="drumsLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,60,0,0" IsChecked="True"/>
+                <Label Content="Piano:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,81,0,0"/>
+                <local:UpmixComboBox x:Name="piano" HorizontalAlignment="Left" Margin="65,83,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="2"/>
+                <CheckBox x:Name="pianoLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,87,0,0"/>
+                <Label Content="Other:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,108,0,0"/>
+                <local:UpmixComboBox x:Name="other" HorizontalAlignment="Left" Margin="65,110,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="5"/>
+                <CheckBox x:Name="otherLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,114,0,0"/>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="button" Content="Process" HorizontalAlignment="Left" Margin="10,203,0,0" VerticalAlignment="Top" Width="75" Click="Process"/>
+        <ProgressBar x:Name="progress" Height="20" Margin="90,203,10,0" VerticalAlignment="Top" Maximum="1"/>
+        <Label x:Name="progressLabel" Margin="90,203,10,0" VerticalAlignment="Top" Height="20" Padding="5,2,5,0"/>
+    </Grid>
+</Window>
