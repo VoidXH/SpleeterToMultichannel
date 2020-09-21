@@ -163,15 +163,16 @@ namespace SpleeterToMultichannel {
 
             task.UpdateProgressBar(.9);
             task.UpdateStatus("Exporting to render.wav (0.00%)...");
-            RIFFWaveWriter writer = new RIFFWaveWriter(new BinaryWriter(File.Open(Path.Combine(path, "render.wav"), FileMode.Create)),
-                8, bassReader.Length, bassReader.SampleRate, BitDepth.Int16);
-            writer.WriteHeader();
-            const long blockSize = 8192;
-            for (long sample = 0; sample < finalMix.LongLength;) {
-                double progress = sample / (double)finalMix.LongLength;
-                writer.WriteBlock(finalMix, sample, Math.Min(sample += blockSize, finalMix.LongLength));
-                task.UpdateProgressBar(.9 + .1 * progress);
-                task.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
+            using (RIFFWaveWriter writer = new RIFFWaveWriter(new BinaryWriter(File.Open(Path.Combine(path, "render.wav"), FileMode.Create)),
+                8, bassReader.Length, bassReader.SampleRate, BitDepth.Int16)) {
+                writer.WriteHeader();
+                const long blockSize = 8192;
+                for (long sample = 0; sample < finalMix.LongLength;) {
+                    double progress = sample / (double)finalMix.LongLength;
+                    writer.WriteBlock(finalMix, sample, Math.Min(sample += blockSize, finalMix.LongLength));
+                    task.UpdateProgressBar(.9 + .1 * progress);
+                    task.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
+                }
             }
 
             task.UpdateProgressBar(1);
