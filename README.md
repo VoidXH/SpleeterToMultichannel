@@ -7,9 +7,11 @@ Each track is configurable for multiple upmixing matrices and LFE mixing, the de
 ## Conversions
 ### Audio only
 ![SpleeterGui](doc/spleetergui.png)
+
 Use Spleeter or SpleeterGui to separate 4 or 5 parts of the source audio. For SpleeterGui, drag and drop any file on the window, video files also work.
 
 ![SpleeterGui](doc/spleetermulti.png)
+
 Browse Spleeter's output folder in this application, and set up your preferred mixing layout.
 The default settings are recommended for every kind of content.
 Clicking Process will result in the creation of render.wav in the previously browsed folder.
