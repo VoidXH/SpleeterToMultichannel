@@ -17,9 +17,13 @@ Clicking Process will result in the creation of render.wav in the previously bro
 ### Videos
 Do everything in the Audio only section, and use FFmpeg or something similar to recombine the rendered audio with the video track.
 The FFmpeg command is the following:
-```ffmpeg -i {video} -i {audio} -map 0:v -map 1:a -c copy {output}
+```
+ffmpeg -i {video} -i {audio} -map 0:v -map 1:a -c copy {output}
+```
 Using Opus as the audio codec is recommended, as it's transparent at default settings with extremely low bitrates:
-```ffmpeg -i {video} -i {audio} -map 0:v -map 1:a -c:v copy -c:a libopus {output}
+```
+ffmpeg -i {video} -i {audio} -map 0:v -map 1:a -c:v copy -c:a libopus {output}
+```
 Disclaimer: Opus and other transparent audio codecs are unsupported in every home theater product, and can only be played on PC.
 Use stream copy for PCM codec if you want to play it on media players.
 
