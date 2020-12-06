@@ -24,7 +24,7 @@
                 <local:UpmixComboBox x:Name="piano" HorizontalAlignment="Left" Margin="65,83,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="2"/>
                 <CheckBox x:Name="pianoLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,87,0,0"/>
                 <Label Content="Other:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,108,0,0"/>
-                <local:UpmixComboBox x:Name="other" HorizontalAlignment="Left" Margin="65,110,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="5"/>
+                <local:UpmixComboBox x:Name="other" HorizontalAlignment="Left" Margin="65,110,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="7"/>
                 <CheckBox x:Name="otherLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,114,0,0"/>
             </Grid>
         </GroupBox>

@@ -5,7 +5,10 @@
         Screen,
         QuadroSide,
         QuadroRear,
-        Full
+        MidSideScreen,
+        MidSideFull,
+        Full,
+        Skip
     }
 
     public class OutputMatrix {
@@ -18,7 +21,7 @@
         /// <summary>
         /// Voltage multipliers for constant power gain with multiple speakers used: sqrt(1 / channel count).
         /// </summary>
-        internal const float out2 = 0.70710678118654752440084436210485f, out3 = 0.57735026918962576450914878050196f;
+        internal const float out2 = .70710678118654752440084436210485f, out3 = .57735026918962576450914878050196f, out4 = .5f;
 
         public OutputMatrix(UpmixOption option) {
             switch (option) {
@@ -42,9 +45,20 @@
                     LeftInput = new float[8] { out2, 0, 0, 0, out2, 0, 0, 0 };
                     RightInput = new float[8] { 0, out2, 0, 0, 0, out2, 0, 0 };
                     break;
-                default:
+                case UpmixOption.MidSideScreen:
+                    LeftInput = new float[8] { out3, -out3, out2, 0, 0, 0, 0, 0 };
+                    RightInput = new float[8] { -out3, out3, out2, 0, 0, 0, 0, 0 };
+                    break;
+                case UpmixOption.MidSideFull:
+                    LeftInput = new float[8] { out4, -out4, out2, 0, out4, -out4, out4, -out4 };
+                    RightInput = new float[8] { -out4, out4, out2, 0, -out4, out4, -out4, out4 };
+                    break;
+                case UpmixOption.Full:
                     LeftInput = new float[8] { out3, 0, 0, 0, out3, 0, out3, 0 };
                     RightInput = new float[8] { 0, out3, 0, 0, 0, out3, 0, out3 };
+                    break;
+                default:
+                    LeftInput = RightInput = new float[8];
                     break;
             }
         }
