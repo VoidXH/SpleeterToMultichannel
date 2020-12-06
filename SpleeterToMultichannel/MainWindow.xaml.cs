@@ -167,16 +167,21 @@ namespace SpleeterToMultichannel {
             float[] finalMix = new float[bassReader.Length * 8];
             float[] source = Read(bassReader, "bass", pianoReader == null ? .1 : .08);
             Render(source, finalMix, GetMatrix(bass), GetLFE(bassLFE), "bass", pianoReader == null ? .1 : .08);
+            bassReader.Dispose();
             source = Read(drumsReader, "drums", pianoReader == null ? .1 : .08);
             Render(source, finalMix, GetMatrix(drums), GetLFE(drumsLFE), "drums", pianoReader == null ? .1 : .08);
+            drumsReader.Dispose();
             if (pianoReader != null) {
                 source = Read(pianoReader, "piano", .08);
                 Render(source, finalMix, GetMatrix(piano), GetLFE(pianoLFE), "piano", .08);
+                pianoReader.Dispose();
             }
             source = Read(otherReader, "other", pianoReader == null ? .1 : .08);
             Render(source, finalMix, GetMatrix(other), GetLFE(otherLFE), "other", pianoReader == null ? .1 : .08);
+            otherReader.Dispose();
             source = Read(vocalsReader, "vocals", pianoReader == null ? .1 : .08);
             Render(source, finalMix, GetMatrix(vocals), GetLFE(vocalsLFE), "vocals", pianoReader == null ? .1 : .08);
+            vocalsReader.Dispose();
 
             task.UpdateProgressBar(.8);
             task.UpdateStatus("Checking peaks...");
