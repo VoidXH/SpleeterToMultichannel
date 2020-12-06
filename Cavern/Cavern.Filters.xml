@@ -1,0 +1,564 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cavern.Filters</name>
+    </assembly>
+    <members>
+        <member name="T:Cavern.Filters.Allpass">
+            <summary>Simple first-order allpass filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Allpass.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order allpass filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Allpass.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.Bandpass">
+            <summary>Simple first-order bandpass filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Bandpass.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order bandpass filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Bandpass.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.BandpassFlat">
+            <summary>Combination of a lowpass and a highpass filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.BandpassFlat.#ctor(System.Double,System.Double,System.Int32,System.Double,System.Int32,System.Double)">
+            <summary>
+            Combination of a lowpass and a highpass filter.
+            </summary>
+            <param name="lowFreq">Low frequency (highpass) cutoff knee</param>
+            <param name="highFreq">High frequency (lowpass) cutoff knee</param>
+            <param name="sampleRate">Sample rate of the system to be EQ'd</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="order">Each order increases the slope with 6 dB/octave</param>
+            <param name="gain">Filter gain</param>
+        </member>
+        <member name="M:Cavern.Filters.BandpassFlat.Process(System.Single[])">
+            <summary>Apply bandpass on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="M:Cavern.Filters.BandpassFlat.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply bandpass on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.BiquadFilter">
+            <summary>Simple first-order biquad filter.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.CenterFreq">
+            <summary>Center frequency (-3 dB point) of the filter.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.Q">
+            <summary>Q-factor of the filter.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.Gain">
+            <summary>Gain of the filter in decibels.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.centerFreq">
+            <summary>Center frequency (-3 dB point) of the filter.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.q">
+            <summary>Q-factor of the filter.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.gain">
+            <summary>Gain of the filter in decibels.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.sampleRate">
+            <summary>Cached sample rate.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.x1">
+            <summary>History sample.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.x2">
+            <summary>History sample.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.y1">
+            <summary>History sample.</summary>
+        </member>
+        <member name="F:Cavern.Filters.BiquadFilter.y2">
+            <summary>History sample.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.a1">
+            <summary>Transfer function variable.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.a2">
+            <summary>Transfer function variable.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.b0">
+            <summary>Transfer function variable.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.b1">
+            <summary>Transfer function variable.</summary>
+        </member>
+        <member name="P:Cavern.Filters.BiquadFilter.b2">
+            <summary>Transfer function variable.</summary>
+        </member>
+        <member name="M:Cavern.Filters.BiquadFilter.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order biquad filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.BiquadFilter.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.BiquadFilter.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply this filter on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.Cavernize">
+            <summary>Separates ground and height data for a channel of a regular surround mix.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Cavernize.Effect">
+            <summary>3D audio effect strength.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Cavernize.SmoothFactor">
+            <summary>Ratio of the distance actually moved between calculated heights of ftames. Should be set with
+            <see cref="M:Cavern.Filters.Cavernize.CalculateSmoothingFactor(System.Int32,System.Int32,System.Double)"/>.</summary>
+            <remarks>The default value is calculated with 0.8 smoothness, with an update rate of 240 at 48 kHz sampling.</remarks>
+        </member>
+        <member name="P:Cavern.Filters.Cavernize.GroundCrossover">
+            <summary>Keep all frequencies below this on the ground.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Cavernize.Height">
+            <summary>The moving part's normalized height from the ground. Clamped between -0.2 and 1, 1 means max height.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Cavernize.GroundLevel">
+            <summary>Audio that must be played at ground level. Results are from the last frame.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Cavernize.HeightLevel">
+            <summary>Audio that should be played at the level by <see cref="P:Cavern.Filters.Cavernize.Height"/>. Results are from the last frame.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Cavernize.crossover">
+            <summary>Crossover that mixes height sounds below its frequency back to the ground.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Cavernize.lastLow">
+            <summary>Last low frequency sample (used in the height calculation algorithm).</summary>
+        </member>
+        <member name="F:Cavern.Filters.Cavernize.lastNormal">
+            <summary>Last unmodified sample (used in the height calculation algorithm).</summary>
+        </member>
+        <member name="F:Cavern.Filters.Cavernize.lastHigh">
+            <summary>Last high frequency sample (used in the height calculation algorithm).</summary>
+        </member>
+        <member name="M:Cavern.Filters.Cavernize.#ctor(System.Int32,System.Single)">
+            <summary>Separates ground and height data for a channel of a regular surround mix.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Cavernize.CalculateSmoothingFactor(System.Int32,System.Int32,System.Double)">
+            <summary>Generate the smoothing factor for a smoothness value.</summary>
+            <param name="updateRate">Block size for processing</param>
+            <param name="sampleRate">Clip sample rate</param>
+            <param name="smoothness">Smoothness from 0 to 1</param>
+        </member>
+        <member name="M:Cavern.Filters.Cavernize.Process(System.Single[])">
+            <summary>Cavernize an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+        </member>
+        <member name="M:Cavern.Filters.Cavernize.PresetOutput(System.Int32)">
+            <summary>Create empty outputs for a given <paramref name="updateRate"/>> in case they are used before processing.
+            This optimizes zero checks.</summary>
+        </member>
+        <member name="T:Cavern.Filters.Comb">
+            <summary>Normalized feedforward comb filter.</summary>
+            <remarks>The feedback comb filter is called <see cref="T:Cavern.Filters.Echo"/>.</remarks>
+        </member>
+        <member name="P:Cavern.Filters.Comb.K">
+            <summary>Delay in samples.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Comb.Frequency">
+            <summary>First minimum point.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Comb.Alpha">
+            <summary>Wet mix multiplier.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Comb.delay">
+            <summary>Delay filter generating the samples fed forward.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Comb.cache">
+            <summary>Array used to hold samples processed by <see cref="F:Cavern.Filters.Comb.delay"/>.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Comb.sampleRate">
+            <summary>Cached source sample rate.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Comb.#ctor(System.Int32,System.Int32,System.Double)">
+            <summary>Normalized feedforward comb filter.</summary>
+            <param name="sampleRate">Source sample rate</param>
+            <param name="K">Delay in samples</param>
+            <param name="alpha">Wet mix multiplier</param>
+        </member>
+        <member name="M:Cavern.Filters.Comb.#ctor(System.Int32,System.Double,System.Double)">
+            <summary>Normalized feedforward comb filter.</summary>
+            <param name="sampleRate">Source sample rate</param>
+            <param name="frequency">First minimum point</param>
+            <param name="alpha">Wet mix multiplier</param>
+        </member>
+        <member name="M:Cavern.Filters.Comb.Process(System.Single[])">
+            <summary>Apply comb on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="T:Cavern.Filters.ComplexFilter">
+            <summary>Multiple filters in series.</summary>
+        </member>
+        <member name="F:Cavern.Filters.ComplexFilter.Filters">
+            <summary>Filters to apply on the output.</summary>
+        </member>
+        <member name="M:Cavern.Filters.ComplexFilter.Process(System.Single[])">
+            <summary>Apply these filters on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="M:Cavern.Filters.ComplexFilter.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply these filters on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.Convolver">
+            <summary>Simple convolution window filter.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Convolver.Delay">
+            <summary>Additional impulse delay in samples.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Convolver.Impulse">
+            <summary>Impulse response to convolve with.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Convolver.delay">
+            <summary>Additional impulse delay in samples.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Convolver.impulse">
+            <summary>Impulse response to convolve with.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Convolver.future">
+            <summary>Samples to be copied to the beginning of the next output.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Convolver.#ctor(System.Single[],System.Int32)">
+            <summary>Construct a convolver for a target impulse response.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Convolver.Process(System.Single[])">
+            <summary>Apply convolution on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="T:Cavern.Filters.Crossover">
+            <summary>Simple variable-order crossover.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Crossover.Frequency">
+            <summary>Crossover frequency.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Crossover.Order">
+            <summary>Number of filters per pass.</summary>
+            <remarks>A value of 2 is recommended for notch prevention when mixing
+            <see cref="P:Cavern.Filters.Crossover.LowOutput"/> and <see cref="P:Cavern.Filters.Crossover.HighOutput"/> back together.</remarks>
+        </member>
+        <member name="P:Cavern.Filters.Crossover.LowOutput">
+            <summary>Low frequency data.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Crossover.HighOutput">
+            <summary>High frequency data.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Crossover.sampleRate">
+            <summary>Cached filter sample rate.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Crossover.lowpasses">
+            <summary>Lowpass filters for each pass.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Crossover.highpasses">
+            <summary>Highpass filters for each pass.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Crossover.RecreateFilters(System.Double,System.Int32)">
+            <summary>Create filters for each pass.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Crossover.#ctor(System.Int32,System.Double,System.Int32)">
+            <summary>Simple variable-order crossover.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="frequency">Crossover frequency</param>
+            <param name="order">Number of filters per pass, 2 is recommended for mixing notch prevention</param>
+        </member>
+        <member name="M:Cavern.Filters.Crossover.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply crossover on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="M:Cavern.Filters.Crossover.Process(System.Single[],System.Single[]@,System.Single[]@)">
+            <summary>Apply crossover on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="lows">Low frequency data</param>
+            <param name="highs">High frequency data</param>
+        </member>
+        <member name="M:Cavern.Filters.Crossover.Process(System.Single[],System.Int32,System.Int32,System.Single[]@,System.Single[]@)">
+            <summary>Apply crossover on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+            <param name="lows">Low frequency data</param>
+            <param name="highs">High frequency data</param>
+        </member>
+        <member name="M:Cavern.Filters.Crossover.PresetOutput(System.Int32)">
+            <summary>Create empty outputs for a given <paramref name="updateRate"/>> in case they are used before processing.
+            This optimizes zero checks.</summary>
+        </member>
+        <member name="T:Cavern.Filters.DebugCrossover">
+            <summary>Used to showcase crossover distortion, this filter mixes crossover outputs.</summary>
+        </member>
+        <member name="M:Cavern.Filters.DebugCrossover.#ctor(System.Int32,System.Double,System.Int32)">
+            <summary>Used to showcase crossover distortion, this filter mixes crossover outputs.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="frequency">Crossover frequency</param>
+            <param name="order">Number of filters per pass, 2 is recommended for mixing notch prevention</param>
+        </member>
+        <member name="M:Cavern.Filters.DebugCrossover.Process(System.Single[])">
+            <summary>Apply crossover on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="M:Cavern.Filters.DebugCrossover.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply crossover on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.Delay">
+            <summary>Delays the audio.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Delay.DelaySamples">
+            <summary>Delay in samples.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Delay.cache">
+            <summary>Cached samples for the next block. Alternates between two arrays to prevent memory allocation.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Delay.usedCache">
+            <summary>The used cache (0 or 1).</summary>
+        </member>
+        <member name="M:Cavern.Filters.Delay.#ctor(System.Int32)">
+            <summary>Create a delay for a given length in samples.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Delay.#ctor(System.Double,System.Int32)">
+            <summary>Create a delay for a given length in seconds.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Delay.Process(System.Single[])">
+            <summary>Apply delay on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="T:Cavern.Filters.Echo">
+            <summary>Simple echo/reverberation filter with delay.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Echo.Strength">
+            <summary>Effect strength.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Echo.DelaySamples">
+            <summary>Delay between echoes in samples.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Echo.DelayTime">
+            <summary>Delay between echoes in seconds.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Echo.cache">
+            <summary>Samples to mix back to the next block.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Echo.cachePos">
+            <summary>Cache is a loop, this is the current position.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Echo.delay">
+            <summary>Delay between echoes in samples.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Echo.sampleRate">
+            <summary>Cached audio sample rate.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Echo.#ctor(System.Int32,System.Double,System.Int32)">
+            <summary>Create an echo filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="strength">Effect strength</param>
+            <param name="delay">Delay between echoes in samples</param>
+        </member>
+        <member name="M:Cavern.Filters.Echo.#ctor(System.Int32,System.Double,System.Double)">
+            <summary>Create an echo filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="strength">Effect strength</param>
+            <param name="delay">Delay between echoes in seconds</param>
+        </member>
+        <member name="M:Cavern.Filters.Echo.Reset(System.Double,System.Int32)">
+            <summary>Reset filter settings.</summary>
+            <param name="strength">Effect strength</param>
+            <param name="delay">Delay between echoes in samples</param>
+        </member>
+        <member name="M:Cavern.Filters.Echo.Reset(System.Double,System.Double)">
+            <summary>Reset filter settings.</summary>
+            <param name="strength">Effect strength</param>
+            <param name="delay">Delay between echoes in seconds</param>
+        </member>
+        <member name="M:Cavern.Filters.Echo.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply echo on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.Filter">
+            <summary>Abstract audio filter.</summary>
+            <remarks>You have to implement at least one signature of the Process function, otherwise they'll call each other.</remarks>
+        </member>
+        <member name="M:Cavern.Filters.Filter.Process(System.Single[])">
+            <summary>Apply this filter on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Filter.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply this filter on an array of samples. One filter should be applied to only one continuous stream of samples.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.Gain">
+            <summary>Signal level multiplier filter.</summary>
+        </member>
+        <member name="P:Cavern.Filters.Gain.GainValue">
+            <summary>Filter gain in decibels.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Gain.#ctor(System.Double)">
+            <summary>Signal level multiplier filter.</summary>
+            <param name="gain">Filter gain in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Gain.Process(System.Single[])">
+            <summary>Apply gain on an array of samples. This filter can be used on multiple streams.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Gain.Process(System.Single[],System.Int32,System.Int32)">
+            <summary>Apply gain on an array of samples. This filter can be used on multiple streams.</summary>
+            <param name="samples">Input samples</param>
+            <param name="channel">Channel to filter</param>
+            <param name="channels">Total channels</param>
+        </member>
+        <member name="T:Cavern.Filters.Highpass">
+            <summary>Simple first-order highpass filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Highpass.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order highpass filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Highpass.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.HighShelf">
+            <summary>Simple first-order high shelf filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.HighShelf.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order high shelf filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.HighShelf.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.Lowpass">
+            <summary>Simple first-order lowpass filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Lowpass.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order lowpass filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Lowpass.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.LowShelf">
+            <summary>Simple first-order low shelf filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.LowShelf.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order low shelf filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.LowShelf.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.Notch">
+            <summary>Simple first-order notch filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Notch.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order notch filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Notch.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.PeakingEQ">
+            <summary>Simple first-order peaking filter.</summary>
+        </member>
+        <member name="M:Cavern.Filters.PeakingEQ.#ctor(System.Int32,System.Double,System.Double,System.Double)">
+            <summary>Simple first-order peaking filter.</summary>
+            <param name="sampleRate">Audio sample rate</param>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.PeakingEQ.Reset(System.Double,System.Double,System.Double)">
+            <summary>Regenerate the transfer function.</summary>
+            <param name="centerFreq">Center frequency (-3 dB point) of the filter</param>
+            <param name="q">Q-factor of the filter</param>
+            <param name="gain">Gain of the filter in decibels</param>
+        </member>
+        <member name="T:Cavern.Filters.Utilities.QFactor">
+            <summary>Q-factor conversion utilities.</summary>
+        </member>
+        <member name="F:Cavern.Filters.Utilities.QFactor.reference">
+            <summary>Sqrt(2)/2, the reference Q factor.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Utilities.QFactor.FromBandwidth(System.Double,System.Double,System.Double)">
+            <summary>Convert bandwidth to Q-factor.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Utilities.QFactor.FromBandwidth(System.Double,System.Double)">
+            <summary>Convert bandwidth to Q-factor.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Utilities.QFactor.FromBandwidth(System.Double)">
+            <summary>Convert bandwidth to Q-factor.</summary>
+        </member>
+        <member name="M:Cavern.Filters.Utilities.QFactor.FromSlope(System.Double,System.Double)">
+            <summary>Convert slope to Q-factor.</summary>
+            <param name="slope">Filter steepness factor</param>
+            <param name="gain">Filter gain in decibels</param>
+        </member>
+        <member name="M:Cavern.Filters.Utilities.QFactor.FromSlopeDecibels(System.Double,System.Double)">
+            <summary>Convert slope to Q-factor.</summary>
+            <param name="slope">Filter steepness in decibels</param>
+            <param name="gain">Filter gain in decibels</param>
+        </member>
+    </members>
+</doc>

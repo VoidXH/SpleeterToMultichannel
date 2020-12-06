@@ -4,15 +4,17 @@ using System.Windows;
 using System.Windows.Forms;
 
 using Cavern.Format;
+using Cavern.QuickEQ;
 
-using MessageBox = System.Windows.MessageBox;
 using CheckBox = System.Windows.Controls.CheckBox;
+using MessageBox = System.Windows.MessageBox;
+using Window = Cavern.QuickEQ.Window;
 
 namespace SpleeterToMultichannel {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window {
+    public partial class MainWindow : System.Windows.Window {
         string path = null;
         readonly TaskEngine task;
 
@@ -66,23 +68,53 @@ namespace SpleeterToMultichannel {
             return check;
         }
 
+        void RenderUpdateTask(TaskEngine task, string instrument, double progress, double progressSrc, double progressGap) {
+            task.UpdateProgressBar(progressSrc + progressGap * progress);
+            task.UpdateStatusLazy(string.Format("Mixing {0} ({1})...", instrument, progress.ToString("0.00%")));
+        }
+
         void Render(float[] source, float[] target, OutputMatrix matrix, bool LFE, string instrument, double progressGap) {
-            const long sampleBlock = 32768;
+            const long sampleBlock = 131072;
             double progressSrc = task.Progress;
-            for (long sample = 0; sample < source.LongLength; sample += 2) {
-                long actualSample = sample >> 1;
-                float left = source[sample], right = source[sample + 1];
-                for (long targetPos = 0; targetPos < 8; ++targetPos) {
-                    long actualPos = (actualSample << 3) + targetPos;
-                    target[actualPos] += left * matrix.LeftInput[targetPos];
-                    target[actualPos] += right * matrix.RightInput[targetPos];
-                }
-                if (LFE)
-                    target[(actualSample << 3) + 3] += OutputMatrix.out2 * .31622776601f /* -10 dB */ * (left + right);
-                if (sample % sampleBlock == 0) {
-                    double progress = sample / (double)source.LongLength;
-                    task.UpdateProgressBar(progressSrc + progressGap * progress);
-                    task.UpdateStatusLazy(string.Format("Mixing {0} ({1})...", instrument, progress.ToString("0.00%")));
+            long totalSamplesWritten = 0;
+            for (long channel = 0; channel < 8; ++channel) {
+                if (channel != 3) {
+                    if (matrix.LeftInput[channel] == 0 && matrix.RightInput[channel] == 0) {
+                        totalSamplesWritten += target.Length >> 3;
+                        continue;
+                    }
+                    if (matrix.LeftInput[channel] == 0) {
+                        for (long sample = 1; sample < source.LongLength; sample += 2) {
+                            long actualSample = sample >> 1;
+                            long actualPos = (actualSample << 3) + channel;
+                            target[actualPos] += source[sample] * matrix.RightInput[channel];
+                            if (++totalSamplesWritten % sampleBlock == 0)
+                                RenderUpdateTask(task, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                        }
+                    } else if (matrix.RightInput[channel] == 0) {
+                        for (long sample = 0; sample < source.LongLength; sample += 2) {
+                            long actualSample = sample >> 1;
+                            long actualPos = (actualSample << 3) + channel;
+                            target[actualPos] += source[sample] * matrix.LeftInput[channel];
+                            if (++totalSamplesWritten % sampleBlock == 0)
+                                RenderUpdateTask(task, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                        }
+                    } else {
+                        for (long sample = 0; sample < source.LongLength; sample += 2) {
+                            long actualSample = sample >> 1;
+                            long actualPos = (actualSample << 3) + channel;
+                            target[actualPos] += source[sample] * matrix.LeftInput[channel] + source[sample + 1] * matrix.RightInput[channel];
+                            if (++totalSamplesWritten % sampleBlock == 0)
+                                RenderUpdateTask(task, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                        }
+                    }
+                } else if (LFE) {
+                    for (long sample = 0; sample < source.LongLength; ++sample) {
+                        long actualSample = sample >> 1;
+                        target[(actualSample << 3) + 3] += OutputMatrix.out2 * .31622776601f /* -10 dB */ * source[sample];
+                        if (++totalSamplesWritten % sampleBlock == 0)
+                            RenderUpdateTask(task, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                    }
                 }
             }
             task.UpdateProgressBar(progressSrc + progressGap);
@@ -148,6 +180,11 @@ namespace SpleeterToMultichannel {
 
             task.UpdateProgressBar(.8);
             task.UpdateStatus("Checking peaks...");
+            const int windowSize = 25 * 8;
+            for (int i = 0; i < windowSize; ++i)
+                finalMix[i] = finalMix[finalMix.Length - 1 - i] = 0;
+            Windowing.ApplyWindow(finalMix, 8, Window.Sine, Window.Disabled, windowSize, 2 * windowSize, 0);
+            Windowing.ApplyWindow(finalMix, 8, Window.Disabled, Window.Sine, 0, finalMix.Length - 2 * windowSize, finalMix.Length - windowSize);
             float peak = 1;
             for (long i = 0; i < finalMix.LongLength; ++i)
                 if (peak < Math.Abs(finalMix[i]))

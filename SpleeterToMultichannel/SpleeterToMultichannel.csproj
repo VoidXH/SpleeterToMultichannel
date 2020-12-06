@@ -50,8 +50,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cavern">
+      <HintPath>..\Cavern\Cavern.dll</HintPath>
+    </Reference>
+    <Reference Include="Cavern.Filters">
+      <HintPath>..\Cavern\Cavern.Filters.dll</HintPath>
+    </Reference>
     <Reference Include="Cavern.Format">
       <HintPath>..\Cavern\Cavern.Format.dll</HintPath>
+    </Reference>
+    <Reference Include="Cavern.QuickEQ">
+      <HintPath>..\Cavern\Cavern.QuickEQ.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

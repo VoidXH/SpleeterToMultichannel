@@ -22,6 +22,9 @@
         <member name="F:Cavern.Format.BitDepth.Int16">
             <summary>16-bit integer.</summary>
         </member>
+        <member name="F:Cavern.Format.BitDepth.Int24">
+            <summary>24-bit integer.</summary>
+        </member>
         <member name="F:Cavern.Format.BitDepth.Float32">
             <summary>32-bit floating point.</summary>
         </member>
@@ -57,7 +60,17 @@
             <param name="to">End position in the input array (exclusive)</param>
             <remarks>The next to - from samples will be read from the file.</remarks>
         </member>
+        <member name="M:Cavern.Format.AudioReader.ReadBlock(System.Single[][],System.Int64,System.Int64)">
+            <summary>Read a block of samples to a multichannel array.</summary>
+            <param name="samples">Input array</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.</remarks>
+        </member>
         <member name="M:Cavern.Format.AudioReader.Read">
+            <summary>Read the entire file.</summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadMultichannel">
             <summary>Read the entire file.</summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.RollingBlockCheck(System.Byte[],System.Byte[])">
@@ -72,20 +85,20 @@
         <member name="T:Cavern.Format.AudioWriter">
             <summary>Abstract audio file writer.</summary>
         </member>
-        <member name="F:Cavern.Format.AudioWriter.writer">
-            <summary>File writer object.</summary>
-        </member>
-        <member name="F:Cavern.Format.AudioWriter.channelCount">
+        <member name="P:Cavern.Format.AudioWriter.ChannelCount">
             <summary>Output channel count.</summary>
         </member>
-        <member name="F:Cavern.Format.AudioWriter.length">
+        <member name="P:Cavern.Format.AudioWriter.Length">
             <summary>Output length in samples.</summary>
         </member>
-        <member name="F:Cavern.Format.AudioWriter.sampleRate">
+        <member name="P:Cavern.Format.AudioWriter.SampleRate">
             <summary>Output sample rate.</summary>
         </member>
-        <member name="F:Cavern.Format.AudioWriter.bits">
+        <member name="P:Cavern.Format.AudioWriter.Bits">
             <summary>Output bit depth.</summary>
+        </member>
+        <member name="F:Cavern.Format.AudioWriter.writer">
+            <summary>File writer object.</summary>
         </member>
         <member name="M:Cavern.Format.AudioWriter.#ctor(System.IO.BinaryWriter,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
             <summary>Abstract audio file writer.</summary>
