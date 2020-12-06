@@ -77,6 +77,7 @@
     <Compile Include="TaskEngine.cs" />
     <Compile Include="UpmixComboBox.cs" />
     <Compile Include="UpmixOption.cs" />
+    <Compile Include="UpmixOptionDisplay.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

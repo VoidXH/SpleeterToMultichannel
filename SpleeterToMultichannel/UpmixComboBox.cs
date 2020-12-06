@@ -5,8 +5,6 @@ namespace SpleeterToMultichannel {
     public class UpmixComboBox : ComboBox {
         public UpmixOption Option { get; set; }
 
-        public UpmixComboBox() {
-            ItemsSource = Enum.GetValues(typeof(UpmixOption));
-        }
+        public UpmixComboBox() => ItemsSource = Enum.GetValues(typeof(UpmixOption));
     }
 }
