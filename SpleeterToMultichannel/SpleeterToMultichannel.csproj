@@ -83,6 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Renderer.cs" />
     <Compile Include="TaskEngine.cs" />
     <Compile Include="UpmixComboBox.cs" />
     <Compile Include="UpmixOption.cs" />
