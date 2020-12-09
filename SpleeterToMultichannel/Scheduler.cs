@@ -15,9 +15,14 @@ namespace SpleeterToMultichannel {
         public Scheduler(MainWindow window, TaskEngine engine) {
             this.window = window;
             this.engine = engine;
+            renderer = new Renderer(window, engine);
         }
 
         public void Run(string path) {
+            if (path == null) {
+                renderer.ProcessError("Please select a folder that contains a 4- or 5-stem Spleeter output.");
+                return;
+            }
             if (engine.IsOperationRunning) {
                 renderer.ProcessError("Another process is already running.");
                 return;
@@ -35,7 +40,6 @@ namespace SpleeterToMultichannel {
                         crawl.AddRange(Directory.GetDirectories(crawl[i]));
                 }
             }
-            renderer = new Renderer(window, engine);
             if (Sources.Count == 0) {
                 renderer.ProcessError("No 4- or 5-stem Spleeter results were found in the selected folder or its subfolders.");
                 return;
