@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpleeterToMultichannel"
         mc:Ignorable="d"
-        Title="Spleeter to Multichannel" Height="300" Width="300">
+        Title="Spleeter to Multichannel" Height="302" Width="300">
     <Window.Resources>
         <local:UpmixOptionDisplay x:Key="UpmixConverter"/>
     </Window.Resources>
@@ -62,6 +62,7 @@
                 <CheckBox x:Name="otherLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,114,0,0"/>
             </Grid>
         </GroupBox>
+        <Button Content="Reset" Margin="0,0,20,176" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Click="Reset"/>
         <Button x:Name="button" Content="Process" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Click="Process" Height="20" VerticalAlignment="Bottom"/>
         <ProgressBar x:Name="progress" Margin="90,0,10,10" Maximum="1" Height="20" VerticalAlignment="Bottom"/>
         <Label x:Name="progressLabel" Margin="90,0,10,10" Padding="5,2,5,0" Height="20" VerticalAlignment="Bottom"/>

@@ -35,8 +35,6 @@ namespace SpleeterToMultichannel {
             base.OnClosed(e);
         }
 
-        void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");
-
         void OpenSpleeterOutput(object sender, RoutedEventArgs e) {
             if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
                 browser.SelectedPath = path;
@@ -46,8 +44,21 @@ namespace SpleeterToMultichannel {
             }
         }
 
-        void Process(object sender, RoutedEventArgs e) {
-            scheduler.Run(path);
+        void Reset(object sender, RoutedEventArgs e) {
+            vocals.SelectedIndex = (int)UpmixOption.MidSideScreen;
+            vocalsLFE.IsChecked = false;
+            bass.SelectedIndex = (int)UpmixOption.QuadroRear;
+            bassLFE.IsChecked = true;
+            drums.SelectedIndex = (int)UpmixOption.QuadroSide;
+            drumsLFE.IsChecked = true;
+            piano.SelectedIndex = (int)UpmixOption.Screen;
+            pianoLFE.IsChecked = false;
+            other.SelectedIndex = (int)UpmixOption.Full;
+            otherLFE.IsChecked = false;
         }
+
+        void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");
+
+        void Process(object sender, RoutedEventArgs e) => scheduler.Run(path);
     }
 }
