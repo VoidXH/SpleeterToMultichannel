@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpleeterToMultichannel"
         mc:Ignorable="d"
-        Title="Spleeter to Multichannel" Height="270" Width="300">
+        Title="Spleeter to Multichannel" Height="300" Width="300">
     <Window.Resources>
         <local:UpmixOptionDisplay x:Key="UpmixConverter"/>
     </Window.Resources>
     <Grid>
-        <Button Content="Open Spleeter output" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="134" Click="OpenSpleeterOutput"/>
-        <Label x:Name="folder" Content="No folder selected." HorizontalAlignment="Left" Margin="149,7,0,0" VerticalAlignment="Top"/>
-        <GroupBox Header="Channel mapping" HorizontalAlignment="Left" Height="160" Margin="10,38,0,0" VerticalAlignment="Top" Width="246">
+        <Button Content="by VoidX" Margin="0,41,10,0" VerticalAlignment="Top" Click="Ad" HorizontalAlignment="Right" Width="60"/>
+        <Button Content="Open Spleeter output folder" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="175" Click="OpenSpleeterOutput"/>
+        <Label x:Name="folder" Content="Please open a 4- or 5-stem Spleeter output." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <GroupBox Header="Channel mapping" HorizontalAlignment="Left" Margin="10,0,0,35" Width="246" Height="160" VerticalAlignment="Bottom">
             <Grid>
                 <Label Content="Vocals:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right"/>
                 <local:UpmixComboBox x:Name="vocals" HorizontalAlignment="Left" Margin="65,2,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="5">
@@ -61,8 +62,8 @@
                 <CheckBox x:Name="otherLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,114,0,0"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="button" Content="Process" HorizontalAlignment="Left" Margin="10,203,0,0" VerticalAlignment="Top" Width="75" Click="Process"/>
-        <ProgressBar x:Name="progress" Height="20" Margin="90,203,10,0" VerticalAlignment="Top" Maximum="1"/>
-        <Label x:Name="progressLabel" Margin="90,203,10,0" VerticalAlignment="Top" Height="20" Padding="5,2,5,0"/>
+        <Button x:Name="button" Content="Process" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Click="Process" Height="20" VerticalAlignment="Bottom"/>
+        <ProgressBar x:Name="progress" Margin="90,0,10,10" Maximum="1" Height="20" VerticalAlignment="Bottom"/>
+        <Label x:Name="progressLabel" Margin="90,0,10,10" Padding="5,2,5,0" Height="20" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

@@ -81,5 +81,22 @@ namespace SpleeterToMultichannel {
             operation.Start();
             return true;
         }
+
+        /// <summary>
+        /// Run a new task as part of a <see cref="TaskGroup"/> if no task is running.
+        /// </summary>
+        public bool Run(Action task, TaskGroup group) {
+            if (IsOperationRunning) {
+                MessageBox.Show("Another operation is already running.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            operation = new Task(() => {
+                task();
+                operation = null;
+                group.Next();
+            });
+            operation.Start();
+            return true;
+        }
     }
 }

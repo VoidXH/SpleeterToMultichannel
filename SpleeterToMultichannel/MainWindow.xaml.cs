@@ -8,14 +8,16 @@ namespace SpleeterToMultichannel {
     /// </summary>
     public partial class MainWindow : Window {
         string path = null;
-        readonly Renderer renderer;
+        readonly Scheduler scheduler;
 
         public MainWindow() {
             InitializeComponent();
             TaskEngine task = new TaskEngine();
             task.SetProgressReporting(progress, progressLabel);
-            renderer = new Renderer(this, task);
+            scheduler = new Scheduler(this, task);
         }
+
+        void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");
 
         void OpenSpleeterOutput(object sender, RoutedEventArgs e) {
             FolderBrowserDialog browser = new FolderBrowserDialog();
@@ -27,6 +29,8 @@ namespace SpleeterToMultichannel {
             }
         }
 
-        void Process(object sender, RoutedEventArgs e) => renderer.Render(path);
+        void Process(object sender, RoutedEventArgs e) {
+            scheduler.Run(path);
+        }
     }
 }
