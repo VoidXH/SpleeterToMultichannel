@@ -70,25 +70,20 @@ namespace SpleeterToMultichannel {
                     }
                     if (matrix.LeftInput[channel] == 0) {
                         for (long sample = 1; sample < source.LongLength; sample += 2) {
-                            long actualSample = sample >> 1;
-                            long actualPos = (actualSample << 3) + channel;
-                            target[actualPos] += source[sample] * matrix.RightInput[channel];
+                            target[(sample >> 1 << 3) + channel] += source[sample] * matrix.RightInput[channel];
                             if (++totalSamplesWritten % sampleBlock == 0)
                                 RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                         }
                     } else if (matrix.RightInput[channel] == 0) {
                         for (long sample = 0; sample < source.LongLength; sample += 2) {
-                            long actualSample = sample >> 1;
-                            long actualPos = (actualSample << 3) + channel;
-                            target[actualPos] += source[sample] * matrix.LeftInput[channel];
+                            target[(sample >> 1 << 3) + channel] += source[sample] * matrix.LeftInput[channel];
                             if (++totalSamplesWritten % sampleBlock == 0)
                                 RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                         }
                     } else {
                         for (long sample = 0; sample < source.LongLength; sample += 2) {
-                            long actualSample = sample >> 1;
-                            long actualPos = (actualSample << 3) + channel;
-                            target[actualPos] += source[sample] * matrix.LeftInput[channel] + source[sample + 1] * matrix.RightInput[channel];
+                            target[(sample >> 1 << 3) + channel] +=
+                                source[sample] * matrix.LeftInput[channel] + source[sample + 1] * matrix.RightInput[channel];
                             if (++totalSamplesWritten % sampleBlock == 0)
                                 RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                         }
