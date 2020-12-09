@@ -27,10 +27,34 @@ namespace SpleeterToMultichannel {
                 }
             }
             browser.SelectedPath = Settings.Default.Path;
+            if (Settings.Default.Vocals == -1)
+                Reset(null, null);
+            else {
+                vocals.SelectedIndex = Settings.Default.Vocals;
+                vocalsLFE.IsChecked = Settings.Default.VocalsLFE;
+                bass.SelectedIndex = Settings.Default.Bass;
+                bassLFE.IsChecked = Settings.Default.BassLFE;
+                drums.SelectedIndex = Settings.Default.Drums;
+                drumsLFE.IsChecked = Settings.Default.DrumsLFE;
+                piano.SelectedIndex = Settings.Default.Piano;
+                pianoLFE.IsChecked = Settings.Default.PianoLFE;
+                other.SelectedIndex = Settings.Default.Other;
+                otherLFE.IsChecked = Settings.Default.OtherLFE;
+            }
         }
 
         protected override void OnClosed(EventArgs e) {
             Settings.Default.Path = browser.SelectedPath;
+            Settings.Default.Vocals = vocals.SelectedIndex;
+            Settings.Default.VocalsLFE = vocalsLFE.IsChecked.Value;
+            Settings.Default.Bass = bass.SelectedIndex;
+            Settings.Default.BassLFE = bassLFE.IsChecked.Value;
+            Settings.Default.Drums = drums.SelectedIndex;
+            Settings.Default.DrumsLFE = drumsLFE.IsChecked.Value;
+            Settings.Default.Piano = piano.SelectedIndex;
+            Settings.Default.PianoLFE = pianoLFE.IsChecked.Value;
+            Settings.Default.Other = other.SelectedIndex;
+            Settings.Default.OtherLFE = otherLFE.IsChecked.Value;
             Settings.Default.Save();
             base.OnClosed(e);
         }
