@@ -28,6 +28,7 @@ namespace SpleeterToMultichannel {
                 return;
             }
             Spleet root = new Spleet(path);
+            Sources.Clear();
             if (root.IsValid())
                 Sources.Add(root);
             else {
