@@ -184,7 +184,7 @@ namespace SpleeterToMultichannel {
                 for (long sample = 0; sample < finalMix.LongLength;) {
                     double progress = sample / (double)finalMix.LongLength;
                     writer.WriteBlock(finalMix, sample, Math.Min(sample += blockSize, finalMix.LongLength));
-                    engine.UpdateProgressBar(.9 + .1 * progress);
+                    engine.UpdateProgressBar((.9 + .1 * progress) * progressMul + progressStart);
                     engine.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
                 }
             }
