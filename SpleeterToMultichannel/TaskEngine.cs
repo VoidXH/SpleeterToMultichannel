@@ -9,11 +9,13 @@ namespace SpleeterToMultichannel {
     /// </summary>
     public class TaskEngine {
         readonly static TimeSpan lazyStatusDelta = new TimeSpan(0, 0, 1);
+        readonly static TimeSpan progressUpdateRate = new TimeSpan(0, 0, 0, 0, 16); // About 60 FPS
 
         Task operation;
         ProgressBar progressBar;
         Label progressLabel;
         DateTime lastLazyStatus = DateTime.MinValue;
+        DateTime lastProgressBar = DateTime.MinValue;
 
         /// <summary>
         /// A task is running and is not completed or failed.
@@ -44,8 +46,11 @@ namespace SpleeterToMultichannel {
         /// Set the progress on the progress bar if it's set.
         /// </summary>
         public void UpdateProgressBar(double progress) {
-            if (progressBar != null)
+            DateTime now = DateTime.Now;
+            if (progressBar != null && (progress == 1 || now - lastProgressBar > progressUpdateRate)) {
                 progressBar.Dispatcher.Invoke(() => progressBar.Value = progress);
+                lastProgressBar = now;
+            }
         }
 
         /// <summary>
