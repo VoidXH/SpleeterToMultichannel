@@ -269,6 +269,10 @@
         <member name="M:Cavern.Channel.Equals(Cavern.Channel)">
             <summary>Check if two channels are the same.</summary>
         </member>
+        <member name="M:Cavern.Channel.IsLFE(System.Int32,System.Int32)">
+            <summary>Get if a channel is LFE for a given channel count.
+            If <paramref name="channels"/> == -1, the current layout will be used.</summary>
+        </member>
         <member name="T:Cavern.Listener">
             <summary>Center of a listening space. Attached <see cref="T:Cavern.Source"/>s will be rendered relative to this object's position.</summary>
         </member>
@@ -364,8 +368,10 @@
         <member name="M:Cavern.Listener.DetachSource(Cavern.Source)">
             <summary>Detach a source from this listener.</summary>
         </member>
-        <member name="M:Cavern.Listener.#ctor">
+        <member name="M:Cavern.Listener.#ctor(System.Boolean)">
             <summary>Center of a listening space. Attached <see cref="T:Cavern.Source"/>s will be rendered relative to this object's position.</summary>
+            <param name="loadGlobals">Load the global settings for all listeners. This should be false for listeners created on the fly, as
+            this overwrites previous application settings that might have been modified.</param>
         </member>
         <member name="M:Cavern.Listener.Render(System.Int32)">
             <summary>Ask for update ticks.</summary>
@@ -736,6 +742,18 @@
         </member>
         <member name="M:Cavern.Utilities.Complex.ToString">
             <summary>Display the complex number.</summary>
+        </member>
+        <member name="T:Cavern.Utilities.ListExtensions">
+            <summary>Extra list handling functions.</summary>
+        </member>
+        <member name="M:Cavern.Utilities.ListExtensions.AddSorted``1(System.Collections.Generic.List{``0},``0)">
+            <summary>Add the item to the list while keeping order.</summary>
+        </member>
+        <member name="M:Cavern.Utilities.ListExtensions.AddSortedDistinct``1(System.Collections.Generic.List{``0},``0)">
+            <summary>Add the item to the list while keeping order and not allowing duplicates.</summary>
+        </member>
+        <member name="M:Cavern.Utilities.ListExtensions.RemoveSorted``1(System.Collections.Generic.List{``0},``0)">
+            <summary>Remove an item from a sorted <see cref="T:System.Collections.Generic.List`1"/>.</summary>
         </member>
         <member name="T:Cavern.Utilities.QMath">
             <summary>Two plus two is four, minus one, that's three, quick maths.</summary>
