@@ -188,6 +188,11 @@ namespace SpleeterToMultichannel {
                     engine.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
                 }
             }
+#pragma warning disable IDE0059 // "Unnecessary assignment of a value" - it is necessary for GC
+            source = null;
+            finalMix = null;
+#pragma warning restore IDE0059
+            GC.Collect();
 
             engine.UpdateProgressBar(progressMul + progressStart);
             engine.UpdateStatus("Finished!");
