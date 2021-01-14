@@ -11,6 +11,9 @@ using Window = Cavern.QuickEQ.Window;
 
 namespace SpleeterToMultichannel {
     public class Renderer {
+        const long readBlockSize = 1 << 14;
+        const long renderBlockSize = 1 << 18;
+
         readonly MainWindow window;
         readonly TaskEngine engine;
 
@@ -26,12 +29,11 @@ namespace SpleeterToMultichannel {
         }
 
         float[] Read(RIFFWaveReader reader, string instrument, double progressGap) {
-            const long sampleBlock = 8192;
             double progressSrc = engine.Progress;
             float[] read = new float[reader.Length * reader.ChannelCount];
             for (long sample = 0; sample < read.LongLength;) {
                 double progress = sample / (double)read.LongLength;
-                reader.ReadBlock(read, sample, Math.Min(sample += sampleBlock, read.LongLength));
+                reader.ReadBlock(read, sample, Math.Min(sample += readBlockSize, read.LongLength));
                 engine.UpdateProgressBar(progressSrc + progressGap * progress);
                 engine.UpdateStatusLazy(string.Format("Reading {0} ({1})...", instrument, progress.ToString("0.00%")));
             }
@@ -59,7 +61,6 @@ namespace SpleeterToMultichannel {
         }
 
         void Render(float[] source, float[] target, OutputMatrix matrix, bool LFE, string instrument, double progressGap) {
-            const long sampleBlock = 131072;
             double progressSrc = engine.Progress;
             long totalSamplesWritten = 0;
             for (long channel = 0; channel < 8; ++channel) {
@@ -71,27 +72,27 @@ namespace SpleeterToMultichannel {
                     if (matrix.LeftInput[channel] == 0) {
                         for (long sample = 1; sample < source.LongLength; sample += 2) {
                             target[(sample >> 1 << 3) + channel] += source[sample] * matrix.RightInput[channel];
-                            if (++totalSamplesWritten % sampleBlock == 0)
+                            if (++totalSamplesWritten % renderBlockSize == 0)
                                 RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                         }
                     } else if (matrix.RightInput[channel] == 0) {
                         for (long sample = 0; sample < source.LongLength; sample += 2) {
                             target[(sample >> 1 << 3) + channel] += source[sample] * matrix.LeftInput[channel];
-                            if (++totalSamplesWritten % sampleBlock == 0)
+                            if (++totalSamplesWritten % renderBlockSize == 0)
                                 RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                         }
                     } else {
                         for (long sample = 0; sample < source.LongLength; sample += 2) {
                             target[(sample >> 1 << 3) + channel] +=
                                 source[sample] * matrix.LeftInput[channel] + source[sample + 1] * matrix.RightInput[channel];
-                            if (++totalSamplesWritten % sampleBlock == 0)
+                            if (++totalSamplesWritten % renderBlockSize == 0)
                                 RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                         }
                     }
                 } else if (LFE) {
                     for (long sample = 0; sample < source.LongLength; ++sample) {
                         target[(sample >> 1 << 3) + 3] += OutputMatrix.out2 * .31622776601f /* -10 dB */ * source[sample];
-                        if (++totalSamplesWritten % sampleBlock == 0)
+                        if (++totalSamplesWritten % renderBlockSize == 0)
                             RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
                     }
                 }
@@ -136,23 +137,24 @@ namespace SpleeterToMultichannel {
             }
 
             double progressMul = 1.0 / of, progressStep = (pianoReader == null ? .1 : .08) * progressMul;
+            double readStep = progressStep * .1, mixStep = progressStep * 1.9;
             float[] finalMix = new float[bassReader.Length * 8];
-            float[] source = Read(bassReader, "bass", progressStep);
-            Render(source, finalMix, GetMatrix(window.bass), GetLFE(window.bassLFE), "bass", progressStep);
+            float[] source = Read(bassReader, "bass", readStep);
+            Render(source, finalMix, GetMatrix(window.bass), GetLFE(window.bassLFE), "bass", mixStep);
             bassReader.Dispose();
-            source = Read(drumsReader, "drums", progressStep);
-            Render(source, finalMix, GetMatrix(window.drums), GetLFE(window.drumsLFE), "drums", progressStep);
+            source = Read(drumsReader, "drums", readStep);
+            Render(source, finalMix, GetMatrix(window.drums), GetLFE(window.drumsLFE), "drums", mixStep);
             drumsReader.Dispose();
             if (pianoReader != null) {
-                source = Read(pianoReader, "piano", progressStep);
-                Render(source, finalMix, GetMatrix(window.piano), GetLFE(window.pianoLFE), "piano", progressStep);
+                source = Read(pianoReader, "piano", readStep);
+                Render(source, finalMix, GetMatrix(window.piano), GetLFE(window.pianoLFE), "piano", mixStep);
                 pianoReader.Dispose();
             }
-            source = Read(otherReader, "other", progressStep);
-            Render(source, finalMix, GetMatrix(window.other), GetLFE(window.otherLFE), "other", progressStep);
+            source = Read(otherReader, "other", readStep);
+            Render(source, finalMix, GetMatrix(window.other), GetLFE(window.otherLFE), "other", mixStep);
             otherReader.Dispose();
-            source = Read(vocalsReader, "vocals", progressStep);
-            Render(source, finalMix, GetMatrix(window.vocals), GetLFE(window.vocalsLFE), "vocals", progressStep);
+            source = Read(vocalsReader, "vocals", readStep);
+            Render(source, finalMix, GetMatrix(window.vocals), GetLFE(window.vocalsLFE), "vocals", mixStep);
             vocalsReader.Dispose();
 
             engine.UpdateProgressBar(.8 * progressMul + progressStart);
@@ -180,10 +182,9 @@ namespace SpleeterToMultichannel {
             using (RIFFWaveWriter writer = new RIFFWaveWriter(new BinaryWriter(File.Open(spleet.RenderPath, FileMode.Create)),
                 8, bassReader.Length, bassReader.SampleRate, BitDepth.Int16)) {
                 writer.WriteHeader();
-                const long blockSize = 8192;
                 for (long sample = 0; sample < finalMix.LongLength;) {
                     double progress = sample / (double)finalMix.LongLength;
-                    writer.WriteBlock(finalMix, sample, Math.Min(sample += blockSize, finalMix.LongLength));
+                    writer.WriteBlock(finalMix, sample, Math.Min(sample += readBlockSize, finalMix.LongLength));
                     engine.UpdateProgressBar((.9 + .1 * progress) * progressMul + progressStart);
                     engine.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
                 }
