@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 
+using MessageBox = System.Windows.MessageBox;
+
 namespace SpleeterToMultichannel {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -21,6 +23,8 @@ namespace SpleeterToMultichannel {
             while (!Directory.Exists(Settings.Default.Path)) {
                 try {
                     Settings.Default.Path = Path.GetDirectoryName(Settings.Default.Path);
+                    if (string.IsNullOrEmpty(Settings.Default.Path))
+                        break;
                 } catch {
                     Settings.Default.Path = string.Empty;
                     break;
@@ -59,12 +63,19 @@ namespace SpleeterToMultichannel {
             base.OnClosed(e);
         }
 
+        string PathDisplay(string from) {
+            string dir = Path.GetFileName(from);
+            if (!string.IsNullOrEmpty(dir))
+                return dir;
+            return from;
+        }
+
         void OpenSpleeterOutput(object sender, RoutedEventArgs e) {
             if (!string.IsNullOrEmpty(path) && Directory.Exists(path))
                 browser.SelectedPath = path;
             if (browser.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                 path = browser.SelectedPath;
-                folder.Content = Path.GetFileName(path);
+                folder.Content = PathDisplay(path);
             }
         }
 
@@ -83,6 +94,16 @@ namespace SpleeterToMultichannel {
 
         void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");
 
-        void Process(object sender, RoutedEventArgs e) => scheduler.Run(path);
+        void Process(object sender, RoutedEventArgs e) {
+            if (path == null && Directory.Exists(browser.SelectedPath)) {
+                if (MessageBox.Show($"You did not select a folder but last time you selected {PathDisplay(browser.SelectedPath)}. " +
+                    "Do you want to process that folder?", "Folder selection", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                    MessageBoxResult.Yes) {
+                    path = browser.SelectedPath;
+                    folder.Content = PathDisplay(path);
+                }
+            }
+            scheduler.Run(path);
+        }
     }
 }
