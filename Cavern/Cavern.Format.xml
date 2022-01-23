@@ -5,219 +5,600 @@
     </assembly>
     <members>
         <member name="T:Cavern.Format.AudioFormat">
-            <summary>Supported audio formats in this namespace.</summary>
+            <summary>
+            Supported audio formats in this namespace.
+            </summary>
         </member>
         <member name="F:Cavern.Format.AudioFormat.RIFFWave">
-            <summary>Minimal RIFF Wave implementation.</summary>
+            <summary>
+            Minimal RIFF Wave implementation.
+            </summary>
         </member>
         <member name="F:Cavern.Format.AudioFormat.LimitlessAudioFormat">
-            <summary>Limitless Audio Format, supports spatial mixes.</summary>
+            <summary>
+            Limitless Audio Format, supports spatial mixes.
+            </summary>
         </member>
         <member name="T:Cavern.Format.BitDepth">
-            <summary>Audio bit depth choices.</summary>
+            <summary>
+            Audio bit depth choices.
+            </summary>
         </member>
         <member name="F:Cavern.Format.BitDepth.Int8">
-            <summary>8-bit integer.</summary>
+            <summary>
+            8-bit integer.
+            </summary>
         </member>
         <member name="F:Cavern.Format.BitDepth.Int16">
-            <summary>16-bit integer.</summary>
+            <summary>
+            16-bit integer.
+            </summary>
         </member>
         <member name="F:Cavern.Format.BitDepth.Int24">
-            <summary>24-bit integer.</summary>
+            <summary>
+            24-bit integer.
+            </summary>
         </member>
         <member name="F:Cavern.Format.BitDepth.Float32">
-            <summary>32-bit floating point.</summary>
+            <summary>
+            32-bit floating point.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.LAFMode">
+            <summary>
+            Limitless Audio Format quality modes.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LAFMode.Int8">
+            <summary>
+            8-bit integer.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LAFMode.Int16">
+            <summary>
+            16-bit integer.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LAFMode.Int24">
+            <summary>
+            24-bit integer.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LAFMode.Float32">
+            <summary>
+            32-bit floating point.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.LimitlessAudioFormatUtils">
+            <summary>
+            Used for both <see cref="T:Cavern.Format.LimitlessAudioFormatReader"/> and <see cref="T:Cavern.Format.LimitlessAudioFormatWriter"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatUtils.limitless">
+            <summary>
+            Limitless Audio Format indicator starting bytes.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatUtils.head">
+            <summary>
+            Header marker bytes.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.RIFFWaveUtils">
+            <summary>
+            Used for both <see cref="T:Cavern.Format.RIFFWaveReader"/> and <see cref="T:Cavern.Format.RIFFWaveWriter"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.RIFFWaveUtils.RIFF">
+            <summary>
+            RIFF marker.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.RIFFWaveUtils.WAVE">
+            <summary>
+            WAVE marker.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.RIFFWaveUtils.fmt">
+            <summary>
+            Format chunk marker.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.RIFFWaveUtils.data">
+            <summary>
+            Data chunk marker.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.FilterSet.EqualizerAPOUtils">
+            <summary>
+            Helper functions for handling Equalizer APO configuration files.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.FilterSet.EqualizerAPOUtils.GetReferenceChannel(System.String)">
+            <summary>
+            Converts Equalizer APO's channel names to <see cref="T:Cavern.Remapping.ReferenceChannel"/> values.
+            </summary>
         </member>
         <member name="T:Cavern.Format.AudioReader">
-            <summary>Abstract audio file reader.</summary>
+            <summary>
+            Abstract audio file reader.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioReader.ChannelCount">
-            <summary>Content channel count.</summary>
+            <summary>
+            Content channel count.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioReader.Length">
-            <summary>Content length in samples.</summary>
+            <summary>
+            Content length in samples for a single channel.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioReader.SampleRate">
-            <summary>Content sample rate.</summary>
+            <summary>
+            Content sample rate.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioReader.Bits">
-            <summary>Content bit depth.</summary>
+            <summary>
+            Content bit depth.
+            </summary>
         </member>
         <member name="F:Cavern.Format.AudioReader.reader">
-            <summary>File reader object.</summary>
+            <summary>
+            File reader object.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.#ctor(System.IO.BinaryReader)">
-            <summary>Abstract audio file reader.</summary>
+            <summary>
+            Abstract audio file reader.
+            </summary>
             <param name="reader">File reader object</param>
         </member>
+        <member name="M:Cavern.Format.AudioReader.#ctor(System.String)">
+            <summary>
+            Abstract audio file reader.
+            </summary>
+            <param name="path">Input file name</param>
+        </member>
         <member name="M:Cavern.Format.AudioReader.ReadHeader">
-            <summary>Read the file header.</summary>
+            <summary>
+            Read the file header.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
-            <summary>Read a block of samples.</summary>
+            <summary>
+            Read a block of samples.
+            </summary>
             <param name="samples">Input array</param>
             <param name="from">Start position in the input array (inclusive)</param>
             <param name="to">End position in the input array (exclusive)</param>
-            <remarks>The next to - from samples will be read from the file.</remarks>
+            <remarks>The next to - from samples will be read from the file. Samples are counted for all channels.</remarks>
         </member>
         <member name="M:Cavern.Format.AudioReader.ReadBlock(System.Single[][],System.Int64,System.Int64)">
-            <summary>Read a block of samples to a multichannel array.</summary>
-            <param name="samples">Input array</param>
+            <summary>
+            Read a block of samples to a multichannel array.
+            </summary>
+            <param name="samples">Input array ([channel][sample])</param>
             <param name="from">Start position in the input array (inclusive)</param>
             <param name="to">End position in the input array (exclusive)</param>
-            <remarks>The next to - from samples will be read from the file.</remarks>
+            <remarks>The next to - from samples will be read from the file. Samples counted for a single channel.</remarks>
         </member>
         <member name="M:Cavern.Format.AudioReader.Read">
-            <summary>Read the entire file.</summary>
+            <summary>
+            Read the entire file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadClip">
+            <summary>
+            Read the entire file and pack it in a <see cref="T:Cavern.Clip"/>.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.ReadMultichannel">
             <summary>Read the entire file.</summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.RollingBlockCheck(System.Byte[],System.Byte[])">
-            <summary>Tests if the next rolling byte block is as expected, if not, it advances by 1 byte.</summary>
+            <summary>
+            Tests if the next rolling byte block is as expected, if not, it advances by 1 byte.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.BlockTest(System.Byte[])">
-            <summary>Tests if the next byte block is as expected, throws an exception if it's not.</summary>
+            <summary>
+            Tests if the next byte block is as expected, throws an exception if it's not.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.Dispose">
-            <summary>Close the reader.</summary>
+            <summary>
+            Close the reader.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.LimitlessAudioFormatReader">
+            <summary>
+            Minimal Limitless Audio Format file reader.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.LimitlessAudioFormatReader.Channels">
+            <summary>
+            Description of each imported channel/object.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatReader.skip">
+            <summary>
+            Maximum size of each read block. This can balance optimization between memory and IO.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatReader.layoutByteCount">
+            <summary>
+            Bytes used before each second of samples to determine which channels are actually exported.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Minimal Limitless Audio Format file reader.
+            </summary>
+            <param name="reader">File reader object</param>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.#ctor(System.String)">
+            <summary>
+            Minimal Limitless Audio Format file reader.
+            </summary>
+            <param name="path">Input file name</param>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.ReadHeader">
+            <summary>
+            Read the file header.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatReader.readSamples">
+            <summary>
+            Samples read for each channel since the construction of this reader.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatReader.copiedSamples">
+            <summary>
+            Read position in <see cref="F:Cavern.Format.LimitlessAudioFormatReader.lastReadSecond"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.LimitlessAudioFormatReader.lastReadSecond">
+            <summary>
+            The last loaded second, as LAF stores channel availability data every second.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.ReadSecond">
+            <summary>
+            Read the next second of audio data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read a block of samples.
+            </summary>
+            <param name="samples">Input array</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file. Samples are counted for all channels.</remarks>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.ReadBlock(System.Single[][],System.Int64,System.Int64)">
+            <summary>
+            Read a block of samples to a multichannel array.
+            </summary>
+            <param name="samples">Input array ([channel][sample])</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file. Samples counted for a single channel.</remarks>
+        </member>
+        <member name="T:Cavern.Format.RIFFWaveReader">
+            <summary>
+            Minimal RIFF wave file reader.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Minimal RIFF wave file reader.
+            </summary>
+            <param name="reader">File reader object</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.#ctor(System.String)">
+            <summary>
+            Minimal RIFF wave file reader.
+            </summary>
+            <param name="path">Input file name</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.ReadHeader">
+            <summary>
+            Read the file header.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read a block of samples.
+            </summary>
+            <param name="samples">Input array</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file. Samples are counted for all channels.</remarks>
         </member>
         <member name="T:Cavern.Format.AudioWriter">
-            <summary>Abstract audio file writer.</summary>
+            <summary>
+            Abstract audio file writer.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioWriter.ChannelCount">
-            <summary>Output channel count.</summary>
+            <summary>
+            Output channel count.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioWriter.Length">
-            <summary>Output length in samples.</summary>
+            <summary>
+            Output length in samples per channel.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioWriter.SampleRate">
-            <summary>Output sample rate.</summary>
+            <summary>
+            Output sample rate.
+            </summary>
         </member>
         <member name="P:Cavern.Format.AudioWriter.Bits">
-            <summary>Output bit depth.</summary>
+            <summary>
+            Output bit depth.
+            </summary>
         </member>
         <member name="F:Cavern.Format.AudioWriter.writer">
-            <summary>File writer object.</summary>
+            <summary>
+            File writer object.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioWriter.#ctor(System.IO.BinaryWriter,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
-            <summary>Abstract audio file writer.</summary>
+            <summary>
+            Abstract audio file writer.
+            </summary>
             <param name="writer">File writer object</param>
             <param name="channelCount">Output channel count</param>
-            <param name="length">Output length in samples</param>
+            <param name="length">Output length in samples per channel</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+        </member>
+        <member name="M:Cavern.Format.AudioWriter.#ctor(System.String,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Abstract audio file writer.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="channelCount">Output channel count</param>
+            <param name="length">Output length in samples per channel</param>
             <param name="sampleRate">Output sample rate</param>
             <param name="bits">Output bit depth</param>
         </member>
         <member name="M:Cavern.Format.AudioWriter.WriteHeader">
-            <summary>Create the file header.</summary>
+            <summary>
+            Create the file header.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioWriter.WriteBlock(System.Single[],System.Int64,System.Int64)">
-            <summary>Write a block of samples.</summary>
+            <summary>
+            Write a block of mono samples.
+            </summary>
+            <param name="samples">Samples to write</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+        </member>
+        <member name="M:Cavern.Format.AudioWriter.WriteBlock(System.Single[][],System.Int64,System.Int64)">
+            <summary>
+            Write a block of multichannel samples.
+            </summary>
             <param name="samples">Samples to write</param>
             <param name="from">Start position in the input array (inclusive)</param>
             <param name="to">End position in the input array (exclusive)</param>
         </member>
         <member name="M:Cavern.Format.AudioWriter.Write(System.Single[])">
-            <summary>Write the entire file.</summary>
+            <summary>
+            Write the entire mono file.
+            </summary>
             <param name="samples">All input samples</param>
         </member>
+        <member name="M:Cavern.Format.AudioWriter.Write(System.Single[][])">
+            <summary>
+            Write the entire multichannel file.
+            </summary>
+            <param name="samples">All input samples</param>
+        </member>
+        <member name="M:Cavern.Format.AudioWriter.WriteOffset(System.Single[][],System.Int32)">
+            <summary>
+            Writes the <paramref name="samples"/> to be played back channel after channel.
+            </summary>
+            <param name="samples">All input samples</param>
+            <param name="period">Channels separated by this many channels are played simultaneously</param>
+        </member>
+        <member name="M:Cavern.Format.AudioWriter.WriteForEachChannel(System.Single[],System.Int32)">
+            <summary>
+            Writes the <paramref name="samples"/> to be played back channel after channel.
+            </summary>
+            <param name="samples">All input samples</param>
+            <param name="channelCount">Output channel count</param>
+        </member>
         <member name="M:Cavern.Format.AudioWriter.Dispose">
-            <summary>Close the writer.</summary>
+            <summary>
+            Close the writer.
+            </summary>
         </member>
         <member name="T:Cavern.Format.LimitlessAudioFormatWriter">
-            <summary>Minimal Limitless Audio Format file writer.</summary>
-        </member>
-        <member name="F:Cavern.Format.LimitlessAudioFormatWriter.limitless">
-            <summary>Limitless Audio Format indicator starting bytes.</summary>
-        </member>
-        <member name="F:Cavern.Format.LimitlessAudioFormatWriter.head">
-            <summary>Header marker bytes.</summary>
+            <summary>
+            Minimal Limitless Audio Format file writer.
+            </summary>
         </member>
         <member name="F:Cavern.Format.LimitlessAudioFormatWriter.channels">
-            <summary>Output channel information.</summary>
+            <summary>
+            Output channel information.
+            </summary>
         </member>
         <member name="F:Cavern.Format.LimitlessAudioFormatWriter.cache">
-            <summary>The past second for each channel.</summary>
+            <summary>
+            The past second for each channel.
+            </summary>
         </member>
         <member name="F:Cavern.Format.LimitlessAudioFormatWriter.cachePosition">
-            <summary>Write position in the <see cref="F:Cavern.Format.LimitlessAudioFormatWriter.cache"/>. Used to check if the cache is full for block dumping.</summary>
+            <summary>
+            Write position in the <see cref="F:Cavern.Format.LimitlessAudioFormatWriter.cache"/>. Used to check if the cache is full for block dumping.
+            </summary>
         </member>
         <member name="F:Cavern.Format.LimitlessAudioFormatWriter.totalWritten">
-            <summary>Total samples written in the file so far. Used to check the end of file and dump the unfilled last block.</summary>
+            <summary>
+            Total samples written in the file so far. Used to check the end of file and dump the unfilled last block.
+            </summary>
         </member>
-        <member name="M:Cavern.Format.LimitlessAudioFormatWriter.#ctor(System.IO.BinaryWriter,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth,Cavern.Channel[])">
-            <summary>Minimal Limitless Audio Format file writer.</summary>
+        <member name="M:Cavern.Format.LimitlessAudioFormatWriter.#ctor(System.IO.BinaryWriter,System.Int64,System.Int32,Cavern.Format.BitDepth,Cavern.Channel[])">
+            <summary>
+            Minimal Limitless Audio Format file writer.
+            </summary>
             <param name="writer">File writer object</param>
-            <param name="channelCount">Output channel count</param>
-            <param name="length">Output length in samples</param>
+            <param name="length">Output length in samples per channel</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+            <param name="channels">Output channel information</param>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatWriter.#ctor(System.String,System.Int64,System.Int32,Cavern.Format.BitDepth,Cavern.Channel[])">
+            <summary>
+            Minimal Limitless Audio Format file writer.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="length">Output length in samples per channel</param>
             <param name="sampleRate">Output sample rate</param>
             <param name="bits">Output bit depth</param>
             <param name="channels">Output channel information</param>
         </member>
         <member name="M:Cavern.Format.LimitlessAudioFormatWriter.WriteHeader">
-            <summary>Create the file header.</summary>
+            <summary>
+            Create the file header.
+            </summary>
         </member>
         <member name="M:Cavern.Format.LimitlessAudioFormatWriter.DumpBlock(System.Int64)">
-            <summary>Output only the used channels from the last second.</summary>
+            <summary>
+            Output only the used channels from the last second.
+            </summary>
             <param name="until">Samples to dump from the <see cref="F:Cavern.Format.LimitlessAudioFormatWriter.cache"/></param>
         </member>
         <member name="M:Cavern.Format.LimitlessAudioFormatWriter.WriteBlock(System.Single[],System.Int64,System.Int64)">
-            <summary>Write a block of samples.</summary>
+            <summary>
+            Write a block of samples.
+            </summary>
             <param name="samples">Samples to write</param>
             <param name="from">Start position in the input array (inclusive)</param>
             <param name="to">End position in the input array (exclusive)</param>
         </member>
-        <member name="T:Cavern.Format.RIFFWaveReader">
-            <summary>Minimal RIFF wave file reader.</summary>
+        <member name="M:Cavern.Format.LimitlessAudioFormatWriter.Write(System.String,System.Single[],System.Int32,Cavern.Format.BitDepth,Cavern.Channel[])">
+            <summary>
+            Export an array of samples to an audio file.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+            <param name="channels">Output channel information</param>
         </member>
-        <member name="M:Cavern.Format.RIFFWaveReader.#ctor(System.IO.BinaryReader)">
-            <summary>Minimal RIFF wave file reader.</summary>
-            <param name="reader">File reader object</param>
+        <member name="M:Cavern.Format.LimitlessAudioFormatWriter.Write(System.String,System.Single[][],System.Int32,Cavern.Format.BitDepth,Cavern.Channel[])">
+            <summary>
+            Export an array of multichannel samples to an audio file.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+            <param name="channels">Output channel information</param>
         </member>
-        <member name="M:Cavern.Format.RIFFWaveReader.ReadHeader">
-            <summary>Read the file header.</summary>
-        </member>
-        <member name="M:Cavern.Format.RIFFWaveReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
-            <summary>Read a block of samples.</summary>
-            <param name="samples">Input array</param>
-            <param name="from">Start position in the input array (inclusive)</param>
-            <param name="to">End position in the input array (exclusive)</param>
-            <remarks>The next to - from samples will be read from the file.</remarks>
-        </member>
-        <member name="T:Cavern.Format.RIFFWaveUtils">
-            <summary>Used for both <see cref="T:Cavern.Format.RIFFWaveReader"/> and <see cref="T:Cavern.Format.RIFFWaveWriter"/>.</summary>
-        </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.RIFF">
-            <summary>RIFF marker.</summary>
-        </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.WAVE">
-            <summary>WAVE marker.</summary>
-        </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.fmt">
-            <summary>Format chunk marker.</summary>
-        </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.data">
-            <summary>Data chunk marker.</summary>
+        <member name="M:Cavern.Format.LimitlessAudioFormatWriter.WriteOffset(System.String,System.Single[][],System.Int32,Cavern.Format.BitDepth,Cavern.Channel[],System.Int32)">
+            <summary>
+            Export an audio file to be played back channel after channel.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+            <param name="channels">Output channel information</param>
+            <param name="period">Channels separated by this many channels are played simultaneously</param>
         </member>
         <member name="T:Cavern.Format.RIFFWaveWriter">
-            <summary>Minimal RIFF wave file writer.</summary>
+            <summary>
+            Minimal RIFF wave file writer.
+            </summary>
         </member>
         <member name="M:Cavern.Format.RIFFWaveWriter.#ctor(System.IO.BinaryWriter,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
-            <summary>Minimal RIFF wave file writer.</summary>
+            <summary>
+            Minimal RIFF wave file writer.
+            </summary>
             <param name="writer">File writer object</param>
             <param name="channelCount">Output channel count</param>
-            <param name="length">Output length in samples</param>
+            <param name="length">Output length in samples per channel</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveWriter.#ctor(System.String,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Minimal RIFF wave file writer.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="channelCount">Output channel count</param>
+            <param name="length">Output length in samples per channel</param>
             <param name="sampleRate">Output sample rate</param>
             <param name="bits">Output bit depth</param>
         </member>
         <member name="M:Cavern.Format.RIFFWaveWriter.WriteHeader">
-            <summary>Create the file header.</summary>
+            <summary>
+            Create the file header.
+            </summary>
         </member>
         <member name="M:Cavern.Format.RIFFWaveWriter.WriteBlock(System.Single[],System.Int64,System.Int64)">
-            <summary>Write a block of samples.</summary>
+            <summary>
+            Write a block of samples.
+            </summary>
             <param name="samples">Samples to write</param>
             <param name="from">Start position in the input array (inclusive)</param>
             <param name="to">End position in the input array (exclusive)</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveWriter.WriteBlock(System.Single[][],System.Int64,System.Int64)">
+            <summary>
+            Write a block of samples.
+            </summary>
+            <param name="samples">Samples to write</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveWriter.Write(System.String,System.Single[],System.Int32,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Export an array of samples to an audio file.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="channelCount">Output channel count</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveWriter.Write(System.String,System.Single[][],System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Export an array of multichannel samples to an audio file.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveWriter.WriteOffset(System.String,System.Single[][],System.Int32,Cavern.Format.BitDepth,System.Int32)">
+            <summary>
+            Export an audio file to be played back channel after channel.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+            <param name="period">Channels separated by this many channels are played simultaneously</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveWriter.WriteForEachChannel(System.String,System.Single[],System.Int32,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Export an audio file to be played back channel after channel.
+            </summary>
+            <param name="path">Output file name</param>
+            <param name="data">Samples to write in the file</param>
+            <param name="channelCount">Output channel count</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
         </member>
     </members>
 </doc>
