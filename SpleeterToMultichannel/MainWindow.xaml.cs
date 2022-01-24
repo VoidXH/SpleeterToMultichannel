@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 using MessageBox = System.Windows.MessageBox;
@@ -12,14 +13,14 @@ namespace SpleeterToMultichannel {
     /// </summary>
     public partial class MainWindow : Window {
         string path = null;
-        readonly Scheduler scheduler;
-        readonly FolderBrowserDialog browser = new FolderBrowserDialog();
+        Scheduler scheduler;
+        readonly FolderBrowserDialog browser = new();
+        readonly TaskEngine task;
 
         public MainWindow() {
             InitializeComponent();
-            TaskEngine task = new TaskEngine();
+            task = new TaskEngine();
             task.SetProgressReporting(progress, progressLabel);
-            scheduler = new Scheduler(this, task);
             while (!Directory.Exists(Settings.Default.Path)) {
                 try {
                     Settings.Default.Path = Path.GetDirectoryName(Settings.Default.Path);
@@ -63,7 +64,7 @@ namespace SpleeterToMultichannel {
             base.OnClosed(e);
         }
 
-        string PathDisplay(string from) {
+        static string PathDisplay(string from) {
             string dir = Path.GetFileName(from);
             if (!string.IsNullOrEmpty(dir))
                 return dir;
@@ -75,9 +76,24 @@ namespace SpleeterToMultichannel {
                 browser.SelectedPath = path;
             if (browser.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                 path = browser.SelectedPath;
-                folder.Content = PathDisplay(path);
+                folder.Text = PathDisplay(path);
             }
         }
+
+        void VocalsGainChanged(object sender, RoutedPropertyChangedEventArgs<double> e) =>
+            vocalsGainDisplay.Text = ((Slider)sender).Value.ToString("0 dB");
+
+        void BassGainChanged(object sender, RoutedPropertyChangedEventArgs<double> e) =>
+            bassGainDisplay.Text = ((Slider)sender).Value.ToString("0 dB");
+
+        void DrumsGainChanged(object sender, RoutedPropertyChangedEventArgs<double> e) =>
+            drumsGainDisplay.Text = ((Slider)sender).Value.ToString("0 dB");
+
+        void PianoGainChanged(object sender, RoutedPropertyChangedEventArgs<double> e) =>
+            pianoGainDisplay.Text = ((Slider)sender).Value.ToString("0 dB");
+
+        void OtherGainChanged(object sender, RoutedPropertyChangedEventArgs<double> e) =>
+            otherGainDisplay.Text = ((Slider)sender).Value.ToString("0 dB");
 
         void Reset(object sender, RoutedEventArgs e) {
             vocals.SelectedIndex = (int)UpmixOption.MidSideScreen;
@@ -100,9 +116,10 @@ namespace SpleeterToMultichannel {
                     "Do you want to process that folder?", "Folder selection", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                     MessageBoxResult.Yes) {
                     path = browser.SelectedPath;
-                    folder.Content = PathDisplay(path);
+                    folder.Text = PathDisplay(path);
                 }
             }
+            scheduler = new Scheduler(this, task);
             scheduler.Run(path);
         }
     }

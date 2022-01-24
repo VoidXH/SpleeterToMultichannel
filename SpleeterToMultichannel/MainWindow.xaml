@@ -5,66 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpleeterToMultichannel"
         mc:Ignorable="d"
-        Title="Spleeter to Multichannel" Height="302" Width="300">
+        Title="Spleeter to Multichannel" Height="350" Width="450">
     <Window.Resources>
         <local:UpmixOptionDisplay x:Key="UpmixConverter"/>
+        <Style TargetType="local:UpmixComboBox">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding Converter={StaticResource UpmixConverter}}"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        <Style TargetType="Slider">
+            <Setter Property="Minimum" Value="-10"/>
+            <Setter Property="Maximum" Value="10"/>
+            <Setter Property="IsSnapToTickEnabled" Value="True"/>
+            <Setter Property="TickFrequency" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
     </Window.Resources>
     <Grid>
-        <Button Content="by VoidX" Margin="0,41,10,0" VerticalAlignment="Top" Click="Ad" HorizontalAlignment="Right" Width="60"/>
-        <Button Content="Open Spleeter output folder" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="175" Click="OpenSpleeterOutput"/>
-        <Label x:Name="folder" Content="Please open a 4- or 5-stem Spleeter output." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <GroupBox Header="Channel mapping" HorizontalAlignment="Left" Margin="10,0,0,35" Width="246" Height="160" VerticalAlignment="Bottom">
+        <Button Content="by VoidX" Margin="0,31,10,0" VerticalAlignment="Top" Click="Ad" HorizontalAlignment="Right" Width="60"/>
+        <Button Content="Open Spleeter output folder" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="175" Click="OpenSpleeterOutput"/>
+        <TextBlock x:Name="folder" Text="Please open a 4- or 5-stem Spleeter output." Margin="10,10,0,0"/>
+        <GroupBox Header="Channel mapping" Margin="10,64,44,0" Height="160" VerticalAlignment="Top">
             <Grid>
                 <Label Content="Vocals:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right"/>
-                <local:UpmixComboBox x:Name="vocals" HorizontalAlignment="Left" Margin="65,2,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="5">
-                    <local:UpmixComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <ContentPresenter Content="{Binding Converter={StaticResource UpmixConverter}}"/>
-                        </DataTemplate>
-                    </local:UpmixComboBox.ItemTemplate>
-                </local:UpmixComboBox>
-                <CheckBox x:Name="vocalsLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,6,-33,0"/>
+                <local:UpmixComboBox x:Name="vocals" Margin="65,2,0,0" SelectedIndex="5"/>
+                <CheckBox x:Name="vocalsLFE" Content="LFE" Margin="190,6,0,0"/>
+                <Slider x:Name="vocalsGain" Margin="233,4,0,0" ValueChanged="VocalsGainChanged"/>
+                <TextBlock x:Name="vocalsGainDisplay" Margin="338,5,0,0" Text="0 dB"/>
+
                 <Label Content="Bass:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,27,0,0"/>
-                <local:UpmixComboBox x:Name="bass" HorizontalAlignment="Left" Margin="65,29,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="4">
-                    <local:UpmixComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <ContentPresenter Content="{Binding Converter={StaticResource UpmixConverter}}"/>
-                        </DataTemplate>
-                    </local:UpmixComboBox.ItemTemplate>
-                </local:UpmixComboBox>
-                <CheckBox x:Name="bassLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,33,0,0" IsChecked="True"/>
+                <local:UpmixComboBox x:Name="bass" Margin="65,29,0,0" SelectedIndex="4"/>
+                <CheckBox x:Name="bassLFE" Content="LFE" Margin="190,33,0,0" IsChecked="True"/>
+                <Slider x:Name="bassGain" Margin="233,31,0,0" ValueChanged="BassGainChanged"/>
+                <TextBlock x:Name="bassGainDisplay" Margin="338,32,0,0" Text="0 dB"/>
+
                 <Label Content="Drums:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,54,0,0"/>
-                <local:UpmixComboBox x:Name="drums" HorizontalAlignment="Left" Margin="65,56,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="3">
-                    <local:UpmixComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <ContentPresenter Content="{Binding Converter={StaticResource UpmixConverter}}"/>
-                        </DataTemplate>
-                    </local:UpmixComboBox.ItemTemplate>
-                </local:UpmixComboBox>
-                <CheckBox x:Name="drumsLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,60,0,0" IsChecked="True"/>
+                <local:UpmixComboBox x:Name="drums" Margin="65,56,0,0" SelectedIndex="3"/>
+                <CheckBox x:Name="drumsLFE" Content="LFE" Margin="190,60,0,0" IsChecked="True"/>
+                <Slider x:Name="drumsGain" Margin="233,58,0,0" ValueChanged="DrumsGainChanged"/>
+                <TextBlock x:Name="drumsGainDisplay" Margin="338,59,0,0" Text="0 dB"/>
+
                 <Label Content="Piano:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,81,0,0"/>
-                <local:UpmixComboBox x:Name="piano" HorizontalAlignment="Left" Margin="65,83,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="2">
-                    <local:UpmixComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <ContentPresenter Content="{Binding Converter={StaticResource UpmixConverter}}"/>
-                        </DataTemplate>
-                    </local:UpmixComboBox.ItemTemplate>
-                </local:UpmixComboBox>
-                <CheckBox x:Name="pianoLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,87,0,0"/>
+                <local:UpmixComboBox x:Name="piano" Margin="65,83,0,0" SelectedIndex="2"/>
+                <CheckBox x:Name="pianoLFE" Content="LFE" Margin="190,87,0,0"/>
+                <Slider x:Name="pianoGain" Margin="233,85,0,0" ValueChanged="PianoGainChanged"/>
+                <TextBlock x:Name="pianoGainDisplay" Margin="338,86,0,0" Text="0 dB"/>
+
                 <Label Content="Other:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" HorizontalContentAlignment="Right" Margin="0,108,0,0"/>
-                <local:UpmixComboBox x:Name="other" HorizontalAlignment="Left" Margin="65,110,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="7">
-                    <local:UpmixComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <ContentPresenter Content="{Binding Converter={StaticResource UpmixConverter}}"/>
-                        </DataTemplate>
-                    </local:UpmixComboBox.ItemTemplate>
-                </local:UpmixComboBox>
-                <CheckBox x:Name="otherLFE" Content="LFE" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,114,0,0"/>
+                <local:UpmixComboBox x:Name="other" Margin="65,110,0,0" SelectedIndex="7"/>
+                <CheckBox x:Name="otherLFE" Content="LFE" Margin="190,114,0,0"/>
+                <Slider x:Name="otherGain" Margin="233,112,0,0" ValueChanged="OtherGainChanged"/>
+                <TextBlock x:Name="otherGainDisplay" Margin="338,113,0,0" Text="0 dB"/>
             </Grid>
         </GroupBox>
-        <Button Content="Reset" Margin="0,0,20,176" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="50" Click="Reset"/>
+        <Button Content="Reset" Margin="0,64,20,0" HorizontalAlignment="Right" Width="50" Click="Reset" Height="20" VerticalAlignment="Top"/>
         <Button x:Name="button" Content="Process" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Click="Process" Height="20" VerticalAlignment="Bottom"/>
         <ProgressBar x:Name="progress" Margin="90,0,10,10" Maximum="1" Height="20" VerticalAlignment="Bottom"/>
         <Label x:Name="progressLabel" Margin="90,0,10,10" Padding="5,2,5,0" Height="20" VerticalAlignment="Bottom"/>
+        <GroupBox Header="Renderer" Margin="10,229,0,35" HorizontalAlignment="Left" Width="300">
+            <Grid>
+                <RadioButton x:Name="multichannel" IsChecked="True" Content="Multichannel" Margin="10,5,0,0"/>
+                <RadioButton x:Name="recombiner" Content="Recombiner (stereo)" Margin="133,5,0,0"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

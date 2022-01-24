@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Cavern.Format;
+using Cavern.QuickEQ;
+using Cavern.Utilities;
+using System;
 using System.IO;
 using System.Windows;
 
-using Cavern.Format;
-using Cavern.QuickEQ;
-
-using CheckBox = System.Windows.Controls.CheckBox;
 using MessageBox = System.Windows.MessageBox;
 using Window = Cavern.QuickEQ.Window;
 
 namespace SpleeterToMultichannel {
     public class Renderer {
-        const long readBlockSize = 1 << 14;
-        const long renderBlockSize = 1 << 18;
+        internal const long ioBlockSize = 1 << 18;
 
         readonly MainWindow window;
-        readonly TaskEngine engine;
+        protected readonly TaskEngine engine;
+
+        public int RenderChannels { get; protected set; } = 8;
 
         public Renderer(MainWindow window, TaskEngine engine) {
             this.window = window;
@@ -28,42 +28,17 @@ namespace SpleeterToMultichannel {
             MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        float[] Read(RIFFWaveReader reader, string instrument, double progressGap) {
-            double progressSrc = engine.Progress;
-            float[] read = new float[reader.Length * reader.ChannelCount];
-            for (long sample = 0; sample < read.LongLength;) {
-                double progress = sample / (double)read.LongLength;
-                reader.ReadBlock(read, sample, Math.Min(sample += readBlockSize, read.LongLength));
-                engine.UpdateProgressBar(progressSrc + progressGap * progress);
-                engine.UpdateStatusLazy(string.Format("Reading {0} ({1})...", instrument, progress.ToString("0.00%")));
-            }
-            engine.UpdateProgressBar(progressSrc + progressGap);
-            engine.UpdateStatus(string.Format("Reading {0} (100%)...", instrument));
-            reader.Dispose();
-            return read;
-        }
-
-        OutputMatrix GetMatrix(UpmixComboBox instrument) {
-            UpmixOption ret = UpmixOption.Full;
-            instrument.Dispatcher.Invoke(() => ret = (UpmixOption)instrument.SelectedItem);
-            return new OutputMatrix(ret);
-        }
-
-        bool GetLFE(CheckBox instrument) {
-            bool check = false;
-            instrument.Dispatcher.Invoke(() => check = instrument.IsChecked.Value);
-            return check;
-        }
-
-        void RenderUpdateTask(TaskEngine task, string instrument, double progress, double progressSrc, double progressGap) {
+        protected static void RenderUpdateTask(TaskEngine task, string instrument, double progress,
+            double progressSrc, double progressGap) {
             task.UpdateProgressBar(progressSrc + progressGap * progress);
             task.UpdateStatusLazy(string.Format("Mixing {0} ({1})...", instrument, progress.ToString("0.00%")));
         }
 
-        void Render(float[] source, float[] target, OutputMatrix matrix, bool LFE, string instrument, double progressGap) {
+        public virtual void Render(float[] source, float[] target, Instrument instrument, double progressGap) {
             double progressSrc = engine.Progress;
             long totalSamplesWritten = 0;
-            for (long channel = 0; channel < 8; ++channel) {
+            OutputMatrix matrix = instrument.Matrix;
+            for (long channel = 0; channel < RenderChannels; ++channel) {
                 if (channel != 3) {
                     if (matrix.LeftInput[channel] == 0 && matrix.RightInput[channel] == 0) {
                         totalSamplesWritten += target.Length >> 3;
@@ -72,28 +47,32 @@ namespace SpleeterToMultichannel {
                     if (matrix.LeftInput[channel] == 0) {
                         for (long sample = 1; sample < source.LongLength; sample += 2) {
                             target[(sample >> 1 << 3) + channel] += source[sample] * matrix.RightInput[channel];
-                            if (++totalSamplesWritten % renderBlockSize == 0)
-                                RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                            if (++totalSamplesWritten % ioBlockSize == 0)
+                                RenderUpdateTask(engine, instrument.Name, totalSamplesWritten / (double)target.LongLength,
+                                    progressSrc, progressGap);
                         }
                     } else if (matrix.RightInput[channel] == 0) {
                         for (long sample = 0; sample < source.LongLength; sample += 2) {
                             target[(sample >> 1 << 3) + channel] += source[sample] * matrix.LeftInput[channel];
-                            if (++totalSamplesWritten % renderBlockSize == 0)
-                                RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                            if (++totalSamplesWritten % ioBlockSize == 0)
+                                RenderUpdateTask(engine, instrument.Name, totalSamplesWritten / (double)target.LongLength,
+                                    progressSrc, progressGap);
                         }
                     } else {
                         for (long sample = 0; sample < source.LongLength; sample += 2) {
                             target[(sample >> 1 << 3) + channel] +=
                                 source[sample] * matrix.LeftInput[channel] + source[sample + 1] * matrix.RightInput[channel];
-                            if (++totalSamplesWritten % renderBlockSize == 0)
-                                RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                            if (++totalSamplesWritten % ioBlockSize == 0)
+                                RenderUpdateTask(engine, instrument.Name, totalSamplesWritten / (double)target.LongLength,
+                                    progressSrc, progressGap);
                         }
                     }
-                } else if (LFE) {
+                } else if (instrument.LFE) {
                     for (long sample = 0; sample < source.LongLength; ++sample) {
                         target[(sample >> 1 << 3) + 3] += OutputMatrix.out2 * .31622776601f /* -10 dB */ * source[sample];
-                        if (++totalSamplesWritten % renderBlockSize == 0)
-                            RenderUpdateTask(engine, instrument, totalSamplesWritten / (double)target.LongLength, progressSrc, progressGap);
+                        if (++totalSamplesWritten % ioBlockSize == 0)
+                            RenderUpdateTask(engine, instrument.Name, totalSamplesWritten / (double)target.LongLength,
+                                progressSrc, progressGap);
                     }
                 }
             }
@@ -107,92 +86,58 @@ namespace SpleeterToMultichannel {
             engine.UpdateStatus("Reading headers...");
             if (!spleet.IsValid()) // Deleted since the scheduler was started
                 return;
-            RIFFWaveReader bassReader = null, drumsReader = null, otherReader = null, pianoReader = null, vocalsReader = null;
             try {
-                bassReader = new RIFFWaveReader(new BinaryReader(File.Open(spleet.BassPath, FileMode.Open)));
-                bassReader.ReadHeader();
-                drumsReader = new RIFFWaveReader(new BinaryReader(File.Open(spleet.DrumsPath, FileMode.Open)));
-                drumsReader.ReadHeader();
-                otherReader = new RIFFWaveReader(new BinaryReader(File.Open(spleet.OtherPath, FileMode.Open)));
-                otherReader.ReadHeader();
-                vocalsReader = new RIFFWaveReader(new BinaryReader(File.Open(spleet.VocalsPath, FileMode.Open)));
-                vocalsReader.ReadHeader();
-                if (File.Exists(spleet.PianoPath)) {
-                    pianoReader = new RIFFWaveReader(new BinaryReader(File.Open(spleet.PianoPath, FileMode.Open)));
-                    pianoReader.ReadHeader();
-                }
+                spleet.Bass.Open();
+                spleet.Drums.Open();
+                spleet.Other.Open();
+                spleet.Piano.Open();
+                spleet.Vocals.Open();
             } catch (IOException ex) {
-                if (bassReader != null)
-                    bassReader.Dispose();
-                if (drumsReader != null)
-                    drumsReader.Dispose();
-                if (pianoReader != null)
-                    pianoReader.Dispose();
-                if (otherReader != null)
-                    otherReader.Dispose();
-                if (vocalsReader != null)
-                    vocalsReader.Dispose();
+                spleet.Dispose();
                 ProcessError(ex.Message);
                 return;
             }
 
-            double progressMul = 1.0 / of, progressStep = (pianoReader == null ? .1 : .08) * progressMul;
+            double progressMul = 1.0 / of, progressStep = (spleet.Piano.IsValid ? .08 : .1) * progressMul;
             double readStep = progressStep * .1, mixStep = progressStep * 1.9;
-            float[] finalMix = new float[bassReader.Length * 8];
-            float[] source = Read(bassReader, "bass", readStep);
-            Render(source, finalMix, GetMatrix(window.bass), GetLFE(window.bassLFE), "bass", mixStep);
-            bassReader.Dispose();
-            source = Read(drumsReader, "drums", readStep);
-            Render(source, finalMix, GetMatrix(window.drums), GetLFE(window.drumsLFE), "drums", mixStep);
-            drumsReader.Dispose();
-            if (pianoReader != null) {
-                source = Read(pianoReader, "piano", readStep);
-                Render(source, finalMix, GetMatrix(window.piano), GetLFE(window.pianoLFE), "piano", mixStep);
-                pianoReader.Dispose();
-            }
-            source = Read(otherReader, "other", readStep);
-            Render(source, finalMix, GetMatrix(window.other), GetLFE(window.otherLFE), "other", mixStep);
-            otherReader.Dispose();
-            source = Read(vocalsReader, "vocals", readStep);
-            Render(source, finalMix, GetMatrix(window.vocals), GetLFE(window.vocalsLFE), "vocals", mixStep);
-            vocalsReader.Dispose();
+            float[] finalMix = new float[spleet.Length * RenderChannels];
+            spleet.RenderTrack(spleet.Bass, this, finalMix, readStep, mixStep);
+            spleet.RenderTrack(spleet.Drums, this, finalMix, readStep, mixStep);
+            if (spleet.Piano.IsValid)
+                spleet.RenderTrack(spleet.Piano, this, finalMix, readStep, mixStep);
+            spleet.RenderTrack(spleet.Other, this, finalMix, readStep, mixStep);
+            spleet.RenderTrack(spleet.Vocals, this, finalMix, readStep, mixStep);
 
             engine.UpdateProgressBar(.8 * progressMul + progressStart);
             engine.UpdateStatus("Checking peaks...");
-            const int windowSize = 25 * 8;
+            int windowSize = 25 * RenderChannels;
             for (int i = 0; i < windowSize; ++i)
                 finalMix[i] = finalMix[finalMix.Length - 1 - i] = 0;
-            Windowing.ApplyWindow(finalMix, 8, Window.Sine, Window.Disabled, windowSize, 2 * windowSize, 0);
-            Windowing.ApplyWindow(finalMix, 8, Window.Disabled, Window.Sine, 0, finalMix.Length - 2 * windowSize, finalMix.Length - windowSize);
-            float peak = 1;
-            for (long i = 0; i < finalMix.LongLength; ++i)
-                if (peak < Math.Abs(finalMix[i]))
-                    peak = Math.Abs(finalMix[i]);
+            Windowing.ApplyWindow(finalMix, RenderChannels, Window.Sine, Window.Disabled, windowSize, 2 * windowSize, 0);
+            Windowing.ApplyWindow(finalMix, RenderChannels, Window.Disabled, Window.Sine, 0,
+                finalMix.Length - 2 * windowSize, finalMix.Length - windowSize);
+            float peak = WaveformUtils.GetPeak(finalMix);
 
             if (peak != 1) {
                 engine.UpdateProgressBar(.85 * progressMul + progressStart);
                 engine.UpdateStatus("Normalizing...");
-                float mul = 1 / peak;
-                for (long i = 0; i < finalMix.LongLength; ++i)
-                    finalMix[i] *= mul;
+                WaveformUtils.Gain(finalMix, 1 / peak);
             }
 
             engine.UpdateProgressBar(.9 * progressMul + progressStart);
             engine.UpdateStatus("Exporting to render.wav (0.00%)...");
-            using (RIFFWaveWriter writer = new RIFFWaveWriter(new BinaryWriter(File.Open(spleet.RenderPath, FileMode.Create)),
-                8, bassReader.Length, bassReader.SampleRate, BitDepth.Int16)) {
+            using (RIFFWaveWriter writer = new(spleet.RenderPath, RenderChannels, spleet.Length, spleet.SampleRate,
+                BitDepth.Int16)) {
                 writer.WriteHeader();
                 for (long sample = 0; sample < finalMix.LongLength;) {
                     double progress = sample / (double)finalMix.LongLength;
-                    writer.WriteBlock(finalMix, sample, Math.Min(sample += readBlockSize, finalMix.LongLength));
+                    writer.WriteBlock(finalMix, sample, Math.Min(sample += ioBlockSize, finalMix.LongLength));
                     engine.UpdateProgressBar((.9 + .1 * progress) * progressMul + progressStart);
                     engine.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
                 }
             }
-#pragma warning disable IDE0059 // "Unnecessary assignment of a value" - it is necessary for GC
-            source = null;
+
             finalMix = null;
-#pragma warning restore IDE0059
             GC.Collect();
 
             engine.UpdateProgressBar(progressMul + progressStart);

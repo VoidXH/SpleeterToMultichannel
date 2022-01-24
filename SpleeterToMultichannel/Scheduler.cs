@@ -5,17 +5,20 @@ namespace SpleeterToMultichannel {
     public class Scheduler {
         List<Spleet> Sources { get; } = new List<Spleet>();
 
+        readonly Renderer renderer;
         readonly MainWindow window;
         readonly TaskEngine engine;
         TaskGroup group;
-        Renderer renderer;
 
         void RunNext(TaskEngine engine, int task) => engine.Run(() => renderer.Process(Sources[task], task, Sources.Count), group);
 
         public Scheduler(MainWindow window, TaskEngine engine) {
             this.window = window;
             this.engine = engine;
-            renderer = new Renderer(window, engine);
+            if (window.multichannel.IsChecked.Value) // TODO: save decision
+                renderer = new Renderer(window, engine);
+            else
+                renderer = new Recombiner(window, engine);
         }
 
         public void Run(string path) {
@@ -27,14 +30,14 @@ namespace SpleeterToMultichannel {
                 renderer.ProcessError("Another process is already running.");
                 return;
             }
-            Spleet root = new Spleet(path);
+            Spleet root = new(path, window, engine);
             Sources.Clear();
             if (root.IsValid())
                 Sources.Add(root);
             else {
-                List<string> crawl = new List<string>(Directory.GetDirectories(path));
+                List<string> crawl = new(Directory.GetDirectories(path));
                 for (int i = 0; i < crawl.Count; ++i) {
-                    Spleet source = new Spleet(crawl[i]);
+                    Spleet source = new(crawl[i], window, engine);
                     if (source.IsValid())
                         Sources.Add(source);
                     else
