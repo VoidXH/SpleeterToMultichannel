@@ -37,14 +37,19 @@ namespace SpleeterToMultichannel {
             else {
                 vocals.SelectedIndex = Settings.Default.Vocals;
                 vocalsLFE.IsChecked = Settings.Default.VocalsLFE;
+                vocalsGain.Value = Settings.Default.VocalsGain;
                 bass.SelectedIndex = Settings.Default.Bass;
                 bassLFE.IsChecked = Settings.Default.BassLFE;
+                bassGain.Value = Settings.Default.VocalsGain;
                 drums.SelectedIndex = Settings.Default.Drums;
                 drumsLFE.IsChecked = Settings.Default.DrumsLFE;
+                drumsGain.Value = Settings.Default.DrumsGain;
                 piano.SelectedIndex = Settings.Default.Piano;
                 pianoLFE.IsChecked = Settings.Default.PianoLFE;
+                pianoGain.Value = Settings.Default.PianoGain;
                 other.SelectedIndex = Settings.Default.Other;
                 otherLFE.IsChecked = Settings.Default.OtherLFE;
+                otherGain.Value = Settings.Default.OtherGain;
             }
         }
 
@@ -52,14 +57,19 @@ namespace SpleeterToMultichannel {
             Settings.Default.Path = browser.SelectedPath;
             Settings.Default.Vocals = vocals.SelectedIndex;
             Settings.Default.VocalsLFE = vocalsLFE.IsChecked.Value;
+            Settings.Default.VocalsGain = (short)vocalsGain.Value;
             Settings.Default.Bass = bass.SelectedIndex;
             Settings.Default.BassLFE = bassLFE.IsChecked.Value;
+            Settings.Default.BassGain = (short)bassGain.Value;
             Settings.Default.Drums = drums.SelectedIndex;
             Settings.Default.DrumsLFE = drumsLFE.IsChecked.Value;
+            Settings.Default.DrumsGain = (short)drumsGain.Value;
             Settings.Default.Piano = piano.SelectedIndex;
             Settings.Default.PianoLFE = pianoLFE.IsChecked.Value;
+            Settings.Default.PianoGain = (short)pianoGain.Value;
             Settings.Default.Other = other.SelectedIndex;
             Settings.Default.OtherLFE = otherLFE.IsChecked.Value;
+            Settings.Default.OtherGain = (short)otherGain.Value;
             Settings.Default.Save();
             base.OnClosed(e);
         }
@@ -98,14 +108,19 @@ namespace SpleeterToMultichannel {
         void Reset(object sender, RoutedEventArgs e) {
             vocals.SelectedIndex = (int)UpmixOption.MidSideScreen;
             vocalsLFE.IsChecked = false;
+            vocalsGain.Value = 0;
             bass.SelectedIndex = (int)UpmixOption.QuadroRear;
             bassLFE.IsChecked = true;
+            bassGain.Value = 0;
             drums.SelectedIndex = (int)UpmixOption.QuadroSide;
             drumsLFE.IsChecked = true;
+            drumsGain.Value = 0;
             piano.SelectedIndex = (int)UpmixOption.Screen;
             pianoLFE.IsChecked = false;
+            pianoGain.Value = 0;
             other.SelectedIndex = (int)UpmixOption.Full;
             otherLFE.IsChecked = false;
+            otherGain.Value = 0;
         }
 
         void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");

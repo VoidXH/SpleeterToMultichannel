@@ -154,5 +154,65 @@ namespace SpleeterToMultichannel.Properties {
                 this["OtherLFE"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short VocalsGain {
+            get {
+                return ((short)(this["VocalsGain"]));
+            }
+            set {
+                this["VocalsGain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short BassGain {
+            get {
+                return ((short)(this["BassGain"]));
+            }
+            set {
+                this["BassGain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short DrumsGain {
+            get {
+                return ((short)(this["DrumsGain"]));
+            }
+            set {
+                this["DrumsGain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short PianoGain {
+            get {
+                return ((short)(this["PianoGain"]));
+            }
+            set {
+                this["PianoGain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short OtherGain {
+            get {
+                return ((short)(this["OtherGain"]));
+            }
+            set {
+                this["OtherGain"] = value;
+            }
+        }
     }
 }
