@@ -81,6 +81,11 @@
             An EQ curve with any amount of custom bands.
             </summary>
         </member>
+        <member name="F:Cavern.QuickEQ.EQCurves.CurveFunction.Smoother">
+            <summary>
+            Smooths out inter-channel differences while keeping the system's sound character.
+            </summary>
+        </member>
         <member name="T:Cavern.QuickEQ.EQCurves.Custom">
             <summary>
             An EQ curve with any amount of custom bands.
@@ -189,6 +194,11 @@
             Equalizer curve processing.
             </summary>
         </member>
+        <member name="F:Cavern.QuickEQ.EQCurves.EQCurve.constructorException">
+            <summary>
+            Returned when an EQ Curve can't be created by a generic switch.
+            </summary>
+        </member>
         <member name="P:Cavern.QuickEQ.EQCurves.EQCurve.Item(System.Double)">
             <summary>
             Get the curve's gain in decibels at a given frequency.
@@ -217,7 +227,8 @@
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurveOptimized(System.Int32,System.Int32,System.Single)">
             <summary>
-            If you have overridden <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32)"/>, but not <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32,System.Single)"/>,
+            If you have overridden <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32)"/>,
+            but not <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32,System.Single)"/>,
             the latter should return this for increased performance.
             </summary>
         </member>
@@ -237,7 +248,8 @@
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
+            <remarks>For uses where gain is not needed, use
+            <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurveOptimized(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
@@ -420,6 +432,21 @@
             <param name="gain">Curve reference level</param>
             <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
         </member>
+        <member name="T:Cavern.QuickEQ.EQCurves.Smoother">
+            <summary>
+            An EQ curve that smooths out inter-channel differences while keeping the system's sound character.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.EQCurves.Smoother.#ctor(System.Single[][],System.Int32)">
+            <summary>
+            Create a custom EQ curve from a source stored as an Equalier.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.EQCurves.Smoother.MakeCurve(System.Single[][],System.Int32)">
+            <summary>
+            Create a target EQ from raw frequency responses, by averaging and smoothing the channels.
+            </summary>
+        </member>
         <member name="T:Cavern.QuickEQ.EQCurves.XCurve">
             <summary>
             Cinema standard EQ curve.
@@ -526,10 +553,11 @@
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.CorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single,System.Double,System.Single)">
             <summary>
-            Generate an equalizer setting to flatten the processed response of <see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
+            Generate an equalizer setting to flatten the processed response of
+            <see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
             </summary>
-            <param name="graph">Graph to equalize, a pre-applied smoothing (<see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is
-            strongly recommended</param>
+            <param name="graph">Graph to equalize, a pre-applied smoothing
+            (<see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
             <param name="startFreq">Frequency at the beginning of the graph</param>
             <param name="endFreq">Frequency at the end of the graph</param>
             <param name="targetCurve">Match the frequency response to this EQ curve</param>
@@ -542,8 +570,8 @@
             Generate a precise equalizer setting to flatten the processed response of
             <see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
             </summary>
-            <param name="graph">Graph to equalize, a pre-applied smoothing (<see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is
-            strongly recommended</param>
+            <param name="graph">Graph to equalize, a pre-applied smoothing
+            (<see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
             <param name="startFreq">Frequency at the beginning of the graph</param>
             <param name="endFreq">Frequency at the end of the graph</param>
             <param name="targetCurve">Match the frequency response to this EQ curve</param>
@@ -584,6 +612,11 @@
             <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
             <param name="sampleRate">Target system sample rate</param>
             <param name="smoothing">Smooth out band spikes</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromGraph(System.Single[],System.Single,System.Single)">
+            <summary>
+            Parse an Equalizer from a drawn graph.
+            </summary>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromCalibration(System.Single[])">
             <summary>
@@ -956,7 +989,7 @@
         </member>
         <member name="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(Cavern.Utilities.Complex[],System.Double,System.Double,System.Int32,System.Int32)">
             <summary>
-            Convert a response to logarithmically scaled cut frequency range.
+            Convert a response to logarithmically scaled frequency range.
             </summary>
             <param name="response">Source response</param>
             <param name="startFreq">Frequency at the first position of the output</param>
@@ -973,6 +1006,13 @@
             <param name="endFreq">Frequency at the last position of the output</param>
             <param name="sampleRate">Sample rate of the measurement that generated the curve</param>
             <param name="resultSize">Length of the resulting array</param>
+            <remarks>Requires a response that is half the FFT size (only extends to <paramref name="sampleRate"/> Hz),
+            for example the result of <see cref="M:Cavern.Utilities.Measurements.GetSpectrum(Cavern.Utilities.Complex[])"/>.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.GraphUtils.Normalize(System.Single[])">
+            <summary>
+            Moves a graph's average value to 0.
+            </summary>
         </member>
         <member name="M:Cavern.QuickEQ.GraphUtils.Scale(System.Single[],System.Int32)">
             <summary>
@@ -996,7 +1036,8 @@
         </member>
         <member name="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single,System.Single)">
             <summary>
-            Apply variable smoothing (in octaves) on a graph drawn with <see cref="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
+            Apply variable smoothing (in octaves) on a graph drawn with
+            <see cref="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
             </summary>
         </member>
         <member name="T:Cavern.QuickEQ.SignalGeneration.NoiseGenerator">

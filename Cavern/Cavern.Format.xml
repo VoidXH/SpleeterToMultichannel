@@ -69,45 +69,1784 @@
             32-bit floating point.
             </summary>
         </member>
-        <member name="T:Cavern.Format.LimitlessAudioFormatUtils">
+        <member name="T:Cavern.Format.Common.Codec">
+            <summary>
+            Codecs detected (not supported) by Cavern.Format.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.Unknown">
+            <summary>
+            Undetected codec.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.AVC">
+            <summary>
+            Advanced Video Coding aka H.264, video.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.HEVC">
+            <summary>
+            High Efficiency Video Coding aka H.265, video.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.AC3">
+            <summary>
+            AC-3 (Dolby Digital), audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.DTS">
+            <summary>
+            DTS, could be any DTS format, audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.DTS_HD">
+            <summary>
+            DTS-HD lossless, could be DTS:X, audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.EnhancedAC3">
+            <summary>
+            Enhanced AC-3 (Dolby Digital Plus), audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.Opus">
+            <summary>
+            Xiph Opus, audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.PCM_Float">
+            <summary>
+            Pulse Code Modulation, IEEE floating point, audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.PCM_LE">
+            <summary>
+            Pulse Code Modulation, little-endian integer, audio.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Codec.TrueHD">
+            <summary>
+            Dolby TrueHD (Meridian Lossless Packaging), audio.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.CodecExtensions">
+            <summary>
+            Extra functions for codecs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.CodecExtensions.audioCodecs">
+            <summary>
+            List of known (not neccessarily supported) audio codecs.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.CodecExtensions.IsAudio(Cavern.Format.Common.Codec)">
+            <summary>
+            Checks if a codec is used for audio only.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.KeyLengthValue">
+            <summary>
+            A tag and its data encoded in the format of a key, a length, and a value, most notably used in the EBML format.
+            </summary>
+            <remarks><see cref="T:System.IO.BinaryReader"/> is not cached. This is an intentional memory optimization and has to be
+            treated carefully.</remarks>
+        </member>
+        <member name="P:Cavern.Format.Common.KeyLengthValue.Tag">
+            <summary>
+            Key of the entry.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.KeyLengthValue.Length">
+            <summary>
+            Length of the entry.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.KeyLengthValue.position">
+            <summary>
+            Position in the file where the raw data of this entry starts.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.KeyLengthValue.#ctor(System.IO.Stream)">
+            <summary>
+            Read the metadata of a KLV.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.KeyLengthValue.GetBytes(System.IO.Stream)">
+            <summary>
+            Read the raw bytes of the value.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.KeyLengthValue.GetFloatBE(System.IO.Stream)">
+            <summary>
+            Read the value as a big-endian float.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.KeyLengthValue.GetUTF8(System.IO.Stream)">
+            <summary>
+            Read the value as an UTF-8 string.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.KeyLengthValue.GetValue(System.IO.Stream)">
+            <summary>
+            Read the value as <see cref="T:Cavern.Format.Common.VarInt"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.KeyLengthValue.Position(System.IO.Stream)">
+            <summary>
+            Move a <see cref="T:System.IO.BinaryReader"/>'s position to the start of the value.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.StreamExtensions">
+            <summary>
+            Stream reading extension functions.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.StreamExtensions.ReadBytes(System.IO.Stream,System.Int32)">
+            <summary>
+            Read a number of bytes from the stream.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.StreamExtensions.ReadInt16BE(System.IO.Stream)">
+            <summary>
+            Read a big endian 16-bit signed integer from a stream.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.Track">
+            <summary>
+            Metadata and continuous reading handler of a track.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.Track.ID">
+            <summary>
+            Identifier of the track.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.Track.Name">
+            <summary>
+            Name of the track.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.Track.Language">
+            <summary>
+            Language code of the track.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.Track.Format">
+            <summary>
+            Codec of the track.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.Track.Extra">
+            <summary>
+            Additional metadata depending on the content type.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.Track.Source">
+            <summary>
+            The container containing this track.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Common.Track.trackNumber">
+            <summary>
+            The position of the track in the container's list of tracks.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.Track.#ctor(Cavern.Format.Container.ContainerReader,System.Int32)">
+            <summary>
+            Create a track to be placed in the list of a container's tracks.
+            </summary>
+            <param name="source">The container containing this track.</param>
+            <param name="trackNumber">The position of the track in the container's list of tracks.</param>
+            <remarks>The <paramref name="trackNumber"/> required for reading from the container.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Common.Track.ReadNextBlock">
+            <summary>
+            Continue reading the track.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.TrackExtensions.GetIndexByID(Cavern.Format.Common.Track[],System.Int64)">
+            <summary>
+            Find the first track with the given ID in the tracklist. If found, the index is returned, -1 otherwise.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.TrackExtra">
+            <summary>
+            Extra metadata of a track.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.TrackExtraAudio">
+            <summary>
+            Audio track metadata.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.TrackExtraAudio.SampleRate">
+            <summary>
+            Sampling frequency of the track in Hertz.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.TrackExtraAudio.ChannelCount">
+            <summary>
+            Number of discrete channels for channel-based (down)mixes.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Common.TrackExtraAudio.Bits">
+            <summary>
+            Audio sample size in bits.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.VarInt">
+            <summary>
+            Variable-size integer (VINT).
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.VarInt.ReadTag(System.IO.Stream)">
+            <summary>
+            Reads the next VINT from a stream, does not cut the leading 1.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.VarInt.ReadValue(System.IO.Stream)">
+            <summary>
+            Reads the next VINT from a stream, cuts the leading 1, reads the correct value.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.VarInt.ReadSignedValue(System.IO.Stream)">
+            <summary>
+            Reads the next signed VINT from a stream, cuts the leading 1, reads the correct value.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.VarInt.ReadValue(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a fixed length VINT (the actual value field from a <see cref="T:Cavern.Format.Common.KeyLengthValue"/>).
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.CodecNotFoundException">
+            <summary>
+            Tells if no stream was present in the container with the selected codec.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.CodecNotFoundException.#ctor(Cavern.Format.Common.Codec)">
+            <summary>
+            Tells if no stream was present in the container with the selected codec.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.CorruptionException">
+            <summary>
+            Tells if the decoded stream is corrupted.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.CorruptionException.#ctor(System.String)">
+            <summary>
+            Tells if the decoded stream is corrupted.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.DecoderException">
+            <summary>
+            Tells if the decoder ran into a predefined error code that is found in the decoder's documentation.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.DecoderException.#ctor(System.Int32)">
+            <summary>
+            Tells if the decoder ran into a predefined error code that is found in the decoder's documentation.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.RealtimeLengthException">
+            <summary>
+            Tells that a decoder which can process an infinite stream is not able to return content length.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.RealtimeLengthException.#ctor">
+            <summary>
+            Tells that a decoder which can process an infinite stream is not able to return content length.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.ReservedValueException">
+            <summary>
+            Tells if a decoded value is reserved. This could mark a transport error.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.ReservedValueException.#ctor(System.String)">
+            <summary>
+            Tells if a decoded value is reserved. This could mark a transport error.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.StreamingException">
+            <summary>
+            Tells is a feature is only available when reading from a raw file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.StreamingException.#ctor">
+            <summary>
+            Tells is a feature is only available when reading from a raw file.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.SyncException">
+            <summary>
+            Tells if a sync word check has failed.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.SyncException.#ctor">
+            <summary>
+            Tells if a sync word check has failed.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.UnsupportedCodecException">
+            <summary>
+            Tells if a codec is unsupported.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.UnsupportedCodecException.#ctor(System.Boolean,Cavern.Format.Common.Codec)">
+            <summary>
+            Tells if a codec is unsupported.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.UnsupportedFeatureException">
+            <summary>
+            Tells if a required feature in the codec is unsupported.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.UnsupportedFeatureException.#ctor(System.String)">
+            <summary>
+            Tells if a required feature in the codec is unsupported.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Common.UnsupportedFormatException">
+            <summary>
+            Tells if no supported file format was detected.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Common.UnsupportedFormatException.#ctor">
+            <summary>
+            Tells if no supported file format was detected.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Consts.FormatConsts">
+            <summary>
+            Constants needed across the entire library.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Consts.FormatConsts.blockSize">
+            <summary>
+            Only read 10 MB blocks at max to optimize I/O performance.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Consts.LimitlessAudioFormat">
             <summary>
             Used for both <see cref="T:Cavern.Format.LimitlessAudioFormatReader"/> and <see cref="T:Cavern.Format.LimitlessAudioFormatWriter"/>.
             </summary>
         </member>
-        <member name="F:Cavern.Format.LimitlessAudioFormatUtils.limitless">
+        <member name="F:Cavern.Format.Consts.LimitlessAudioFormat.syncWord">
+            <summary>
+            First half of the LIMITLESS word as a single int for quick format detection.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Consts.LimitlessAudioFormat.limitless">
             <summary>
             Limitless Audio Format indicator starting bytes.
             </summary>
         </member>
-        <member name="F:Cavern.Format.LimitlessAudioFormatUtils.head">
+        <member name="F:Cavern.Format.Consts.LimitlessAudioFormat.head">
             <summary>
             Header marker bytes.
             </summary>
         </member>
-        <member name="T:Cavern.Format.RIFFWaveUtils">
+        <member name="T:Cavern.Format.Consts.RIFFWave">
             <summary>
             Used for both <see cref="T:Cavern.Format.RIFFWaveReader"/> and <see cref="T:Cavern.Format.RIFFWaveWriter"/>.
             </summary>
         </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.RIFF">
+        <member name="F:Cavern.Format.Consts.RIFFWave.syncWord1">
             <summary>
-            RIFF marker.
+            RIFF sync word, stream marker.
             </summary>
         </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.WAVE">
+        <member name="F:Cavern.Format.Consts.RIFFWave.syncWord2">
             <summary>
-            WAVE marker.
+            WAVE and fmt sync word, header marker.
             </summary>
         </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.fmt">
+        <member name="F:Cavern.Format.Consts.RIFFWave.syncWord3BE">
             <summary>
-            Format chunk marker.
+            Data header marker (big-endian).
             </summary>
         </member>
-        <member name="F:Cavern.Format.RIFFWaveUtils.data">
+        <member name="F:Cavern.Format.Consts.RIFFWave.syncWord3LE">
             <summary>
-            Data chunk marker.
+            Data header marker (little-endian).
             </summary>
+        </member>
+        <member name="F:Cavern.Format.Consts.RIFFWave.channelMask">
+            <summary>
+            Meaning of each bit in WAVEFORMATEXTENSIBLE's channel mask.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Container.Matroska.Block">
+            <summary>
+            One or multiple frames of a Matroska file's single track.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.keyframeFlag">
+            <summary>
+            Flag mask for <see cref="P:Cavern.Format.Container.Matroska.Block.IsKeyframe"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.invisibleFlag">
+            <summary>
+            Flag mask for <see cref="P:Cavern.Format.Container.Matroska.Block.IsInvisible"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.lacingFlags">
+            <summary>
+            Flag mask for <see cref="P:Cavern.Format.Container.Matroska.Block.LacingType"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.discardableFlag">
+            <summary>
+            Flag mask for <see cref="P:Cavern.Format.Container.Matroska.Block.IsDiscardable"/>.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Block.IsKeyframe">
+            <summary>
+            The frame itself doesn't reference any other frames and no frame after this can reference any frame before this.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Block.IsInvisible">
+            <summary>
+            The duration of this block is 0.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Block.LacingType">
+            <summary>
+            Used method of storing multiple frames in this block.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Block.IsDiscardable">
+            <summary>
+            This frame can be dropped on poor decoder performance.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Block.Track">
+            <summary>
+            Used <see cref="P:Cavern.Format.Container.Matroska.Block.Track"/> from a <see cref="T:Cavern.Format.Container.MatroskaReader"/>.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Block.TimeStamp">
+            <summary>
+            Timing relative to <see cref="P:Cavern.Format.Container.Matroska.Cluster.TimeStamp"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.flags">
+            <summary>
+            Bit mask of property flags.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.frameCount">
+            <summary>
+            Number of frames contained in this block.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.frameSizes">
+            <summary>
+            Length of each frame's raw data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.firstFrame">
+            <summary>
+            Position of the first byte of the first frame in the file.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Block.reader">
+            <summary>
+            Source stream of the block, which might be a <see cref="T:System.IO.MemoryStream"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Block.#ctor(System.IO.Stream,Cavern.Format.Container.Matroska.MatroskaTree)">
+            <summary>
+            Parse the metadata of a data block.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Block.GetData">
+            <summary>
+            Read all stream data from this block, without separating frames.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Block.GetFrames">
+            <summary>
+            Get the raw stream bytes for each frame contained in this block.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Block.ToString">
+            <summary>
+            Provides basic information about the block.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Container.Matroska.Cluster">
+            <summary>
+            Stream data block in a Matroska file.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Cluster.TimeStamp">
+            <summary>
+            Absolute timestamp of the cluster, expressed in Segment Ticks which is based on TimestampScale.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Cluster.source">
+            <summary>
+            Element to read the cluster from.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.Cluster.blocks">
+            <summary>
+            All blocks of the cluster, in order.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Cluster.#ctor(System.IO.Stream,Cavern.Format.Container.Matroska.MatroskaTree)">
+            <summary>
+            Parse metadata from a cluster.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Cluster.GetBlocks(System.IO.Stream)">
+            <summary>
+            All blocks of the cluster, in order.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Container.Matroska.Cue">
+            <summary>
+            Contains seeking info in a Matroska file.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Cue.Time">
+            <summary>
+            Scaled timestamp of the seek position.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Cue.Track">
+            <summary>
+            ID (not index) of the <see cref="P:Cavern.Format.Container.Matroska.Cue.Track"/> in <see cref="P:Cavern.Format.Container.ContainerReader.Tracks"/>.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.Matroska.Cue.Position">
+            <summary>
+            First byte of the cluster to read from.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Cue.#ctor(System.Int64,System.Int64,System.Int64)">
+            <summary>
+            Contains seeking info in a Matroska file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Cue.GetCues(Cavern.Format.Container.Matroska.MatroskaTree,System.IO.Stream)">
+            <summary>
+            Read the cues from the root cue node.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Cue.Find(Cavern.Format.Container.Matroska.Cue[],System.Int64)">
+            <summary>
+            Get the cue that holds info for the timestamp to seek to.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.Cue.ToString">
+            <summary>
+            Provides basic information about the cue.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Container.Matroska.MatroskaTrack">
+            <summary>
+            Track data for a <see cref="T:Cavern.Format.Container.MatroskaReader"/>, containing read positions.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTrack.lastCluster">
+            <summary>
+            Currently read cluster.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTrack.lastBlock">
+            <summary>
+            Last read block in the current cluster.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTrack.#ctor(Cavern.Format.Container.ContainerReader,System.Int32)">
+            <summary>
+            Create a track to be placed in the list of a container's tracks.
+            </summary>
+            <param name="source">The container containing this track.</param>
+            <param name="trackNumber">The position of the track in the container's list of tracks.</param>
+            <remarks>The <paramref name="trackNumber"/> required for reading from the container.</remarks>
+        </member>
+        <member name="T:Cavern.Format.Container.Matroska.MatroskaTree">
+            <summary>
+            Builds a tree of a Matroska file's neccessary tags.
+            </summary>
+            <see href="https://github.com/ietf-wg-cellar/matroska-specification/blob/master/ebml_matroska.xml"/>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_CodecID">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_Audio_Channels">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cluster_BlockGroup">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cluster_BlockGroup_Block">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cluster_SimpleBlock">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cues_CuePoint_CueTime">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_Audio_SamplingFrequency">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cues_CuePoint_CueTrackPositions">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cues_CuePoint">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_TrackNumber">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_Audio">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cluster_Timestamp">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cues_CuePoint_CueTrackPositions_CueClusterPosition">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cues_CuePoint_CueTrackPositions_CueTrack">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Info_Duration">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_SeekHead_Seek">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_SeekHead_Seek_SeekPosition">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_Name">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_Audio_BitDepth">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Info_ChapterTranslate">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks_TrackEntry_Language">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Info_TimestampScale">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_SeekHead">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Info">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Tracks">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.EBML">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cues">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.Segment_Cluster">
+            <summary>
+            EBML tag IDs.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.children">
+            <summary>
+            The contained subtree.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.end">
+            <summary>
+            Last byte (exclusive) of the file that is a tag in this element.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.childIndices">
+            <summary>
+            Cache for <see cref="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChild(System.IO.Stream,System.Int32,System.Int32)"/>, contains which the indices of
+            already read <see cref="F:Cavern.Format.Container.Matroska.MatroskaTree.children"/> are for a given tag (key).
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.Matroska.MatroskaTree.nextTag">
+            <summary>
+            Location in the file where the next child should be read from.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.#ctor(System.IO.Stream)">
+            <summary>
+            Build the next KLV subtree.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChild(System.IO.Stream,System.Int32)">
+            <summary>
+            Fetch the first child of a tag if it exists.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChild(System.IO.Stream,System.Int32,System.Int32)">
+            <summary>
+            Get a specific child by its order of the same kind of children.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChildren(System.IO.Stream,System.Int32)">
+            <summary>
+            Fetch all child instances of a tag.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChildFloatBE(System.IO.Stream,System.Int32)">
+            <summary>
+            Get the first found child's big-endian floating point value by tag if it exists.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChildUTF8(System.IO.Stream,System.Int32)">
+            <summary>
+            Get the first found child's UTF-8 value by tag if it exists.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChildValue(System.IO.Stream,System.Int32)">
+            <summary>
+            Get the first found child's <see cref="T:Cavern.Format.Common.VarInt"/> value by tag if it exists.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetIndexByPosition(System.IO.Stream,System.Int32,System.Int64)">
+            <summary>
+            Get the index of a child for <see cref="M:Cavern.Format.Container.Matroska.MatroskaTree.GetChild(System.IO.Stream,System.Int32,System.Int32)"/> by its position in the file stream.
+            </summary>
+            <remarks>This <paramref name="position"/> is not the same as <see cref="F:Cavern.Format.Common.KeyLengthValue.position"/>, that
+            has to be matched first by reading the metadata for the element.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Container.Matroska.MatroskaTree.GetRawData(System.IO.Stream)">
+            <summary>
+            Read the remainder of the value of this element to a byte array.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Container.ContainerReader">
+            <summary>
+            Multimedia container reader base class.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.ContainerReader.Duration">
+            <summary>
+            Content length in seconds.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Container.ContainerReader.Tracks">
+            <summary>
+            Metadata of media streams in this file.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.ContainerReader.reader">
+            <summary>
+            File reader object.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.ContainerReader.#ctor(System.IO.Stream)">
+            <summary>
+            Abstract audio file reader.
+            </summary>
+            <param name="reader">File reader object</param>
+        </member>
+        <member name="M:Cavern.Format.Container.ContainerReader.#ctor(System.String)">
+            <summary>
+            Abstract audio file reader.
+            </summary>
+            <param name="path">Input file name</param>
+        </member>
+        <member name="M:Cavern.Format.Container.ContainerReader.ReadNextBlock(System.Int32)">
+            <summary>
+            Continue reading a given track.
+            </summary>
+            <param name="track">Not the unique <see cref="P:Cavern.Format.Common.Track.ID"/>, but its position in the <see cref="P:Cavern.Format.Container.ContainerReader.Tracks"/> array.</param>
+        </member>
+        <member name="M:Cavern.Format.Container.ContainerReader.Seek(System.Double)">
+            <summary>
+            Start the following reads from the selected timestamp.
+            </summary>
+            <returns>Position that was actually possible to seek to or -1 if the position didn't change.</returns>
+        </member>
+        <member name="M:Cavern.Format.Container.ContainerReader.GetFirstAudioTrack">
+            <summary>
+            Get the main audio track from the container.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.ContainerReader.Dispose">
+            <summary>
+            Close the reader.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Container.MatroskaReader">
+            <summary>
+            Reads EBML, a kind of binary XML format that is used by Matroska.
+            </summary>
+            <see href="https://www.matroska.org/files/matroska_file_format_alexander_noe.pdf"/>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.nsToS">
+            <summary>
+            Nanoseconds to seconds.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.sToNs">
+            <summary>
+            Seconds to nanoseconds.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.defaultLanguage">
+            <summary>
+            A Matroska track's default language.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.cachedClusters">
+            <summary>
+            Clusters are large and should be cached, but only to a certain limit to prevent leaking.
+            The limit is the size of this array. Use <see cref="M:Cavern.Format.Container.MatroskaReader.GetCluster(System.Int32)"/> to read a cluster,
+            it checks the cache before trying to read it.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.codecNames">
+            <summary>
+            Matroska codec ID mapping to the <see cref="T:Cavern.Format.Common.Codec"/> enum.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.segments">
+            <summary>
+            All segments of the file.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.cues">
+            <summary>
+            Seek-aiding metadata.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Container.MatroskaReader.timestampScale">
+            <summary>
+            Multiplier for all timestamps in clusters.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.#ctor(System.IO.Stream)">
+            <summary>
+            Minimal EBML reader.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.#ctor(System.String)">
+            <summary>
+            Minimal EBML reader.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.ReadNextBlock(System.Int32)">
+            <summary>
+            Continue reading a given track.
+            </summary>
+            <param name="track">Not the unique <see cref="P:Cavern.Format.Common.Track.ID"/>, but its position in the
+            <see cref="P:Cavern.Format.Container.ContainerReader.Tracks"/> array.</param>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.Seek(System.Double)">
+            <summary>
+            Start the following reads from the selected timestamp.
+            Seeks all tracks to the block before the position given in seconds.
+            </summary>
+            <returns>Position that was actually possible to seek to or -1 if the position didn't change.</returns>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.GetCluster(System.Int32)">
+            <summary>
+            Read a <see cref="T:Cavern.Format.Container.Matroska.Cluster"/> from the cache, or if it's not cached, from the file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.ReadSkeleton">
+            <summary>
+            Read the metadata and basic block structure of the file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Container.MatroskaReader.ReadTracks(Cavern.Format.Container.Matroska.MatroskaTree)">
+            <summary>
+            Read track information metadata.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.Decoder">
+            <summary>
+            Converts a bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.Decoder.ChannelCount">
+            <summary>
+            Content channel count.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.Decoder.Length">
+            <summary>
+            Content length in samples for a single channel.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.Decoder.SampleRate">
+            <summary>
+            Bitstream sample rate.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.Decoder.reader">
+            <summary>
+            Stream reader and block regrouping object.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.Decoder.#ctor(Cavern.Format.Utilities.BlockBuffer{System.Byte})">
+            <summary>
+            Converts a bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.Decoder.#ctor">
+            <summary>
+            Gives the possibility of setting <see cref="F:Cavern.Format.Decoders.Decoder.reader"/> after a derived constructor has read a header.
+            </summary>
+            <remarks>Not setting <see cref="F:Cavern.Format.Decoders.Decoder.reader"/> in all constructors can break a decoder.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Decoders.Decoder.DecodeBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read and decode a given number of samples.
+            </summary>
+            <param name="target">Array to decode data into</param>
+            <param name="from">Start position in the target array (inclusive)</param>
+            <param name="to">End position in the target array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Decoders.Decoder.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
+        <member name="T:Cavern.Format.Decoders.DummyDecoder">
+            <summary>
+            Decoder for a format that can't be decoded.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.DummyDecoder.ChannelCount">
+            <summary>
+            Content channel count.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.DummyDecoder.Length">
+            <summary>
+            Content length in samples for a single channel.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.DummyDecoder.SampleRate">
+            <summary>
+            Bitstream sample rate.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.DummyDecoder.format">
+            <summary>
+            Unsupported codec type.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.DummyDecoder.#ctor(Cavern.Format.Common.Codec,System.Int32,System.Int64,System.Int32)">
+            <summary>
+            Decoder for a format that can't be decoded.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.DummyDecoder.DecodeBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Mark the unsupported codec on decoding.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.DummyDecoder.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3Decoder">
+            <summary>
+            Converts an Enhanced AC-3 bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.Enhanced">
+            <summary>
+            The stream is coded in the Enhanced version of AC-3.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.Finished">
+            <summary>
+            True if the stream has reached its end.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.ChannelCount">
+            <summary>
+            Number of total output channels.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.Length">
+            <summary>
+            Content length in samples for a single channel.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.SampleRate">
+            <summary>
+            Content sample rate.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.FrameSize">
+            <summary>
+            Samples in each decoded frame
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.header">
+            <summary>
+            Header data container and reader.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.bodies">
+            <summary>
+            Independently decoded substreams.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.outputs">
+            <summary>
+            Rendered samples for each channel.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.fileSize">
+            <summary>
+            File size to calculate the content length from, assuming AC-3 is constant bitrate.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.frameSize">
+            <summary>
+            Bytes per audio frame.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3Decoder.Extensions">
+            <summary>
+            Auxillary metadata parsed for the last decoded frame.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.extractor">
+            <summary>
+            Reads through the current frame.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3Decoder.outCache">
+            <summary>
+            Reusable output sample array.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3Decoder.#ctor(Cavern.Format.Utilities.BlockBuffer{System.Byte})">
+            <summary>
+            Converts an Enhanced AC-3 bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3Decoder.#ctor(Cavern.Format.Utilities.BlockBuffer{System.Byte},System.Int64)">
+            <summary>
+            Converts an Enhanced AC-3 bitstream to raw samples. When the file size is known, the length can be calculated
+            from the bitrate assuming AC-3 is constant bitrate.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3Decoder.GetChannels">
+            <summary>
+            Get the bed channels.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3Decoder.DecodeFrame">
+            <summary>
+            Decode a new frame if the cached samples are already fetched.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3Decoder.ReadHeader">
+            <summary>
+            Reads all metadata for the next frame and prepares audio decoding.
+            </summary>
+            <remarks>This decoder has to read the beginning of the next frame to know if it's a beginning.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3Decoder.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder">
+            <summary>
+            Decodes Extensible Metadata Delivery Format (EMDF) from the reserved fields of an E-AC-3 bitstream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.syncWord">
+            <summary>
+            EMDF marker.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.oamdPayloadID">
+            <summary>
+            Payload ID for Object Audio Metadata.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.jocPayloadID">
+            <summary>
+            Payload ID for Joint Object Coding.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.HasObjects">
+            <summary>
+            The last EBML frame contained object data.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.JOC">
+            <summary>
+            The Joint Object Coding data in this frame.
+            </summary>
+            <remarks>There can be only one JOC payload in every E-AC-3 frame.</remarks>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.OAMD">
+            <summary>
+            The Object Audio Metadata in this frame.
+            </summary>
+            <remarks>There can be only one OAMD payload in every E-AC-3 frame.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.Decode(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Decode the next EMDF frame from a bitstream.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataDecoder.DecodeBlock(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Tries to decode an EMDF block, returns if succeeded.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataExtensions">
+            <summary>
+            Extension methods used for EMDF decoding.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ExtensibleMetadataExtensions.VariableBits(Cavern.Format.Utilities.BitExtractor,System.Byte)">
+            <summary>
+            Read variable-length values from an EMDF stream.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding">
+            <summary>
+            Joint object coding decoder and renderer.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.ObjectActive">
+            <summary>
+            The object is active and will have rendered audio data.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.ChannelCount">
+            <summary>
+            Number of full bandwidth input channels.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.ObjectCount">
+            <summary>
+            Number of rendered dynamic objects.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.Decode(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Decodes a JOC frame from an EMDF payload.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.maxObjects">
+            <summary>
+            Maximum number of objects to render.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.prevMatrix">
+            <summary>
+            Previous JOC mixing matrix values.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.steepSlope">
+            <summary>
+            If true, the temporal extension transition will not be linearly interpolated, only stepped.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.joc_num_bands_idx">
+            <summary>
+            Indexing value for given <see cref="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.joc_num_bands"/> values in cache tables.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.joc_num_bands">
+            <summary>
+            Number of processed bands of each object.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.joc_num_quant_idx">
+            <summary>
+            Index of the used quantization table for each object.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.dataPoints">
+            <summary>
+            Number of data points for each object.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.#ctor">
+            <summary>
+            Create a JOC decoder. Always reuse a previous one as history data is required for decoding.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.UpdateCache">
+            <summary>
+            Checks if the cache is ready for the given number of objects and channels, and fixes if it's not.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.SetupStaticCache">
+            <summary>
+            Create fast LUTs from compressed data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding.GetMixingMatrices(System.Int32)">
+            <summary>
+            Get the object mixing matrices.
+            </summary>
+            <param name="frameSize">Length of the entire time window of all time slots</param>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier">
+            <summary>
+            Converts a channel-based audio stream and JOC to object output samples.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.objects">
+            <summary>
+            Output object count.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.frameSize">
+            <summary>
+            Length of an AC-3 frame.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.timeslotCache">
+            <summary>
+            Recycled timeslot object output arrays.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.results">
+            <summary>
+            Recycled forward transformation result holder.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.qmfbCache">
+            <summary>
+            Recycled QMFB operation arrays.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.converters">
+            <summary>
+            Recycled QMFB transform objects.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.mixMatrix">
+            <summary>
+            Channels to objects matrix.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.timeslot">
+            <summary>
+            Next timeslot to read in the current JOC.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a converter from a channel-based audio stream and JOC to object output samples.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.Apply(System.Single[][],Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding)">
+            <summary>
+            Gets the audio samples of each object for the next timeslot.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingApplier.ProcessObject(Cavern.Format.Decoders.EnhancedAC3.JointObjectCoding,System.Int32,System.Single[][])">
+            <summary>
+            Mixes channel-based samples by a matrix to the objects.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.HuffmanType.MTX">
+            <summary>
+            Matrix.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.HuffmanType.VEC">
+            <summary>
+            Vector.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.HuffmanType.IDX">
+            <summary>
+            Index.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingTables">
+            <summary>
+            Hardcoded values for JOC decoding.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingTables.GetHuffCodeTable(System.Int32,Cavern.Format.Decoders.EnhancedAC3.HuffmanType)">
+            <summary>
+            Implementation of joc_get_huff_code, gets the corresponding Huffman table.
+            </summary>
+            <remarks>Does not handle invalid modes correctly.</remarks>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.JointObjectCodingTables.inputMatrix">
+            <summary>
+            The order of input channels for JOC matrix mixing.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.OAElementMD">
+            <summary>
+            Decodes an object audio element metadata block.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.objectElementIndex">
+            <summary>
+            Marks an object positioning frame.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.extendedObjectElementIndex">
+            <summary>
+            Marks a precise object positioning frame.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.MinOffset">
+            <summary>
+            Gets the timecode of the first update in this block.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.blockUsed">
+            <summary>
+            The movement data of the next block was already set to motion.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.sampleOffset">
+            <summary>
+            Global sample offset, applied to all info blocks.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.blockOffsetFactor">
+            <summary>
+            The beginning of each info block in samples.
+            </summary>
+            <remarks>Negative numbers mean that this element doesn't contain object location data.</remarks>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.rampDuration">
+            <summary>
+            Time to fade to a new position in samples for each info block.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.infoBlocks">
+            <summary>
+            Rendering info for each object's updates. The first dimension is the object, the second is the info block.
+            </summary>
+            <remarks>Can be null if the element is not an object element.</remarks>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.future">
+            <summary>
+            The position of each object to move to.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.futureDistance">
+            <summary>
+            Samples until reaching the <see cref="F:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.future"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.Read(Cavern.Format.Utilities.BitExtractor,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Decodes an object audio element metadata block.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.OAElementMD.UpdateSources(System.Int32,System.Collections.Generic.IReadOnlyList{Cavern.Source})">
+            <summary>
+            Set the object properties from metadata.
+            </summary>
+            <param name="timecode">Samples since the beginning of the audio frame</param>
+            <param name="sources">The sources used for rendering this track</param>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata">
+            <summary>
+            A decoded OAMD frame from an EMDF payload.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.ObjectCount">
+            <summary>
+            Number of audio objects in the stream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.elements">
+            <summary>
+            Decoded object audio element metadata.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.bedAssignment">
+            <summary>
+            Bed channels used. The first dimension is the element ID, the second is one bit for each channel,
+            in the order of <see cref="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.bedChannels"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.beds">
+            <summary>
+            Count of bed channels.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.isfInUse">
+            <summary>
+            Use intermediate spatial format (ISF), which has a few fixed layouts.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.isfIndex">
+            <summary>
+            ISF layout ID.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.offset">
+            <summary>
+            This payload applies this many samples later.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.Decode(Cavern.Format.Utilities.BitExtractor,System.Int32)">
+            <summary>
+            Decodes a OAMD frame from an EMDF payload.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.GetLFEPosition">
+            <summary>
+            Gets which object is the LFE channel or -1 if it's not present.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.UpdateSources(System.Int32,System.Collections.Generic.IReadOnlyList{Cavern.Source})">
+            <summary>
+            Set the object properties from metadata.
+            </summary>
+            <param name="timecode">Samples since the beginning of the audio frame</param>
+            <param name="sources">The sources used for rendering this track</param>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.bedChannels">
+            <summary>
+            What each bit of <see cref="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.bedAssignment"/> means.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.standardBedChannels">
+            <summary>
+            Which <see cref="F:Cavern.Format.Decoders.EnhancedAC3.ObjectAudioMetadata.bedChannels"/> are set with each bit of a standard layout.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.validPosition">
+            <summary>
+            This block contained position information.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.differentialPosition">
+            <summary>
+            This frame contains the difference from the last object position instead of an exact position.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.gain">
+            <summary>
+            Object volume multiplier. Any negative value means reusing the last gain.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.distance">
+            <summary>
+            Object distance from the center of the room. Distant objects are mapped closer to the listening position.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.size">
+            <summary>
+            Object size. Any negative value means reusing the last size.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.depthFactor">
+            <summary>
+            A multiplier in screen-anchored rendering.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.screenFactor">
+            <summary>
+            A multiplier in screen-anchored rendering.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.anchor">
+            <summary>
+            The object's anchor position.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.position">
+            <summary>
+            The coded position information, either exact or differential.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.lastPrecise">
+            <summary>
+            Last fully transmitted position to add delta positions to.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.Update(Cavern.Format.Utilities.BitExtractor,System.Int32,System.Boolean)">
+            <summary>
+            Read new information for this block.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.ObjectInfoBlock.UpdateSource(Cavern.Source)">
+            <summary>
+            Sets the properties of the block, returns the final target position.
+            The position shouldn't be updated immediately, it might have a ramp.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank">
+            <summary>
+            Converts a PCM stream to a quadrature mirror filter bank and back.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.subbands">
+            <summary>
+            QMFB subband count.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.coeffs">
+            <summary>
+            Filter coefficients.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.subbandDiv">
+            <summary>
+            1 / <see cref="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.subbands"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.inputStreamForward">
+            <summary>
+            Input sample cache for forward transformations.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.inputStreamInverse">
+            <summary>
+            Input sample cache for inverse transformations.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.window">
+            <summary>
+            Processor window cache.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.grouping">
+            <summary>
+            Summation of <see cref="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.window"/> groups.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.outCache">
+            <summary>
+            Output cache.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.sinCacheFwd">
+            <summary>
+            Forward transformation cache of rotation sines.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.cosCacheFwd">
+            <summary>
+            Forward transformation cache of rotation cosines.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.sinCacheInv">
+            <summary>
+            Inverse transformation cache of rotation sines.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.cosCacheInv">
+            <summary>
+            Inverse transformation cache of rotation cosines.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.#ctor">
+            <summary>
+            Converts a PCM stream to a quadrature mirror filter bank and back.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.ProcessForward(System.Single[])">
+            <summary>
+            Convert a timeslot of real <see cref="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.subbands"/> to QMFB.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.ProcessInverse(Cavern.Utilities.Complex[],System.Single[])">
+            <summary>
+            Convert a timeslot of QMFB <see cref="F:Cavern.Format.Decoders.EnhancedAC3.QuadratureMirrorFilterBank.subbands"/> to PCM samples.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.FrameBasedDecoder">
+            <summary>
+            Converts a frame-based bitstream to raw samples.
+            Only a single function is required which processes a single frame, with access to the <see cref="F:Cavern.Format.Decoders.Decoder.reader"/>.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.FrameBasedDecoder.LastFetchStart">
+            <summary>
+            The position of the first sample of the last exported block in the buffer.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.FrameBasedDecoder.decoder">
+            <summary>
+            Frame cache object.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.FrameBasedDecoder.#ctor(Cavern.Format.Utilities.BlockBuffer{System.Byte})">
+            <summary>
+            Converts a frame-based bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.FrameBasedDecoder.DecodeBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read and decode a given number of samples.
+            </summary>
+            <param name="target">Array to decode data into</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Decoders.FrameBasedDecoder.DecodeFrame">
+            <summary>
+            Decode a new frame if the cached samples are already fetched.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Decoders.RIFFWaveDecoder">
+            <summary>
+            Converts a RIFF WAVE bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.RIFFWaveDecoder.Bits">
+            <summary>
+            Bit depth of the WAVE file.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.RIFFWaveDecoder.ChannelCount">
+            <summary>
+            Content channel count.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.RIFFWaveDecoder.Length">
+            <summary>
+            Content length in samples for a single channel.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Decoders.RIFFWaveDecoder.SampleRate">
+            <summary>
+            Bitstream sample rate.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.RIFFWaveDecoder.dataStart">
+            <summary>
+            The location of the first sample in the file stream. Knowing this allows seeking.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Decoders.RIFFWaveDecoder.stream">
+            <summary>
+            Input stream when reading from a WAV file. If the stream is null, then only a block buffer is available,
+            whose parent has to be seeked.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.RIFFWaveDecoder.#ctor(Cavern.Format.Utilities.BlockBuffer{System.Byte},System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Converts a RIFF WAVE bitstream to raw samples.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.RIFFWaveDecoder.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Converts a RIFF WAVE bitstream with header to raw samples.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.RIFFWaveDecoder.DecodeBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read and decode a given number of samples.
+            </summary>
+            <param name="target">Array to decode data into</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Decoders.RIFFWaveDecoder.DecodeLittleEndianBlock(System.Byte[],System.Single[],System.Int64,Cavern.Format.BitDepth)">
+            <summary>
+            Decode a block of RIFF WAVE data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Decoders.RIFFWaveDecoder.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
         </member>
         <member name="T:Cavern.Format.FilterSet.EqualizerAPOUtils">
             <summary>
@@ -161,9 +1900,19 @@
             </summary>
             <param name="path">Input file name</param>
         </member>
+        <member name="M:Cavern.Format.AudioReader.GetRenderer">
+            <summary>
+            Get an object-based renderer for this audio file.
+            </summary>
+        </member>
         <member name="M:Cavern.Format.AudioReader.ReadHeader">
             <summary>
             Read the file header.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
             </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
@@ -186,16 +1935,38 @@
         </member>
         <member name="M:Cavern.Format.AudioReader.Read">
             <summary>
-            Read the entire file.
+            Read the entire file, including the header, and get the data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadAfterHeader">
+            <summary>
+            Read the entire file, and get the data. The header should have been read before.
             </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.ReadClip">
             <summary>
-            Read the entire file and pack it in a <see cref="T:Cavern.Clip"/>.
+            Read the entire file, including the header, and pack it in a <see cref="T:Cavern.Clip"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadClipAfterHeader">
+            <summary>
+            Read the entire file and pack it in a <see cref="T:Cavern.Clip"/>. The header should have been read before.
             </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.ReadMultichannel">
-            <summary>Read the entire file.</summary>
+            <summary>
+            Read the entire file, including the header.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadMultichannelAfterHeader">
+            <summary>
+            Read the entire file. The header should have been read before.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.Reset">
+            <summary>
+            Goes back to a state where the first sample can be read.
+            </summary>
         </member>
         <member name="M:Cavern.Format.AudioReader.RollingBlockCheck(System.Byte[],System.Byte[])">
             <summary>
@@ -211,6 +1982,141 @@
             <summary>
             Close the reader.
             </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.Open(System.IO.BinaryReader)">
+            <summary>
+            Open an audio stream for reading. The format will be detected automatically.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.Open(System.String)">
+            <summary>
+            Open an audio file for reading by file name. The format will be detected automatically.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadClip(System.IO.BinaryReader)">
+            <summary>
+            Open an audio clip from a stream. The format will be detected automatically.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioReader.ReadClip(System.String)">
+            <summary>
+            Open an audio clip by file name. The format will be detected automatically.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.AudioTrackReader">
+            <summary>
+            Reads an audio track from a container.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.AudioTrackReader.decoder">
+            <summary>
+            Decoder based on the <see cref="T:Cavern.Format.Common.Codec"/> of the selected stream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.AudioTrackReader.disposeSource">
+            <summary>
+            If this track reader was created without keeping the reference to the container,
+            the container is disposed with this track.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.AudioTrackReader.track">
+            <summary>
+            The referenced track from a container.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.#ctor(Cavern.Format.Common.Track)">
+            <summary>
+            Reads an audio track from a container.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.#ctor(Cavern.Format.Common.Track,System.Boolean)">
+            <summary>
+            Reads an audio track from a container and disposes the container after the reading was done.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.ReadHeader">
+            <summary>
+            Fill the file metadata from the selected track.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.GetRenderer">
+            <summary>
+            If the stream can be rendered in 3D by Cavern, return a renderer.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read a block of samples.
+            </summary>
+            <param name="samples">Input array</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.Dispose">
+            <summary>
+            Close the reader if it surely can't be used anywhere else.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.AudioTrackReader.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
+        <member name="T:Cavern.Format.EnhancedAC3Reader">
+            <summary>
+            Enhanced AC-3 file reader.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.EnhancedAC3Reader.fileSize">
+            <summary>
+            File size to calculate the content length from, assuming AC-3 is constant bitrate.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.EnhancedAC3Reader.decoder">
+            <summary>
+            Bitsteam interpreter.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.EnhancedAC3Reader.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Enhanced AC-3 file reader.
+            </summary>
+            <param name="reader">File reader object</param>
+        </member>
+        <member name="M:Cavern.Format.EnhancedAC3Reader.#ctor(System.String)">
+            <summary>
+            Enhanced AC-3 file reader.
+            </summary>
+            <param name="path">Input file name</param>
+        </member>
+        <member name="M:Cavern.Format.EnhancedAC3Reader.ReadHeader">
+            <summary>
+            Read the file header.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.EnhancedAC3Reader.ReadBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read a block of samples.
+            </summary>
+            <param name="samples">Input array</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.EnhancedAC3Reader.GetRenderer">
+            <summary>
+            Get an object-based renderer for this audio file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.EnhancedAC3Reader.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
         </member>
         <member name="T:Cavern.Format.LimitlessAudioFormatReader">
             <summary>
@@ -287,9 +2193,25 @@
             <param name="to">End position in the input array (exclusive)</param>
             <remarks>The next to - from samples will be read from the file. Samples counted for a single channel.</remarks>
         </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.GetRenderer">
+            <summary>
+            Get an object-based renderer for this audio file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.LimitlessAudioFormatReader.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
         <member name="T:Cavern.Format.RIFFWaveReader">
             <summary>
             Minimal RIFF wave file reader.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.RIFFWaveReader.decoder">
+            <summary>
+            Bitsteam interpreter.
             </summary>
         </member>
         <member name="M:Cavern.Format.RIFFWaveReader.#ctor(System.IO.BinaryReader)">
@@ -316,7 +2238,96 @@
             <param name="samples">Input array</param>
             <param name="from">Start position in the input array (inclusive)</param>
             <param name="to">End position in the input array (exclusive)</param>
-            <remarks>The next to - from samples will be read from the file. Samples are counted for all channels.</remarks>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.Reset">
+            <summary>
+            Goes back to a state where the first sample can be read.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.RIFFWaveReader.GetRenderer">
+            <summary>
+            Get an object-based renderer for this audio file.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.SegmentedAudioReader">
+            <summary>
+            Reads audio files from multiple segments.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioReader.path">
+            <summary>
+            A C# format string compliant path, where {0} will be the index.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioReader.segments">
+            <summary>
+            References to all segments.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioReader.segment">
+            <summary>
+            The currently read segment.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioReader.segmentPosition">
+            <summary>
+            The next sample to read from the current <see cref="F:Cavern.Format.SegmentedAudioReader.segment"/>, for a single channel.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.#ctor(System.String)">
+            <summary>
+            Reads audio files from multiple segments.
+            </summary>
+            <param name="path">A C# format string compliant path, where {0} will be the index</param>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.GetSegmentFiles">
+            <summary>
+            Get all file names which are loaded by this reader.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.ReadHeader">
+            <summary>
+            Read the file header.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.ReadBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Read a block of samples.
+            </summary>
+            <param name="samples">Input array</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+            <remarks>The next to - from samples will be read from the file.
+            All samples are counted, not just a single channel.</remarks>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.Reset">
+            <summary>
+            Goes back to a state where the first sample can be read.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.Seek(System.Int64)">
+            <summary>
+            Start the following reads from the selected sample.
+            </summary>
+            <param name="sample">The selected sample, for a single channel</param>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.GetRenderer">
+            <summary>
+            Get an object-based renderer for this audio file.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioReader.Dispose">
+            <summary>
+            Close the files of the segments.
+            </summary>
         </member>
         <member name="T:Cavern.Format.AudioWriter">
             <summary>
@@ -368,6 +2379,17 @@
             <param name="sampleRate">Output sample rate</param>
             <param name="bits">Output bit depth</param>
         </member>
+        <member name="M:Cavern.Format.AudioWriter.Create(System.String,System.Int32,System.Int64,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Create an <see cref="T:Cavern.Format.AudioWriter"/> that matches the output file name.
+            </summary>
+            <remarks>When creating a .LAF file, the active environment's channels will be used.</remarks>
+            <param name="path">Output file name</param>
+            <param name="channelCount">Output channel count</param>
+            <param name="length">Output length in samples per channel</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+        </member>
         <member name="M:Cavern.Format.AudioWriter.WriteHeader">
             <summary>
             Create the file header.
@@ -375,7 +2397,7 @@
         </member>
         <member name="M:Cavern.Format.AudioWriter.WriteBlock(System.Single[],System.Int64,System.Int64)">
             <summary>
-            Write a block of mono samples.
+            Write a block of mono or interlaced samples.
             </summary>
             <param name="samples">Samples to write</param>
             <param name="from">Start position in the input array (inclusive)</param>
@@ -391,7 +2413,7 @@
         </member>
         <member name="M:Cavern.Format.AudioWriter.Write(System.Single[])">
             <summary>
-            Write the entire mono file.
+            Write the entire mono file, including the header.
             </summary>
             <param name="samples">All input samples</param>
         </member>
@@ -599,6 +2621,928 @@
             <param name="channelCount">Output channel count</param>
             <param name="sampleRate">Output sample rate</param>
             <param name="bits">Output bit depth</param>
+        </member>
+        <member name="T:Cavern.Format.SegmentedAudioWriter">
+            <summary>
+            Writes audio files with the selected encoder in multiple segments
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioWriter.path">
+            <summary>
+            A C# format string compliant path, where {0} will be the index.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioWriter.segments">
+            <summary>
+            References to all segments.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioWriter.segment">
+            <summary>
+            The currently read segment.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.SegmentedAudioWriter.segmentPosition">
+            <summary>
+            The next sample to read from the current <see cref="F:Cavern.Format.SegmentedAudioWriter.segment"/>, for a single channel.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioWriter.#ctor(System.String,System.Int32,System.Int64,System.Int64,System.Int32,Cavern.Format.BitDepth)">
+            <summary>
+            Writes audio files with the selected encoder in multiple segments
+            </summary>
+            <param name="path">A C# format string compliant path, where {0} will be the index</param>
+            <param name="channelCount">Output channel count</param>
+            <param name="length">Output length in samples per channel</param>
+            <param name="segmentSize">Length of a segment in samples per a single channel</param>
+            <param name="sampleRate">Output sample rate</param>
+            <param name="bits">Output bit depth</param>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioWriter.GetSegmentFiles">
+            <summary>
+            Get all file names which are loaded by this writer.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioWriter.WriteHeader">
+            <summary>
+            Create the file header.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioWriter.WriteBlock(System.Single[],System.Int64,System.Int64)">
+            <summary>
+            Write a block of mono or interlaced samples.
+            </summary>
+            <param name="samples">Samples to write</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioWriter.WriteBlock(System.Single[][],System.Int64,System.Int64)">
+            <summary>
+            Write a block of multichannel samples.
+            </summary>
+            <param name="samples">Samples to write</param>
+            <param name="from">Start position in the input array (inclusive)</param>
+            <param name="to">End position in the input array (exclusive)</param>
+        </member>
+        <member name="M:Cavern.Format.SegmentedAudioWriter.Dispose">
+            <summary>
+            Close the files of the segments.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Renderers.EnhancedAC3Renderer">
+            <summary>
+            Renders a decoded E-AC-3 stream with Cavern.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Renderers.EnhancedAC3Renderer.Enhanced">
+            <summary>
+            The stream is coded in the Enhanced version of AC-3.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Renderers.EnhancedAC3Renderer.Source">
+            <summary>TODO: TEMPORARY UNTIL THE DECODER IS IMPLEMENTED!</summary>
+        </member>
+        <member name="P:Cavern.Format.Renderers.EnhancedAC3Renderer.DynamicObjects">
+            <summary>
+            Count of free-floating objects.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.finalResult">
+            <summary>
+            Aligned timeslot results for final output.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.applier">
+            <summary>
+            Creates the object mix from channels.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.lfeTimeslot">
+            <summary>
+            LFE channel samples from the last timeslot.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.lfeResult">
+            <summary>
+            LFE channel output.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.inputData">
+            <summary>
+            Cache for the decoded bed data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.timeslotResult">
+            <summary>
+            Object samples for the last rendered timeslot.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.EnhancedAC3Renderer.timeslotPosition">
+            <summary>
+            Sample in the last fetched <see cref="F:Cavern.Format.Renderers.EnhancedAC3Renderer.timeslotResult"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.EnhancedAC3Renderer.#ctor(Cavern.Format.Decoders.EnhancedAC3Decoder)">
+            <summary>
+            Parse an E-AC-3 decoder to a renderer.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.EnhancedAC3Renderer.GetChannels">
+            <summary>
+            Get the bed channels.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.EnhancedAC3Renderer.Update(System.Int32)">
+            <summary>
+            Read the next <paramref name="samples"/> and update the objects.
+            </summary>
+            <param name="samples">Samples per channel</param>
+        </member>
+        <member name="M:Cavern.Format.Renderers.EnhancedAC3Renderer.RenderNextTimeslot">
+            <summary>
+            Render new object samples for the next timeslot
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Renderers.Renderer">
+            <summary>
+            Renders a decoded stream with Cavern.
+            </summary>
+            <summary>
+            Constants required for rendering.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Renderers.Renderer.HasObjects">
+            <summary>
+            The stream is object-based.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Renderers.Renderer.Objects">
+            <summary>
+            Rendered Cavern objects. Might not be dynamic, channels are rendered as stationary objects.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.Renderer.objects">
+            <summary>
+            Rendered Cavern objects. Might not be dynamic, channels are rendered as stationary objects.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.Renderer.stream">
+            <summary>
+            Source stream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.Renderer.reader">
+            <summary>
+            Sample supplier for the rendered objects.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.Renderer.objectSamples">
+            <summary>
+            Samples for the rendered objects in the last update.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.#ctor(Cavern.Format.Decoders.Decoder)">
+            <summary>
+            Renders a decoded stream with Cavern.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.GetChannels">
+            <summary>
+            Get the bed channels.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.Update(System.Int32)">
+            <summary>
+            Read the next <paramref name="samples"/> and update the <see cref="F:Cavern.Format.Renderers.Renderer.objects"/>.
+            </summary>
+            <param name="samples">Samples per channel</param>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.GetNextObjectSamples(System.Int32)">
+            <summary>
+            Update the objects and get the samples they need to render.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.SetupObjects(System.Int32)">
+            <summary>
+            Set up the renderer for a number of objects.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.SetupChannels(System.Int32)">
+            <summary>
+            Set up the renderer for a number of standard channels.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.Renderer.FinishSetup(System.Int32)">
+            <summary>
+            Finishing steps of creating a layout.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.Renderer.channelPositions">
+            <summary>
+            Rendering positions of standard channels, indexed by <see cref="T:Cavern.Remapping.ReferenceChannel"/>s.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Renderers.RIFFWaveRenderer">
+            <summary>
+            Renders a decoded RIFF WAVE stream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Renderers.RIFFWaveRenderer.render">
+            <summary>
+            Reused array for output rendering.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.RIFFWaveRenderer.#ctor(Cavern.Format.Decoders.RIFFWaveDecoder)">
+            <summary>
+            Renders a decoded RIFF WAVE stream.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Renderers.RIFFWaveRenderer.Update(System.Int32)">
+            <summary>
+            Read the next <paramref name="samples"/> and update the objects.
+            </summary>
+            <param name="samples">Samples per channel</param>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3Body">
+            <summary>
+            Renders a single E-AC-3 substream and holds inter-frame data.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Body.Channels">
+            <summary>
+            Used full bandwidth channels.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.channels">
+            <summary>
+            Used full bandwidth channels.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Body.FrameResult">
+            <summary>
+            Full bandwidth samples from the last decoded frame.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Body.LFEResult">
+            <summary>
+            LFE samples from the last decoded frame.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.extractor">
+            <summary>
+            Source of decodable data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.header">
+            <summary>
+            Header data container and reader.
+            </summary>
+            <remarks>Reading is done in the decoder.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.GetAuxData">
+            <summary>
+            Combine the found auxillary data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.Update">
+            <summary>
+            Create or reuse per-channel outputs and separate auxillary bitstream.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.ReadAux">
+            <summary>
+            Read the auxillary data field and add it to <see cref="F:Cavern.Format.Transcoders.EnhancedAC3Body.auxData"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.AudioBlock(System.Int32)">
+            <summary>
+            Decode an (E-)AC-3 audio block.
+            </summary>
+            <param name="block">Number of the block in the currently decoded syncframe</param>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3Body.ExpStrat">
+            <summary>
+            Meaning of values for chexpstr[ch], cplexpstr, and lfeexpstr.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.nlfegrps">
+            <summary>
+            Number of LFE groups.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.nlfemant">
+            <summary>
+            Fixed LFE mantissa count.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.ecplsubbndtab">
+            <summary>
+            Sub-band transform start coefficients.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.frmcplexpstr_tbl">
+            <summary>
+            Frame exponent strategy combinations.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.slowdec">
+            <summary>
+            Slow decay table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.fastdec">
+            <summary>
+            Fast decay table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.slowgain">
+            <summary>
+            Slow gain table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.dbpbtab">
+            <summary>
+            dB/bit table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.floortab">
+            <summary>
+            Floor table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.fastgain">
+            <summary>
+            Fast gain table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.bndtab">
+            <summary>
+            Banding structure tables.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.masktab">
+            <summary>
+            Bin number to band number table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.latab">
+            <summary>
+            Log-addition table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.hth">
+            <summary>
+            Hearing threshold table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.baptab">
+            <summary>
+            Bit allocation pointer table.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.bitsToRead">
+            <summary>
+            Number of bits to read. Corresponds to each value of a BAP table.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocationMode">
+            <summary>
+            Handling of delta bit allocation data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocationMode.Reuse">
+            <summary>
+            Use the old delta bit allocation data for the current block too.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocationMode.NewInfoFollows">
+            <summary>
+            Read new delta bit allocation data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocationMode.NoAllocation">
+            <summary>
+            Don't use delta bit allocation, even if it's read.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocationMode.MuteOutput">
+            <summary>
+            Reserved value, which is handled by muting the stream.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation">
+            <summary>
+            Delta bit allocation information.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation.enabled">
+            <summary>
+            Handling of delta bit allocation data (cpldeltba, deltba).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation.Offset">
+            <summary>
+            First bit allocation band (cpldeltoffst, deltoffst).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation.Length">
+            <summary>
+            Bit allocation band span (cpldeltlen, deltlen).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation.BitAllocation">
+            <summary>
+            Adjustment of the bit allocation mask (cpldeltba, deltba).
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation.Reset">
+            <summary>
+            Set the default values to mark an unused delta bit allocation.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.DeltaBitAllocation.Read(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Read the delta bit allocation from the bitstream.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.AudioFrame">
+            <summary>
+            For E-AC-3, data for multiple blocks is included in an audio frame header.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.allocation">
+            <summary>
+            Per-channel bit allocation data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.couplingAllocation">
+            <summary>
+            Coupling channel bit allocation data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.lfeAllocation">
+            <summary>
+            LFE channel bit allocation data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.auxData">
+            <summary>
+            Unprocessed auxillary data fields are added here.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.auxDataPos">
+            <summary>
+            Last written byte in <see cref="F:Cavern.Format.Transcoders.EnhancedAC3Body.auxData"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.ParseSPX">
+            <summary>
+            Parse spectral extension data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.ParseParametricBitAllocation(System.Int32)">
+            <summary>
+            Set endmant and nchgrps.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.groupAdd">
+            <summary>
+            Addition for each <see cref="T:Cavern.Format.Transcoders.EnhancedAC3Body.ExpStrat"/> to calculate group sizes.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Body.groupDiv">
+            <summary>
+            Divider of each <see cref="T:Cavern.Format.Transcoders.EnhancedAC3Body.ExpStrat"/> to calculate group sizes.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.ReadSPX(System.Int32)">
+            <summary>
+            Read spectral extension metadata for a given <paramref name="block"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Body.ClearSPX">
+            <summary>
+            Set up SPX as unused.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.syncWord">
+            <summary>
+            First word of all AC-3 frames.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.syncWordLE">
+            <summary>
+            First word of all AC-3 frames in little-endian order.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.mustDecode">
+            <summary>
+            Bytes that must be read before determining the frame size.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.frameSizes">
+            <summary>
+            Frame size code to actual frame size in bytes for 48 kHz sample rate.
+            For 44.1 kHz, frame sizes are 1393/1280 times these values.
+            For 32 kHz, frame sizes are 3/2 times these values.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.numberOfBlocks">
+            <summary>
+            Number of blocks per sync frame for each code.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.sampleRates">
+            <summary>
+            Sample rates for each sample rate code.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.channelArrangements">
+            <summary>
+            Possible channel arrangements in E-AC-3. The index is the ID read from the file. LFE channel is marked separately.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.channelMappingTargets">
+            <summary>
+            If a custom channel mapping is present, these are the channels for each bit.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3.Decoders">
+            <summary>
+            Supported decoder versions.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3.StreamTypes">
+            <summary>
+            Types of programs in a single frame of a stream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.StreamTypes.Independent">
+            <summary>
+            Main program, can be decoded on its own.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.StreamTypes.Dependent">
+            <summary>
+            Should be decoded with the associated independent substream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.StreamTypes.Repackaged">
+            <summary>
+            This frame was converted from AC-3, the E-AC-3 extra data will follow.
+            Usually used to go beyond 5.1, up to 16 discrete channels.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3.StreamTypes.Reserved">
+            <summary>
+            Unused type.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Transcoders.EnhancedAC3Header">
+            <summary>
+            Read or write an E-AC-3 header.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.ChannelMode">
+            <summary>
+            Channel mode ID, determines the channel layout (acmod).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.Blocks">
+            <summary>
+            Number of blocks per audio frame (numblks).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.LFE">
+            <summary>
+            Low Frequency Effects channel enabled (lfeon).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.SampleRate">
+            <summary>
+            Decoded sampling rate.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.SampleRateCode">
+            <summary>
+            Sampling rate code (fscod).
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.SubstreamID">
+            <summary>
+            Number of the substream (substreamid).
+            0 marks the beginning of a new timeslot, incremented values overwrite previous frames.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.WordsPerSyncframe">
+            <summary>
+            Number of 16-bit words in this frame (words_per_syncframe).
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.channelMappingBits">
+            <summary>
+            Length of <see cref="F:Cavern.Format.Transcoders.EnhancedAC3Header.channelMapping"/>.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.Decoder">
+            <summary>
+            Used decoder type.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Transcoders.EnhancedAC3Header.StreamType">
+            <summary>
+            Type of the last decoded substream.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.bsmod">
+            <summary>
+            Bitstream mode, information about the type of the contained audio data.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.channelMapping">
+            <summary>
+            One bit for each active channel, the channels are in <see cref="F:Cavern.Format.Transcoders.EnhancedAC3.channelMappingTargets"/> (chanmap).
+            </summary>
+            <remarks>Null, if channel mapping is disabled (chanmape).</remarks>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.frmsizecod">
+            <summary>
+            AC-3 frame size code.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.Decode(Cavern.Format.Utilities.BlockBuffer{System.Byte})">
+            <summary>
+            Reads an E-AC-3 header from a bitstream.
+            </summary>
+            <remarks>Has to read a calculated number of bytes from the source stream.</remarks>
+            <returns>A <see cref="T:Cavern.Format.Utilities.BitExtractor"/> that continues at the beginning of the audio frame.</returns>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.GetChannelArrangement">
+            <summary>
+            Gets the channels contained in the stream in order.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.ParseDecoder(System.Int32)">
+            <summary>
+            Decoder version check.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.additionalDownmixInfo">
+            <summary>
+            Additional downmixing information (dmixmod, ltrtcmixlev, ltrtsurmixlev, lorocmixlev, lorosurmixlev).
+            </summary>
+            <remarks>Contains timecod1, if the header is not alternative.</remarks>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.additionalMixInfo">
+            <summary>
+            Additional mixing information (dsurexmod, dheadphonmod, adconvtyp, xbsi2, encinfo).
+            </summary>
+            <remarks>Contains timecod2, if the header is not alternative.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.BitStreamInformation(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Decodes the legacy or alternative AC-3 header after the ID of the decoder.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.BitStreamInformationEAC3(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Decodes the E-AC-3 header after the ID of the decoder.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.ReadInfoMetadata(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Parse informational metadata.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.mixingEnabled">
+            <summary>
+            Mixing metadata is present and should be used (mixmdate).
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.centerDownmix">
+            <summary>
+            Center downmixing level (cmixlev).
+            When using E-AC-3, both LtRt and LoRo modes are included (ltrtcmixlev and lorocmixlev).
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Transcoders.EnhancedAC3Header.surroundDownmix">
+            <summary>
+            Surround downmixing level (surmixlev).
+            When using E-AC-3, both LtRt and LoRo modes are included (ltrtsurmixlev and lorosurmixlev).
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Transcoders.EnhancedAC3Header.ReadMixingMetadata(Cavern.Format.Utilities.BitExtractor)">
+            <summary>
+            Parse mixing and mapping metadata.
+            </summary>
+        </member>
+        <member name="T:Cavern.Format.Utilities.BitExtractor">
+            <summary>
+            Read custom length words from a bitstream.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BitExtractor.Position">
+            <summary>
+            Next bit to read.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BitExtractor.BackPosition">
+            <summary>
+            Next bit to read from the back.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BitExtractor.Readable">
+            <summary>
+            New bits can be extracted.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Utilities.BitExtractor.source">
+            <summary>
+            Bytestream to get the data from.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.#ctor">
+            <summary>
+            Construct an empty extractor to be expanded.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.#ctor(System.Byte[])">
+            <summary>
+            Construct an extractor to a bitstream.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.#ctor(System.Byte[],System.Int32)">
+            <summary>
+            Construct an extractor to a bitstream with a truncated length of the <paramref name="source"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.Clear">
+            <summary>
+            Make sure the next expansion will replace all data.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.Expand(System.Byte[])">
+            <summary>
+            Add more bytes to the read queue.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.Peek(System.Int32)">
+            <summary>
+            Check the next bits without advancing the position.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.Read(System.Int32)">
+            <summary>
+            Read the next custom length unsigned word.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadConditional(System.Int32)">
+            <summary>
+            Read the next custom length unsigned word, if a flag is set before it.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadSigned(System.Int32)">
+            <summary>
+            Read the next custom length signed word.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadBit">
+            <summary>
+            Read the next single bit as a flag.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadBitInt">
+            <summary>
+            Read the next bit and advance the position.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadBits(System.Int32)">
+            <summary>
+            Read the next masked flag value as an array.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadBytes(System.Int32)">
+            <summary>
+            Read a byte array, even if it's offset from byte borders.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.ReadInto(System.Byte[]@,System.Int32@,System.Int32)">
+            <summary>
+            Append <paramref name="count"/> bytes to the <paramref name="buffer"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BitExtractor.Skip(System.Int32)">
+            <summary>
+            Skip some bits.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BitExtractor.Item(System.Int32)">
+            <summary>
+            Get a byte at a fixed position of the input data.
+            </summary>
+            <remarks><see cref="M:Cavern.Format.Utilities.BitExtractor.Expand(System.Byte[])"/> can remove bytes from the beginning of the cache.</remarks>
+        </member>
+        <member name="T:Cavern.Format.Utilities.BlockBuffer`1">
+            <summary>
+            Converts a function that fetches a given chunk of a stream to an object that can fetch a block with any size.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BlockBuffer`1.Readable">
+            <summary>
+            True if there's more data to read.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BlockBuffer`1.FreshFetch">
+            <summary>
+            Indicates that the <see cref="P:Cavern.Format.Utilities.BlockBuffer`1.LastFetch"/> was not yet read from.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BlockBuffer`1.LastFetchStart">
+            <summary>
+            The position of the first sample of the last exported block in the buffer.
+            </summary>
+        </member>
+        <member name="P:Cavern.Format.Utilities.BlockBuffer`1.LastFetch">
+            <summary>
+            Result of the last <see cref="E:Cavern.Format.Utilities.BlockBuffer`1.Fetcher"/> call.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Utilities.BlockBuffer`1.result">
+            <summary>
+            Reusable output array.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Utilities.BlockBuffer`1.lastFetchPosition">
+            <summary>
+            First sample from <see cref="P:Cavern.Format.Utilities.BlockBuffer`1.LastFetch"/> that wasn't collected.
+            </summary>
+        </member>
+        <member name="E:Cavern.Format.Utilities.BlockBuffer`1.Fetcher">
+            <summary>
+            Calls when new block data is needed.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BlockBuffer`1.#ctor(System.Func{`0[]})">
+            <summary>
+            Converts a function that fetches a given chunk of a stream to an object that can fetch a block with any size.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BlockBuffer`1.Create(System.IO.BinaryReader,System.Int32)">
+            <summary>
+            Converts a stream reader to a block buffer of fixed size.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BlockBuffer`1.Clear">
+            <summary>
+            Flush the current cache and read a new block. This should be called when a stream position changes.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BlockBuffer`1.Read(System.Int32)">
+            <summary>
+            Read the next fixed number of elements from the stream.
+            </summary>
+            <remarks>The returned array can have a smaller length than <paramref name="elements"/>
+            if there's no more data to be fetched.</remarks>
+        </member>
+        <member name="M:Cavern.Format.Utilities.BlockBuffer`1.ReadOne">
+            <summary>
+            Read the next value from the stream.
+            </summary>
+            <remarks>Returns the default value of <typeparamref name="T"/> when new data can't be fetched.</remarks>
+        </member>
+        <member name="T:Cavern.Format.Utilities.FileReader">
+            <summary>
+            TODO: make and use this
+            Like <see cref="T:System.IO.BinaryReader"/>, but faster. Caches multiple segments, expands read sizes exponentially
+            to support both small and large chunks, collects garbage like a CPU cache.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Utilities.FileReader.minReadSize">
+            <summary>
+            The smallest number of bytes to read. This is the size of the smallest possible read from a disk.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Utilities.FileReader.stream">
+            <summary>
+            File system handle to the target file.
+            </summary>
+        </member>
+        <member name="F:Cavern.Format.Utilities.FileReader.maxCacheSize">
+            <summary>
+            Number of bytes to cache at max.
+            </summary>
+        </member>
+        <member name="M:Cavern.Format.Utilities.FileReader.#ctor(System.String,System.Int64)">
+            <summary>
+            Open a file for reading with this class.
+            </summary>
+            <param name="fileName">Path to open the file from</param>
+            <param name="maxCacheSize">Number of bytes to cache at max (default: 50 MB)</param>
+        </member>
+        <member name="M:Cavern.Format.Utilities.FileReader.Dispose">
+            <summary>
+            Close the file handle.
+            </summary>
         </member>
     </members>
 </doc>
