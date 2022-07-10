@@ -2,9 +2,7 @@
 
 namespace SpleeterToMultichannel {
     public class Recombiner : Renderer {
-        public Recombiner(MainWindow window, TaskEngine engine) : base(window, engine) {
-            RenderChannels = 2;
-        }
+        public Recombiner(TaskEngine engine, byte? lowpass) : base(engine, lowpass) => RenderChannels = 2;
 
         public override void Render(float[] source, float[] target, Instrument instrument, double progressGap) {
             double progressSrc = engine.Progress;

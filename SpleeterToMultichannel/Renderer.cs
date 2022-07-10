@@ -1,4 +1,5 @@
-﻿using Cavern.Format;
+﻿using Cavern.Filters;
+using Cavern.Format;
 using Cavern.QuickEQ;
 using Cavern.Utilities;
 using System;
@@ -12,14 +13,14 @@ namespace SpleeterToMultichannel {
     public class Renderer {
         internal const long ioBlockSize = 1 << 18;
 
-        readonly MainWindow window;
         protected readonly TaskEngine engine;
+        protected readonly byte? lowpass;
 
         public int RenderChannels { get; protected set; } = 8;
 
-        public Renderer(MainWindow window, TaskEngine engine) {
-            this.window = window;
+        public Renderer(TaskEngine engine, byte? lowpass) {
             this.engine = engine;
+            this.lowpass = lowpass;
         }
 
         internal void ProcessError(string message) {
@@ -119,9 +120,16 @@ namespace SpleeterToMultichannel {
             float peak = WaveformUtils.GetPeak(finalMix);
 
             if (peak != 1) {
-                engine.UpdateProgressBar(.85 * progressMul + progressStart);
+                engine.UpdateProgressBar(.83 * progressMul + progressStart);
                 engine.UpdateStatus("Normalizing...");
                 WaveformUtils.Gain(finalMix, 1 / peak);
+            }
+
+            if (RenderChannels > 4 && lowpass.HasValue) {
+                engine.UpdateProgressBar(.86 * progressMul + progressStart);
+                engine.UpdateStatus("Applying LFE lowpass...");
+                Lowpass filter = new(spleet.SampleRate, lowpass.Value);
+                filter.Process(finalMix, 3, RenderChannels);
             }
 
             engine.UpdateProgressBar(.9 * progressMul + progressStart);
@@ -137,7 +145,9 @@ namespace SpleeterToMultichannel {
                 }
             }
 
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             finalMix = null;
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
             GC.Collect();
 
             engine.UpdateProgressBar(progressMul + progressStart);

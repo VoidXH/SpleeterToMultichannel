@@ -15,10 +15,11 @@ namespace SpleeterToMultichannel {
         public Scheduler(MainWindow window, TaskEngine engine) {
             this.window = window;
             this.engine = engine;
-            if (window.multichannel.IsChecked.Value) // TODO: save decision
-                renderer = new Renderer(window, engine);
+            byte? lowpass = window.lfeLowpass.IsChecked.Value ? (byte)window.lfeLowpassFreq.Value : null;
+            if (window.multichannel.IsChecked.Value)
+                renderer = new Renderer(engine, lowpass);
             else
-                renderer = new Recombiner(window, engine);
+                renderer = new Recombiner(engine, lowpass);
         }
 
         public void Run(string path) {

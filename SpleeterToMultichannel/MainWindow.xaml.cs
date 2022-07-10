@@ -50,6 +50,9 @@ namespace SpleeterToMultichannel {
                 other.SelectedIndex = Settings.Default.Other;
                 otherLFE.IsChecked = Settings.Default.OtherLFE;
                 otherGain.Value = Settings.Default.OtherGain;
+                recombiner.IsChecked = Settings.Default.stereoRenderer;
+                lfeLowpass.IsChecked = Settings.Default.lfeLowpass;
+                lfeLowpassFreq.Value = Settings.Default.lfeLowpassFreq;
             }
         }
 
@@ -70,6 +73,9 @@ namespace SpleeterToMultichannel {
             Settings.Default.Other = other.SelectedIndex;
             Settings.Default.OtherLFE = otherLFE.IsChecked.Value;
             Settings.Default.OtherGain = (short)otherGain.Value;
+            Settings.Default.stereoRenderer = recombiner.IsChecked.Value;
+            Settings.Default.lfeLowpass = lfeLowpass.IsChecked.Value;
+            Settings.Default.lfeLowpassFreq = (byte)lfeLowpassFreq.Value;
             Settings.Default.Save();
             base.OnClosed(e);
         }
@@ -121,15 +127,18 @@ namespace SpleeterToMultichannel {
             other.SelectedIndex = (int)UpmixOption.Full;
             otherLFE.IsChecked = false;
             otherGain.Value = 0;
+            multichannel.IsChecked = true;
+            lfeLowpass.IsChecked = true;
+            lfeLowpassFreq.Value = 80;
         }
 
         void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");
 
         void Process(object sender, RoutedEventArgs e) {
             if (path == null && Directory.Exists(browser.SelectedPath)) {
-                if (MessageBox.Show($"You did not select a folder but last time you selected {PathDisplay(browser.SelectedPath)}. " +
-                    "Do you want to process that folder?", "Folder selection", MessageBoxButton.YesNo, MessageBoxImage.Question) ==
-                    MessageBoxResult.Yes) {
+                if (MessageBox.Show($"You did not select a folder but last time you selected " +
+                    $"{PathDisplay(browser.SelectedPath)}. Do you want to process that folder?",
+                    "Folder selection", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) {
                     path = browser.SelectedPath;
                     folder.Text = PathDisplay(path);
                 }

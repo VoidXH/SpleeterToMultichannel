@@ -11,11 +11,18 @@
         Skip
     }
 
+    /// <summary>
+    /// Contains how to mix a stereo input to the 8 target reference channels.
+    /// </summary>
     public class OutputMatrix {
         /// <summary>
-        /// Channel order: L, R, C, LFE, RL, RR, SL, SR.
+        /// Gain of the left input channel to mix to L, R, C, LFE, RL, RR, SL, SR, in this order.
         /// </summary>
         public float[] LeftInput { get; }
+
+        /// <summary>
+        /// Gain of the right input channel to mix to L, R, C, LFE, RL, RR, SL, SR, in this order.
+        /// </summary>
         public float[] RightInput { get; }
 
         /// <summary>
