@@ -4,6 +4,172 @@
         <name>Cavern.QuickEQ</name>
     </assembly>
     <members>
+        <member name="T:Cavern.QuickEQ.NonGeneralizedCurveException">
+            <summary>
+            Tells that an EQ Curve can't be created by a generic switch.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.NonGeneralizedCurveException.#ctor">
+            <summary>
+            Tells that an EQ Curve can't be created by a generic switch.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Crossover.BasicCrossover">
+            <summary>
+            A generic crossover used most of the time. This will use Equalizer APO's included lowpass/highpass filters to create the crossover,
+            but that can be overridden to create any custom mains-to-LFE crossover function.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.BasicCrossover.#ctor(System.Single[],System.Boolean[])">
+            <summary>
+            Create a biquad crossover with frequencies for each channel. Only values over 0 mean crossovered channels.
+            </summary>
+            <param name="frequencies">Crossover frequencies for each channel, only values over 0 mean crossovered channels</param>
+            <param name="subs">Channels to route bass to</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.BasicCrossover.ExportToEqualizerAPO(System.Collections.Generic.List{System.String})">
+            <summary>
+            Attach the crossover to an Equalizer APO configuration file in the making.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Crossover.CavernCrossover">
+            <summary>
+            A FIR brickwall crossover, first introduced in Cavern.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.CavernCrossover.#ctor(System.Single[],System.Boolean[])">
+            <summary>
+            Creates a FIR brickwall crossover, first introduced in Cavern.
+            </summary>
+            <param name="frequencies">Crossover frequencies for each channel, only values over 0 mean crossovered channels</param>
+            <param name="subs">Channels to route bass to</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.CavernCrossover.AddHighpass(System.Collections.Generic.List{System.String},System.Single)">
+            <summary>
+            Add the filter's interpretation of highpass to the previously selected channel in a WIP configuration file.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.CavernCrossover.AddLowpass(System.Collections.Generic.List{System.String},System.Single)">
+            <summary>
+            Add the filter's interpretation of lowpass to the previously selected channel in a WIP configuration file.
+            </summary>
+            <remarks>Don't forget to call AddExtraOperations, this is generally the best place for it.</remarks>
+        </member>
+        <member name="T:Cavern.QuickEQ.Crossover.CrossoverType">
+            <summary>
+            Supported types of crossovers.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.CrossoverType.Biquad">
+            <summary>
+            Crossover made of generic 2nd order highpass/lowpass filters.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.CrossoverType.Cavern">
+            <summary>
+            Brickwall FIR crossover.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.CrossoverType.SyntheticBiquad">
+            <summary>
+            FIR realization of <see cref="F:Cavern.QuickEQ.Crossover.CrossoverType.Biquad"/>, without any phase distortions.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Crossover.Crossover">
+            <summary>
+            A crossover to modify an Equalizer APO configuration file with.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.Crossover.extraOperations">
+            <summary>
+            Extra Equalizer APO commands to be performed on crossovered channels, like adding Sealing as convolution.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.Crossover.frequencies">
+            <summary>
+            Crossover frequencies for each channel. Only values over 0 mean crossovered channels.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.Crossover.subs">
+            <summary>
+            Channels to route bass to. The energy will remain constant.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.#ctor(System.Single[],System.Boolean[])">
+            <summary>
+            Create a crossover with frequencies for each channel. Only values over 0 mean crossovered channels.
+            </summary>
+            <param name="frequencies">Crossover frequencies for each channel, only values over 0 mean crossovered channels</param>
+            <param name="subs">Channels to route bass to</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.Create(Cavern.QuickEQ.Crossover.CrossoverType,System.Single[],System.Boolean[])">
+            <summary>
+            Create the appropriate type of <see cref="T:Cavern.QuickEQ.Crossover.Crossover"/> object for the selected <paramref name="type"/>.
+            </summary>
+            <param name="frequencies">Crossover frequencies for each channel, only values over 0 mean crossovered channels</param>
+            <param name="subs">Channels to route bass to</param>
+            <param name="type">The type of crossover to use</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.ExportToEqualizerAPO(System.Collections.Generic.List{System.String})">
+            <summary>
+            Attach the crossover to an Equalizer APO configuration file in the making.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.AddHighpass(System.Collections.Generic.List{System.String},System.Single)">
+            <summary>
+            Add the filter's interpretation of highpass to the previously selected channel in a WIP configuration file.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.AddLowpass(System.Collections.Generic.List{System.String},System.Single)">
+            <summary>
+            Add the filter's interpretation of lowpass to the previously selected channel in a WIP configuration file.
+            </summary>
+            <remarks>Don't forget to call <see cref="M:Cavern.QuickEQ.Crossover.Crossover.AddExtraOperations(System.Collections.Generic.List{System.String})"/>, this is generally the best place for it.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.GetSubLabels">
+            <summary>
+            Get the labels of channels to route bass to.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.GetCrossoverGroups">
+            <summary>
+            For each frequency, get which channels are using it for crossover.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.Crossover.AddExtraOperations(System.Collections.Generic.List{System.String})">
+            <summary>
+            Add the <see cref="F:Cavern.QuickEQ.Crossover.Crossover.extraOperations"/> to the crossovered signal.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Crossover.Crossover.minus10dB">
+            <summary>
+            Use this value to mix crossover results to an LFE channel.
+            The LFE's level is over the mains with 10 dB, this results in level matching.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Crossover.SyntheticBiquadCrossover">
+            <summary>
+            The generally used 2nd order highpass/lowpass, but without the phase distortions by applying the spectrum with FIR filters.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.SyntheticBiquadCrossover.#ctor(System.Single[],System.Boolean[])">
+            <summary>
+            Creates a phase distortion-less <see cref="T:Cavern.QuickEQ.Crossover.BasicCrossover"/>.
+            </summary>
+            <param name="frequencies">Crossover frequencies for each channel, only values over 0 mean crossovered channels</param>
+            <param name="subs">Channels to route bass to</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.SyntheticBiquadCrossover.AddHighpass(System.Collections.Generic.List{System.String},System.Single)">
+            <summary>
+            Add the filter's interpretation of highpass to the previously selected channel in a WIP configuration file.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Crossover.SyntheticBiquadCrossover.AddLowpass(System.Collections.Generic.List{System.String},System.Single)">
+            <summary>
+            Add the filter's interpretation of lowpass to the previously selected channel in a WIP configuration file.
+            </summary>
+            <remarks>Don't forget to call AddExtraOperations, this is generally the best place for it.</remarks>
+        </member>
         <member name="T:Cavern.QuickEQ.EQCurves.Bandpass">
             <summary>
             Bandpass EQ curve, recommended for stage subwoofers.
@@ -24,9 +190,18 @@
             Bandpass gain loss compensation.
             </summary>
         </member>
+        <member name="M:Cavern.QuickEQ.EQCurves.Bandpass.#ctor(System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Bandpass EQ curve, with the default settings recommended for stage subwoofers: maximum flatness, first order, 6 dB gain.
+            </summary>
+            <param name="lowFreq">Low frequency (highpass) cutoff knee</param>
+            <param name="highFreq">High frequency (lowpass) cutoff knee</param>
+            <param name="sampleRate">Sample rate of the system to be EQ'd</param>
+            <param name="resolution">Sample resolution for <see cref="P:Cavern.QuickEQ.EQCurves.Bandpass.Item(System.Double)"/>, must be a power of 2</param>
+        </member>
         <member name="M:Cavern.QuickEQ.EQCurves.Bandpass.#ctor(System.Double,System.Double,System.Int32,System.Int32,System.Double,System.Int32,System.Double)">
             <summary>
-            Bandpass EQ curve, recommended for stage subwoofers.
+            Bandpass EQ curve with custom Q-factor, order, and gain.
             </summary>
             <param name="lowFreq">Low frequency (highpass) cutoff knee</param>
             <param name="highFreq">High frequency (lowpass) cutoff knee</param>
@@ -155,13 +330,6 @@
             Get the curve's gain in decibels at a given frequency.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.Depth.GenerateLinearCurve(System.Int32,System.Int32)">
-            <summary>
-            Generate a linear curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
-        </member>
         <member name="M:Cavern.QuickEQ.EQCurves.Depth.GenerateLinearCurve(System.Int32,System.Int32,System.Single)">
             <summary>
             Generate a linear curve for correction generators.
@@ -169,15 +337,6 @@
             <param name="length">Curve length</param>
             <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.Depth.GenerateLinearCurve(System.Int32,System.Int32)"/>, it's faster.</remarks>
-        </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.Depth.GenerateLogCurve(System.Double,System.Double,System.Int32)">
-            <summary>
-            Generate a logarithmic curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.Depth.GenerateLogCurve(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
@@ -187,16 +346,10 @@
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.Depth.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
         </member>
         <member name="T:Cavern.QuickEQ.EQCurves.EQCurve">
             <summary>
             Equalizer curve processing.
-            </summary>
-        </member>
-        <member name="F:Cavern.QuickEQ.EQCurves.EQCurve.constructorException">
-            <summary>
-            Returned when an EQ Curve can't be created by a generic switch.
             </summary>
         </member>
         <member name="P:Cavern.QuickEQ.EQCurves.EQCurve.Item(System.Double)">
@@ -211,19 +364,18 @@
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32)">
             <summary>
-            Generate a linear curve for correction generators.
+            Generate a linear curve for correction generators with no additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32,System.Single)">
             <summary>
-            Generate a linear curve for correction generators.
+            Generate a linear curve for correction generators with an additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurve(System.Int32,System.Int32)"/>, it's faster.</remarks>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLinearCurveOptimized(System.Int32,System.Int32,System.Single)">
             <summary>
@@ -234,7 +386,7 @@
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)">
             <summary>
-            Generate a logarithmic curve for correction generators.
+            Generate a logarithmic curve for correction generators with no additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="startFreq">Frequency at the beginning of the curve</param>
@@ -242,14 +394,12 @@
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurve(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
-            Generate a logarithmic curve for correction generators.
+            Generate a logarithmic curve for correction generators with an additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use
-            <see cref="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.EQCurve.GenerateLogCurveOptimized(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
@@ -329,13 +479,6 @@
             Get the curve's gain in decibels at a given frequency.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.Punch.GenerateLinearCurve(System.Int32,System.Int32)">
-            <summary>
-            Generate a linear curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
-        </member>
         <member name="M:Cavern.QuickEQ.EQCurves.Punch.GenerateLinearCurve(System.Int32,System.Int32,System.Single)">
             <summary>
             Generate a linear curve for correction generators.
@@ -343,15 +486,6 @@
             <param name="length">Curve length</param>
             <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.Punch.GenerateLinearCurve(System.Int32,System.Int32)"/>, it's faster.</remarks>
-        </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.Punch.GenerateLogCurve(System.Double,System.Double,System.Int32)">
-            <summary>
-            Generate a logarithmic curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.Punch.GenerateLogCurve(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
@@ -361,7 +495,6 @@
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.Punch.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
         </member>
         <member name="T:Cavern.QuickEQ.EQCurves.RoomCurve">
             <summary>
@@ -398,29 +531,13 @@
             Get the curve's gain in decibels at a given frequency.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLinearCurve(System.Int32,System.Int32)">
-            <summary>
-            Generate a linear curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
-        </member>
         <member name="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLinearCurve(System.Int32,System.Int32,System.Single)">
             <summary>
-            Generate a linear curve for correction generators.
+            Generate a linear curve for correction generators with an additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLinearCurve(System.Int32,System.Int32)"/>, it's faster.</remarks>
-        </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)">
-            <summary>
-            Generate a logarithmic curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLogCurve(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
@@ -430,19 +547,23 @@
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.RoomCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.EQCurves.RoomCurve.FinalizeKnees(System.Int32@,System.Int32@,System.Int32)">
+            <summary>
+            Set the knees' positions within limits in case the curve is too short.
+            </summary>
         </member>
         <member name="T:Cavern.QuickEQ.EQCurves.Smoother">
             <summary>
             An EQ curve that smooths out inter-channel differences while keeping the system's sound character.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.Smoother.#ctor(System.Single[][],System.Int32)">
+        <member name="M:Cavern.QuickEQ.EQCurves.Smoother.#ctor(Cavern.QuickEQ.Equalization.Equalizer[])">
             <summary>
             Create a custom EQ curve from a source stored as an Equalier.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.Smoother.MakeCurve(System.Single[][],System.Int32)">
+        <member name="M:Cavern.QuickEQ.EQCurves.Smoother.MakeCurve(Cavern.QuickEQ.Equalization.Equalizer[])">
             <summary>
             Create a target EQ from raw frequency responses, by averaging and smoothing the channels.
             </summary>
@@ -482,39 +603,27 @@
             Get the curve's gain in decibels at a given frequency.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.XCurve.GenerateLinearCurve(System.Int32,System.Int32)">
-            <summary>
-            Generate a linear curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
-        </member>
         <member name="M:Cavern.QuickEQ.EQCurves.XCurve.GenerateLinearCurve(System.Int32,System.Int32,System.Single)">
             <summary>
-            Generate a linear curve for correction generators.
+            Generate a linear curve for correction generators with an additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="sampleRate">Sample rate of the measurement that the generated curve will be used for</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.XCurve.GenerateLinearCurve(System.Int32,System.Int32)"/>, it's faster.</remarks>
-        </member>
-        <member name="M:Cavern.QuickEQ.EQCurves.XCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)">
-            <summary>
-            Generate a logarithmic curve for correction generators.
-            </summary>
-            <param name="length">Curve length</param>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
         </member>
         <member name="M:Cavern.QuickEQ.EQCurves.XCurve.GenerateLogCurve(System.Double,System.Double,System.Int32,System.Single)">
             <summary>
-            Generate a logarithmic curve for correction generators.
+            Generate a logarithmic curve for correction generators with an additional gain.
             </summary>
             <param name="length">Curve length</param>
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
             <param name="gain">Curve reference level</param>
-            <remarks>For uses where gain is not needed, use <see cref="M:Cavern.QuickEQ.EQCurves.XCurve.GenerateLogCurve(System.Double,System.Double,System.Int32)"/>, it's faster.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.EQCurves.XCurve.FinalizeKnees(System.Int32@,System.Int32@,System.Int32)">
+            <summary>
+            Set the knees' positions within limits in case the curve is too short.
+            </summary>
         </member>
         <member name="T:Cavern.QuickEQ.Equalization.Band">
             <summary>
@@ -528,12 +637,27 @@
         </member>
         <member name="P:Cavern.QuickEQ.Equalization.Band.Gain">
             <summary>
-            Gain at <see cref="P:Cavern.QuickEQ.Equalization.Band.Frequency"/> in dB.
+            Gain at <see cref="P:Cavern.QuickEQ.Equalization.Band.Frequency"/> in decibels.
             </summary>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.Band.#ctor(System.Double,System.Double)">
             <summary>
             EQ band constructor.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Band.op_Addition(Cavern.QuickEQ.Equalization.Band,System.Double)">
+            <summary>
+            Add gain in decibels to this band.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Band.op_Subtraction(Cavern.QuickEQ.Equalization.Band,System.Double)">
+            <summary>
+            Subtract gain in decibels from this band.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Band.op_Multiply(Cavern.QuickEQ.Equalization.Band,System.Double)">
+            <summary>
+            Set gain for this band.
             </summary>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.Band.ToString">
@@ -551,41 +675,120 @@
             Equalizer generation functions.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.CorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single,System.Double,System.Single)">
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.CorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single)">
             <summary>
             Generate an equalizer setting to flatten the processed response of
-            <see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>. The maximum gain on any band
+            will not pass the recommended maximum of 6 dB. The default resolution of 1/3 octaves will be used.
             </summary>
             <param name="graph">Graph to equalize, a pre-applied smoothing
-            (<see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
+            (<see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
             <param name="startFreq">Frequency at the beginning of the graph</param>
             <param name="endFreq">Frequency at the end of the graph</param>
             <param name="targetCurve">Match the frequency response to this EQ curve</param>
-            <param name="resolution">Band diversity in octaves</param>
             <param name="targetGain">Target EQ level</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.CorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single,System.Double)">
+            <summary>
+            Generate an equalizer setting to flatten the processed response of
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>. The maximum gain on any band
+            will not pass the recommended maximum of 6 dB.
+            </summary>
+            <param name="graph">Graph to equalize, a pre-applied smoothing
+            (<see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
+            <param name="startFreq">Frequency at the beginning of the graph</param>
+            <param name="endFreq">Frequency at the end of the graph</param>
+            <param name="targetCurve">Match the frequency response to this EQ curve</param>
+            <param name="targetGain">Target EQ level</param>
+            <param name="resolution">Band diversity in octaves</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.CorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single,System.Double,System.Single)">
+            <summary>
+            Generate an equalizer setting to flatten the processed response of
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
+            </summary>
+            <param name="graph">Graph to equalize, a pre-applied smoothing
+            (<see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
+            <param name="startFreq">Frequency at the beginning of the graph</param>
+            <param name="endFreq">Frequency at the end of the graph</param>
+            <param name="targetCurve">Match the frequency response to this EQ curve</param>
+            <param name="targetGain">Target EQ level</param>
+            <param name="resolution">Band diversity in octaves</param>
             <param name="maxGain">Maximum gain of any generated band</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.AutoCorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single)">
+            <summary>
+            Generate a precise equalizer setting to flatten the processed response of
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.The maximum gain on any band
+            will not pass the recommended maximum of 6 dB.
+            </summary>
+            <param name="graph">Graph to equalize, a pre-applied smoothing
+            (<see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
+            <param name="startFreq">Frequency at the beginning of the graph</param>
+            <param name="endFreq">Frequency at the end of the graph</param>
+            <param name="targetCurve">Match the frequency response to this EQ curve</param>
+            <param name="targetGain">Target EQ level</param>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.AutoCorrectGraph(System.Single[],System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve,System.Single,System.Single)">
             <summary>
             Generate a precise equalizer setting to flatten the processed response of
-            <see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/>.
             </summary>
             <param name="graph">Graph to equalize, a pre-applied smoothing
-            (<see cref="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
+            (<see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)"/> is strongly recommended</param>
             <param name="startFreq">Frequency at the beginning of the graph</param>
             <param name="endFreq">Frequency at the end of the graph</param>
             <param name="targetCurve">Match the frequency response to this EQ curve</param>
             <param name="targetGain">Target EQ level</param>
             <param name="maxGain">Maximum gain of any generated band</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.Average(Cavern.QuickEQ.Equalization.Equalizer[])">
+            <summary>
+            Get the average gains of multiple equalizers. The averaging happens in linear space.
+            </summary>
+            <remarks>All <paramref name="sources"/> must have an equal number of bands at the same frequencies.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.AverageSafe(Cavern.QuickEQ.Equalization.Equalizer[])">
+            <summary>
+            Get the average gains of multiple equalizers, regardless of how many bands they have. The averaging happens in linear space.
+            </summary>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FlattenSpectrum(Cavern.Utilities.Complex[],System.Int32)">
             <summary>
             Create an EQ that completely linearizes the <paramref name="spectrum"/>.
             </summary>
         </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32)">
+            <summary>
+            Gets a zero-delay convolution filter with minimally sacrificed phase that results in this EQ when applied.
+            Additional gain will not be applied, and the filter's length will be the default of 1024 samples.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Int32)">
+            <summary>
+            Gets a zero-delay convolution filter with minimally sacrificed phase that results in this EQ when applied.
+            Additional gain will not be applied.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
+            <param name="length">Length of the convolution filter in samples, must be a power of 2</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Gets a zero-delay convolution filter with minimally sacrificed phase that results in this EQ when applied.
+            Additional gain will be applied.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
+            <param name="length">Length of the convolution filter in samples, must be a power of 2</param>
+            <param name="gain">Signal voltage multiplier</param>
+        </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Int32,System.Single,Cavern.Utilities.Complex[])">
             <summary>
             Gets a zero-delay convolution filter with minimally sacrificed phase that results in this EQ when applied.
+            The initial curve can be provided in Fourier-space.
             </summary>
             <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
             <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
@@ -594,9 +797,37 @@
             <param name="initial">Custom initial spectrum to apply the EQ on - phases will be corrected, this is not convolved,
             and has to be twice the size of <paramref name="length"/></param>
         </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetLinearConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32)">
+            <summary>
+            Gets a linear phase convolution filter that results in this EQ when applied.
+            Additional gain will not be applied, and the filter's length will be the default of 1024 samples.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetLinearConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Int32)">
+            <summary>
+            Gets a linear phase convolution filter that results in this EQ when applied.
+            Additional gain will not be applied.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
+            <param name="length">Length of the convolution filter in samples, must be a power of 2</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetLinearConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Int32,System.Single)">
+            <summary>
+            Gets a linear phase convolution filter that results in this EQ when applied.
+            Additional gain will be applied.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
+            <param name="length">Length of the convolution filter in samples, must be a power of 2</param>
+            <param name="gain">Signal voltage multiplier</param>
+        </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetLinearConvolution(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Int32,System.Single,Cavern.Utilities.Complex[])">
             <summary>
             Gets a linear phase convolution filter that results in this EQ when applied.
+            The initial curve can be provided in Fourier-space.
             </summary>
             <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
             <param name="sampleRate">Sample rate of the target system the convolution filter could be used on</param>
@@ -604,6 +835,14 @@
             <param name="gain">Signal voltage multiplier</param>
             <param name="initial">Custom initial spectrum to apply the EQ on - phases will be corrected, this is not convolved,
             and has to be twice the size of <paramref name="length"/></param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetPeakingEQ(Cavern.QuickEQ.Equalization.Equalizer,System.Int32)">
+            <summary>
+            Create a peaking EQ filter set with bands at the positions of the EQ's bands to approximate the drawn EQ curve.
+            The default of 2 octave smoothing will be used.
+            </summary>
+            <param name="eq">Source <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/></param>
+            <param name="sampleRate">Target system sample rate</param>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.GetPeakingEQ(Cavern.QuickEQ.Equalization.Equalizer,System.Int32,System.Double)">
             <summary>
@@ -613,7 +852,17 @@
             <param name="sampleRate">Target system sample rate</param>
             <param name="smoothing">Smooth out band spikes</param>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromGraph(System.Single[],System.Single,System.Single)">
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromTransferFunction(Cavern.Utilities.Complex[],System.Int32)">
+            <summary>
+            Parse an Equalizer from a linear transfer function.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromTransferFunctionOptimized(Cavern.Utilities.Complex[],System.Int32)">
+            <summary>
+            Parse an Equalizer from a linear transfer function, but merge samples in logarithmic gaps (keep the octave range constant).
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromGraph(System.Single[],System.Double,System.Double)">
             <summary>
             Parse an Equalizer from a drawn graph.
             </summary>
@@ -622,6 +871,12 @@
             <summary>
             Parse a calibration array where entries are in frequency-gain (dB) pairs.
             </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromCalibration(System.String)">
+            <summary>
+            Parse a calibration text where each line is a frequency-gain (dB) pair.
+            </summary>
+            <param name="contents">Contents of the calibration file</param>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.EQGenerator.FromCalibration(System.String[])">
             <summary>
@@ -645,6 +900,36 @@
             Bands that make up this equalizer.
             </summary>
         </member>
+        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.Item(System.Double)">
+            <summary>
+            Gets the gain at a given frequency.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.SubsonicFilter">
+            <summary>
+            Cut off low frequencies that are out of the channel's frequency range.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.SubsonicRolloff">
+            <summary>
+            Subsonic filter rolloff in dB / octave.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.PeakGain">
+            <summary>
+            The highest gain in this EQ.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.StartFrequency">
+            <summary>
+            Frequency of the leftmost band.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.EndFrequency">
+            <summary>
+            Frequency of the rightmost band.
+            </summary>
+        </member>
         <member name="M:Cavern.QuickEQ.Equalization.Equalizer.#ctor">
             <summary>
             Equalizer data collector and exporter.
@@ -656,29 +941,9 @@
             </summary>
             <remarks>The list of bands must be sorted.</remarks>
         </member>
-        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.Item(System.Double)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Clone">
             <summary>
-            Gets the gain at a given frequency.
-            </summary>
-        </member>
-        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.SubsonicFilter">
-            <summary>
-            Cut off low frequencies that are out of the channel's frequency range.
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Modify(System.Action)">
-            <summary>
-            Frame modifications to not break subsonic filtering.
-            </summary>
-        </member>
-        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.SubsonicRolloff">
-            <summary>
-            Subsonic filter rolloff in dB / octave.
-            </summary>
-        </member>
-        <member name="P:Cavern.QuickEQ.Equalization.Equalizer.PeakGain">
-            <summary>
-            The highest gain in this EQ.
+            Create a copy of this EQ with the same bands.
             </summary>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.Equalizer.AddBand(Cavern.QuickEQ.Equalization.Band)">
@@ -703,44 +968,144 @@
             Reset this EQ.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.VisualizeLinear(System.Double,System.Double,System.Int32)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Offset(System.Double)">
             <summary>
-            Shows the EQ curve in a linearly scaled frequency axis.
+            Add gain in decibels to all bands.
             </summary>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
-            <param name="length">Points on the curve</param>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.FrequenciesLinear(System.Double,System.Double,System.Int32)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.HasTheSameFrequenciesAs(Cavern.QuickEQ.Equalization.Equalizer)">
             <summary>
-            Gets the corresponding frequencies for <see cref="M:Cavern.QuickEQ.Equalization.Equalizer.VisualizeLinear(System.Double,System.Double,System.Int32)"/>.
+            Compares the two EQs if they have values at the same frequencies.
             </summary>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
-            <param name="length">Points on the curve</param>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Visualize(System.Double,System.Double,System.Int32)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Invert">
             <summary>
-            Shows the EQ curve in a logarithmically scaled frequency axis.
+            Flip the <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> vertically.
             </summary>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
-            <param name="length">Points on the curve</param>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Frequencies(System.Double,System.Double,System.Int32)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Calibrate(Cavern.QuickEQ.Equalization.Equalizer)">
             <summary>
-            Gets the corresponding frequencies for <see cref="M:Cavern.QuickEQ.Equalization.Equalizer.Visualize(System.Double,System.Double,System.Int32)"/>.
+            Calibrate this Equalizer with another: keep the frequencies and subtract the recording device's added gains.
             </summary>
-            <param name="startFreq">Frequency at the beginning of the curve</param>
-            <param name="endFreq">Frequency at the end of the curve</param>
-            <param name="length">Points on the curve</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Merge(Cavern.QuickEQ.Equalization.Equalizer)">
+            <summary>
+            Merge this Equalizer with another, summing their gains.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.ValleyCorrection(System.Single[],Cavern.QuickEQ.EQCurves.EQCurve,System.Double,System.Double,System.Single)">
+            <summary>
+            Remove correction from spectrum vallies that are most likely measurement errors or uncorrectable room modes.
+            The maximum gain increase is 6 dB, any band that needs more than this is considered a valley.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.ValleyCorrection(System.Single[],Cavern.QuickEQ.EQCurves.EQCurve,System.Double,System.Double,System.Single,System.Single)">
+            <summary>
+            Remove correction from spectrum vallies that are most likely measurement errors or uncorrectable room modes.
+            The maximum gain increase is defined in the <paramref name="maxGain"/> parameter in decibels,
+            anyt band that needs more than this is considered a valley.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Modify(System.Action)">
+            <summary>
+            Frame modifications to not break subsonic filtering.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.RecalculatePeakGain">
+            <summary>
+            Determine the highest amplification of the filter.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.AddSlope(System.Double,System.Double,System.Double)">
+            <summary>
+            Apply a slope (in decibels, per octave) between two frequencies.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.AlignTo(Cavern.QuickEQ.Equalization.Equalizer)">
+            <summary>
+            Set this equalizer so if the <paramref name="other"/> is linear, this will be the difference from it.
+            </summary>
+            <remarks>Matching frequencies have to be guaranteed before calling this function with
+            <see cref="M:Cavern.QuickEQ.Equalization.Equalizer.HasTheSameFrequenciesAs(Cavern.QuickEQ.Equalization.Equalizer)"/>.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Downsample(System.Int32)">
+            <summary>
+            Decrease the number of bands to this number at max. The function guarantees that a constant range
+            between old bands is kept.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.DownsampleLogarithmically(System.Int32,System.Double,System.Double)">
+            <summary>
+            Change the number of bands to a fixed value by resampling the curve on a logarithmic scale.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Limit(System.Double,System.Double)">
+            <summary>
+            Limit the application range of the EQ.
+            </summary>
+            <param name="startFreq">Bottom cutoff frequency</param>
+            <param name="endFreq">Top cutoff frequency</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Limit(System.Double,System.Double,Cavern.QuickEQ.EQCurves.EQCurve)">
+            <summary>
+            Limit the application range of the EQ, and conform the gain of the cut parts to the target curve.
+            </summary>
+            <param name="startFreq">Bottom cutoff frequency</param>
+            <param name="endFreq">Top cutoff frequency</param>
+            <param name="targetCurve">If set, the cuts will conform to this curve</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.LimitPeaks(System.Double)">
+            <summary>
+            Make sure the EQ won't go over the desired <paramref name="peak"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.MonotonousDecrease(System.Double,System.Double)">
+            <summary>
+            Make sure that in the given range, all subsequent gains are smaller.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.MonotonousIncrease(System.Double,System.Double)">
+            <summary>
+            Make sure that in the given range, all subsequent gains are larger.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Normalize">
+            <summary>
+            Set the average gain of the curve to 0 dB.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Normalize(System.Double,System.Double)">
+            <summary>
+            Set the average gain of the curve to 0 dB between frequency limits.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Resample(System.Collections.Generic.IReadOnlyList{Cavern.QuickEQ.Equalization.Band})">
+            <summary>
+            Change the frequencies contained in this <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/>.
+            </summary>
+            <param name="frequencies">Use the frequencies of these bands</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Smooth(System.Double)">
+            <summary>
+            Apply smoothing on this <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> with a window of a given octave.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Window(Cavern.QuickEQ.Window,System.Double,System.Double)">
+            <summary>
+            Add windowing on the right of the curve. Windowing is applied logarithmically.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.GetFirstBand(System.Double)">
+            <summary>
+            Get which band is the first after a given <paramref name="freq"/>uency. Returns -1 if such a band was not found.
+            </summary>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Apply(System.Single[],System.Double,System.Double)">
             <summary>
             Shows the resulting frequency response if this EQ is applied.
             </summary>
             <param name="response">Frequency response curve to apply the EQ on, from
-            <see cref="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/></param>
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/></param>
             <param name="startFreq">Frequency at the beginning of the curve</param>
             <param name="endFreq">Frequency at the end of the curve</param>
         </member>
@@ -751,19 +1116,83 @@
             <param name="response">Frequency response to apply the EQ on</param>
             <param name="sampleRate">Sample rate where <paramref name="response"/> was generated</param>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Merge(Cavern.QuickEQ.Equalization.Equalizer)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Export(System.String,System.Double,System.String)">
             <summary>
-            Merge this Equalizer with another, summing their gains.
+            Save this EQ to a file in the standard curve/calibration format.
+            </summary>
+            <param name="path">Export path of the file</param>
+            <param name="level">Gain at the center of the curve</param>
+            <param name="header">Extra text to be added to the first line of the file</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.ExportToDirac(System.String,System.Double,System.String)">
+            <summary>
+            Save this EQ to a file in Dirac's curve format.
+            </summary>
+            <param name="path">Export path of the file</param>
+            <param name="level">Gain at the center of the curve</param>
+            <param name="header">Extra text to be added to the first line of the file</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.ExportToEqualizerAPO">
+            <summary>
+            Get a line in an Equalizer APO configuration file that applies this EQ.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.GetAverageLevel(System.Double,System.Double,System.Double)">
+            <summary>
+            Get the average level between the rolloff points (-<paramref name="range"/> dB points)
+            of the curve drawn by this <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/>. <paramref name="stableRangeStart"/> and <paramref name="stableRangeEnd"/> are
+            the limits of a frequency band that can't be overly distorted on the curve and shall work for regression line calculation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.GetRegressionLine(System.Double,System.Double)">
+            <summary>
+            Get a line in the form of slope * log10(x) + intercept that fits the curve drawn by this <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/>.
+            The regression line will only be calculated on the bands between <paramref name="startFreq"/> and <paramref name="endFreq"/>.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.ValleyCorrection(System.Single[],Cavern.QuickEQ.EQCurves.EQCurve,System.Double,System.Double,System.Single,System.Single)">
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.GetRolloffs(System.Double,System.Double,System.Double)">
             <summary>
-            Remove correction from spectrum vallies that are most likely measurement errors or uncorrectable room modes.
+            Get the rolloff points of the EQ by fitting a line on it and finding the first and last points
+            with a given range in decibels below it. <paramref name="stableRangeStart"/> and <paramref name="stableRangeEnd"/> are
+            the limits of a frequency band that can't be overly distorted on the curve and shall work for regression line calculation.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.Visualize(System.Double,System.Double,System.Int32)">
+            <summary>
+            Shows the EQ curve in a logarithmically scaled frequency axis.
+            </summary>
+            <param name="startFreq">Frequency at the beginning of the curve</param>
+            <param name="endFreq">Frequency at the end of the curve</param>
+            <param name="length">Points on the curve</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.Equalizer.VisualizeLinear(System.Double,System.Double,System.Int32)">
+            <summary>
+            Shows the EQ curve in a linearly scaled frequency axis.
+            </summary>
+            <param name="startFreq">Frequency at the beginning of the curve</param>
+            <param name="endFreq">Frequency at the end of the curve</param>
+            <param name="length">Points on the curve</param>
+        </member>
+        <member name="F:Cavern.QuickEQ.Equalization.Equalizer.diracFooter">
+            <summary>
+            End of a Dirac calibration file. We don't need these features for FIR.
             </summary>
         </member>
         <member name="T:Cavern.QuickEQ.Equalization.PeakingEqualizer">
             <summary>
             Generates peaking EQ filter sets that try to match <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> curves.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MaxFrequency">
+            <summary>
+            Highest allowed frequency to place a filter at.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MinFrequency">
+            <summary>
+            Lowest allowed frequency to place a filter at.
             </summary>
         </member>
         <member name="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MaxGain">
@@ -792,252 +1221,308 @@
             The precision of Q will be <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.StartQ"/> / 2^<see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.Iterations"/>.
             </summary>
         </member>
+        <member name="F:Cavern.QuickEQ.Equalization.PeakingEqualizer.logMaxFreq">
+            <summary>
+            Base-10 logarithm of <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MaxFrequency"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Equalization.PeakingEqualizer.logMinFreq">
+            <summary>
+            Base-10 logarithm of <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MinFrequency"/>.
+            </summary>
+        </member>
         <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.#ctor(Cavern.QuickEQ.Equalization.Equalizer)">
             <summary>
             Generates peaking EQ filter sets that try to match <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> curves.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceStep(System.Single[],System.Single[]@)">
-            <summary>
-            Measure a filter candidate for <see cref="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceQ(System.Single[]@,System.Double,System.Double)"/>.
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceQ(System.Single[]@,System.Double,System.Double)">
-            <summary>
-            Find the filter with the best Q for the given frequency and gain in <paramref name="target"/>.
-            Correct <paramref name="target"/> to the frequency response with the inverse of the found filter.
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceBand(System.Single[]@,Cavern.QuickEQ.FilterAnalyzer,System.Int32,System.Int32)">
-            <summary>
-            Finds a <see cref="T:Cavern.Filters.PeakingEQ"/> to correct the worst problem on the input spectrum.
-            </summary>
-            <param name="target">Logarithmic input spectrum from 20 to sample rate/2 Hz</param>
-            <param name="analyzer">A filter analyzer with cached variables that shoudn't be computed again</param>
-            <param name="startPos">First band to analyze</param>
-            <param name="stopPos">Last band to analyze</param>
-            <remarks><paramref name="target"/> will be corrected to the frequency response with the found filter</remarks>
-        </member>
         <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.GetPeakingEQ(System.Int32,System.Int32)">
             <summary>
             Create a peaking EQ filter set with bands placed at optimal frequencies to approximate the drawn EQ curve.
             </summary>
+            <remarks>Might return less <paramref name="bands"/> when no better solution can be found in the iteration limit.</remarks>
         </member>
         <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.GetPeakingEQ(System.Int32)">
             <summary>
             Create a peaking EQ filter set with bands placed at equalized frequencies to approximate the drawn EQ curve.
             </summary>
         </member>
-        <member name="T:Cavern.QuickEQ.FilterAnalyzer">
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.GetPeakingEQ(System.Int32,System.Double,System.Int32,System.Int32)">
             <summary>
-            Measures properties of a filter, like frequency/impulse response, gain, or delay.
+            Create a peaking EQ filter set with constant bandwidth between the frequencies. This mimics legacy x-band EQs.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Resolution">
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceStep(System.Single[],System.Single[]@)">
             <summary>
-            Used FFT size for most measurements.
+            Measure a filter candidate for <see cref="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceQ(System.Single[]@,System.Double,System.Double,System.Boolean)"/>.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Gain">
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.Cleanup(Cavern.Filters.PeakingEQ[])">
             <summary>
-            Maximum filter amplification.
+            When the EQ generation finishes, the last band repeats. This function returns an array of results
+            with the invalid entries removed.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Cache">
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceGain(System.Single[]@,System.Double,System.Double)">
             <summary>
-            <see cref="T:Cavern.Utilities.FFTCache"/> used for <see cref="P:Cavern.QuickEQ.FilterAnalyzer.FrequencyResponse"/>.
+            Find the filter with the best Q for the given frequency and gain in <paramref name="target"/>.
+            Correct <paramref name="target"/> to the frequency response with the inverse of the found filter.
+            </summary>
+            <returns>The found filter if it's required, or null if it isn't</returns>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceQ(System.Single[]@,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Find the filter with the best Q for the given frequency and gain in <paramref name="target"/>.
+            Correct <paramref name="target"/> to the frequency response with the inverse of the found filter.
+            </summary>
+            <returns>The found filter if it's required, or null if it isn't</returns>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.BruteForceBand(System.Single[]@,System.Int32,System.Int32)">
+            <summary>
+            Finds a <see cref="T:Cavern.Filters.PeakingEQ"/> to correct the worst problem on the input spectrum.
+            </summary>
+            <param name="target">Logarithmic input spectrum between <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MinFrequency"/> and <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MaxFrequency"/></param>
+            <param name="startPos">First band to analyze</param>
+            <param name="stopPos">Last band to analyze</param>
+            <remarks><paramref name="target"/> will be corrected to the frequency response with the found filter</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Equalization.PeakingEqualizer.SnapGain(System.Double)">
+            <summary>
+            Sets the requested gain to a value that's permitted by the respective parameters
+            (<see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MinGain"/>, <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.MaxGain"/>, and <see cref="P:Cavern.QuickEQ.Equalization.PeakingEqualizer.GainPrecision"/>).
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.ImpulseReference">
+        <member name="T:Cavern.QuickEQ.Graphing.GraphRenderer">
             <summary>
-            Swept sine used for frequency and impulse response measurements.
+            Draws multiple <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> curves on a single canvas.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.FrequencyResponse">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.StartFrequency">
             <summary>
-            Frequency response of the filter.
+            First frequency to display.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Spectrum">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.EndFrequency">
             <summary>
-            Absolute of <see cref="P:Cavern.QuickEQ.FilterAnalyzer.FrequencyResponse"/> up to half the sample rate.
+            Last frequency to display.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Impulse">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Logarithmic">
             <summary>
-            Impulse response processor.
+            The curves are displayed logarithmically (base 10).
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.GainDecibels">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.DynamicRange">
             <summary>
-            Maximum filter amplification in decibels.
+            The difference between the highest and lowest displayed values in decibels.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.ImpulseResponse">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Peak">
             <summary>
-            Filter impulse response samples.
+            Maximum value to display in decibels.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Polarity">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Padding">
             <summary>
-            Filter polarity, true if positive.
+            The top and bottom will be moved towards the center by this many decibels.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.Delay">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Width">
             <summary>
-            Response delay in seconds.
+            Canvas width.
             </summary>
         </member>
-        <member name="P:Cavern.QuickEQ.FilterAnalyzer.SampleRate">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Height">
             <summary>
-            Sample rate used for measurements and in <see cref="F:Cavern.QuickEQ.FilterAnalyzer.filter"/> if it's sample rate-dependent.
+            Canvas height.
             </summary>
         </member>
-        <member name="F:Cavern.QuickEQ.FilterAnalyzer.filter">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Pixels">
             <summary>
-            Filter to measure.
+            ARGB values for all pixels of the canvas, line by line.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.#ctor(Cavern.Filters.Filter,System.Int32)">
+        <member name="P:Cavern.QuickEQ.Graphing.GraphRenderer.Overlay">
             <summary>
-            Copy a filter for measurements.
-            </summary>
-            <param name="filter">Filter to measure</param>
-            <param name="sampleRate">Sample rate used for measurements and in <paramref name="filter"/> if it's sample rate-dependent</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.Reset(Cavern.Filters.Filter)">
-            <summary>
-            Change the filter while keeping the sample rate.
+            Something to draw over the graph, like a <see cref="T:Cavern.QuickEQ.Graphing.Overlays.Frame"/> or <see cref="T:Cavern.QuickEQ.Graphing.Overlays.Grid"/>.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.Reset(Cavern.Filters.Filter,System.Int32)">
+        <member name="F:Cavern.QuickEQ.Graphing.GraphRenderer.curves">
             <summary>
-            Change the filter and the sample rate.
+            List of displayed curves in overdrawing order.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.GetFrequencyResponse">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.#ctor(System.Int32,System.Int32)">
             <summary>
-            Get the frequency response of the filter.
+            Draws multiple <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> curves on a single canvas.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.GetFrequencyResponseReadonly">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.AddCurve(Cavern.QuickEQ.Equalization.Equalizer,System.UInt32)">
             <summary>
-            Get the frequency response of the filter.
+            Add a curve with an ARGB color.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.GetSpectrum">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.Clear">
             <summary>
-            Get the absolute of <see cref="P:Cavern.QuickEQ.FilterAnalyzer.FrequencyResponse"/> up to half the sample rate.
+            Remove all curves from the graph.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.GetSpectrumReadonly">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.GetFrequencyAt(System.Single)">
             <summary>
-            Get the absolute of <see cref="P:Cavern.QuickEQ.FilterAnalyzer.FrequencyResponse"/> up to half the sample rate.
+            Get the frequency at a given subpixel position on the width axis.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.ToEqualizer(System.Double,System.Double,System.Double,System.Int32)">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.GetGainAt(System.Single)">
             <summary>
-            Render an approximate <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> by the analyzed filter's frequency response.
-            </summary>
-            <param name="startFreq">Start of the rendered range</param>
-            <param name="endFreq">End of the rendered range</param>
-            <param name="resolution">Band diversity in octaves</param>
-            <param name="oversampling">Detail increase factor</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.FilterAnalyzer.Dispose">
-            <summary>
-            Free the resources used by this analyzer.
+            Get what gain corresponds to a given subpixel position on the heigh axis, relative to the peak gain.
             </summary>
         </member>
-        <member name="T:Cavern.QuickEQ.GraphUtils">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.DrawAll">
             <summary>
-            Functions for graph processing and iterations.
+            Redraw the entire image.
             </summary>
         </member>
-        <member name="T:Cavern.QuickEQ.GraphUtils.FrequencyFunction`1">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.DrawSingle(Cavern.QuickEQ.Graphing.RenderedCurve)">
             <summary>
-            Action performed at a given frequency-value pair.
+            Draw a single curve over the current output.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.ForEachLin``1(``0[],System.Double,System.Double,Cavern.QuickEQ.GraphUtils.FrequencyFunction{``0})">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.ReRender">
             <summary>
-            Perform an action for each frequency value on a linearly scaled graph or spectrum band.
-            </summary>
-            <param name="source">Sample array or spectrum</param>
-            <param name="startFreq">Frequency at the first element of the array</param>
-            <param name="endFreq">Frequency at the last element of the array</param>
-            <param name="action">Performed action</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.ForEachLog``1(``0[],System.Double,System.Double,Cavern.QuickEQ.GraphUtils.FrequencyFunction{``0})">
-            <summary>
-            Perform an action for each frequency value on a logarithmically scaled graph or spectrum band.
-            </summary>
-            <param name="source">Sample array or spectrum</param>
-            <param name="startFreq">Frequency at the first element of the array</param>
-            <param name="endFreq">Frequency at the last element of the array</param>
-            <param name="action">Performed action</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.ConvertFromDecibels(System.Single[])">
-            <summary>
-            Convert a response curve back from decibel scale.
+            Re-render but don't regenerate all displayed curves.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.ConvertToDecibels(System.Single[],System.Single)">
+        <member name="M:Cavern.QuickEQ.Graphing.GraphRenderer.ReRenderFull">
             <summary>
-            Convert a response curve to decibel scale.
+            Completely re-render all displayed curves.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(Cavern.Utilities.Complex[],System.Double,System.Double,System.Int32,System.Int32)">
+        <member name="T:Cavern.QuickEQ.Graphing.Overlays.Frame">
             <summary>
-            Convert a response to logarithmically scaled frequency range.
-            </summary>
-            <param name="response">Source response</param>
-            <param name="startFreq">Frequency at the first position of the output</param>
-            <param name="endFreq">Frequency at the last position of the output</param>
-            <param name="sampleRate">Sample rate of the measurement that generated the curve</param>
-            <param name="resultSize">Length of the resulting array</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)">
-            <summary>
-            Convert a response to logarithmically scaled cut frequency range.
-            </summary>
-            <param name="response">Source response</param>
-            <param name="startFreq">Frequency at the first position of the output</param>
-            <param name="endFreq">Frequency at the last position of the output</param>
-            <param name="sampleRate">Sample rate of the measurement that generated the curve</param>
-            <param name="resultSize">Length of the resulting array</param>
-            <remarks>Requires a response that is half the FFT size (only extends to <paramref name="sampleRate"/> Hz),
-            for example the result of <see cref="M:Cavern.Utilities.Measurements.GetSpectrum(Cavern.Utilities.Complex[])"/>.</remarks>
-        </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.Normalize(System.Single[])">
-            <summary>
-            Moves a graph's average value to 0.
+            Draws a frame of a given <see cref="P:Cavern.QuickEQ.Graphing.Overlays.Frame.Width"/> over the graph.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.Scale(System.Single[],System.Int32)">
+        <member name="P:Cavern.QuickEQ.Graphing.Overlays.Frame.Width">
             <summary>
-            Scales a graph to another length, while keeping the local peaks.
+            Line stroke width.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.Scale(System.Single[],System.Int32,System.Int32,System.Int32)">
+        <member name="F:Cavern.QuickEQ.Graphing.Overlays.Frame.color">
             <summary>
-            Scales a partial graph to another length, while keeping the local peaks.
+            RGBA color of the line.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.SmoothUniform(System.Single[],System.Int32)">
+        <member name="M:Cavern.QuickEQ.Graphing.Overlays.Frame.#ctor(System.Int32,System.UInt32)">
             <summary>
-            Smooth any kind of graph with a uniform window size.
+            Draws a frame over the graph.
+            </summary>
+            <param name="width">Line stroke width</param>
+            <param name="color">RGBA color of the line</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.Overlays.Frame.DrawOn(Cavern.QuickEQ.Graphing.GraphRenderer)">
+            <summary>
+            Adds the overlay to a graph.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)">
+        <member name="T:Cavern.QuickEQ.Graphing.Overlays.GraphOverlay">
             <summary>
-            Apply smoothing (in octaves) on a graph drawn with <see cref="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
+            Something to draw over the graph, like a <see cref="T:Cavern.QuickEQ.Graphing.Overlays.Frame"/> or <see cref="T:Cavern.QuickEQ.Graphing.Overlays.Grid"/>.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:Cavern.QuickEQ.Graphing.Overlays.GraphOverlay.DrawOn(Cavern.QuickEQ.Graphing.GraphRenderer)">
             <summary>
-            Apply variable smoothing (in octaves) on a graph drawn with
-            <see cref="M:Cavern.QuickEQ.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
+            Adds the overlay to a graph.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Graphing.Overlays.Grid">
+            <summary>
+            Draws a grid over the graph.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Graphing.Overlays.Grid.gridWidth">
+            <summary>
+            Inner line stroke width.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Graphing.Overlays.Grid.xSteps">
+            <summary>
+            Number of columns drawn, including the frame lines.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Graphing.Overlays.Grid.ySteps">
+            <summary>
+            Number of rows drawn, including the frame lines.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.Overlays.Grid.#ctor(System.Int32,System.Int32,System.UInt32,System.Int32,System.Int32)">
+            <summary>
+            Draws a grid over the graph.
+            </summary>
+            <param name="borderWidth">Border line stroke width</param>
+            <param name="gridWidth">Inner line stroke width</param>
+            <param name="color">RGBA color of the line</param>
+            <param name="xSteps">Number of columns drawn, including the frame lines</param>
+            <param name="ySteps">Number of rows drawn, including the frame lines</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.Overlays.Grid.DrawOn(Cavern.QuickEQ.Graphing.GraphRenderer)">
+            <summary>
+            Adds the overlay to a graph.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Graphing.RenderedCurve">
+            <summary>
+            A curve's source and render.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Graphing.RenderedCurve.Curve">
+            <summary>
+            Source curve to draw.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Graphing.RenderedCurve.Parent">
+            <summary>
+            The graph that draws this curve.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Graphing.RenderedCurve.Color">
+            <summary>
+            ARGB color of the curve.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Graphing.RenderedCurve.Render">
+            <summary>
+            The brightness value for each pixel on the output.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Graphing.RenderedCurve.preRender">
+            <summary>
+            The visualized <see cref="P:Cavern.QuickEQ.Graphing.RenderedCurve.Curve"/>, all of its values at given width values of the <see cref="T:Cavern.QuickEQ.Graphing.GraphRenderer"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.RenderedCurve.#ctor(Cavern.QuickEQ.Equalization.Equalizer,Cavern.QuickEQ.Graphing.GraphRenderer)">
+            <summary>
+            A curve's source and render.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.RenderedCurve.Update(Cavern.QuickEQ.Equalization.Equalizer,System.Boolean)">
+            <summary>
+            Change the <paramref name="curve"/> displayed by this unit of the graph,
+            and optionally <paramref name="redraw"/> the entire graph.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.RenderedCurve.ReRender">
+            <summary>
+            Some minor values have changed, recreate the <see cref="P:Cavern.QuickEQ.Graphing.RenderedCurve.Render"/> from the <see cref="F:Cavern.QuickEQ.Graphing.RenderedCurve.preRender"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.RenderedCurve.ReRenderFull">
+            <summary>
+            Major values have changed (like frequency limits), restart from <see cref="F:Cavern.QuickEQ.Graphing.RenderedCurve.preRender"/>ing.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Graphing.RenderedCurve.Update">
+            <summary>
+            Update the pixel positions.
             </summary>
         </member>
         <member name="T:Cavern.QuickEQ.SignalGeneration.NoiseGenerator">
@@ -1126,9 +1611,14 @@
             Rendered output array kept to save allocation time.
             </summary>
         </member>
-        <member name="M:Cavern.QuickEQ.SignalGeneration.TimedTestTone.#ctor(System.Int32,System.Single[],System.Boolean)">
+        <member name="M:Cavern.QuickEQ.SignalGeneration.TimedTestTone.#ctor(System.Int32,System.Single[])">
             <summary>
             Create the source from any waveform.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.SignalGeneration.TimedTestTone.#ctor(System.Int32,System.Single[],System.Boolean)">
+            <summary>
+            Create the source from any waveform, and add an additional channel of delay for warming up the input.
             </summary>
         </member>
         <member name="M:Cavern.QuickEQ.SignalGeneration.TimedTestTone.Precollect">
@@ -1180,6 +1670,347 @@
         <member name="M:Cavern.QuickEQ.Utilities.CavernQuickEQAmp.BruteForceBand(System.Single[],System.Int32,System.IntPtr,System.Int32,System.Int32)">
             <summary>
             Finds a PeakingEQ to correct the worst problem on the input spectrum.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Utilities.FilterAnalyzer">
+            <summary>
+            Measures properties of a filter, like frequency/impulse response, gain, or delay.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Resolution">
+            <summary>
+            Used FFT size for most measurements.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Gain">
+            <summary>
+            Maximum filter amplification.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Cache">
+            <summary>
+            <see cref="T:Cavern.Utilities.FFTCache"/> used for <see cref="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.FrequencyResponse"/>.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.ImpulseReference">
+            <summary>
+            Swept sine used for frequency and impulse response measurements.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.FrequencyResponse">
+            <summary>
+            Frequency response of the filter.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Spectrum">
+            <summary>
+            Absolute of <see cref="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.FrequencyResponse"/> up to half the sample rate.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Impulse">
+            <summary>
+            Impulse response processor.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.GainDecibels">
+            <summary>
+            Maximum filter amplification in decibels.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.ImpulseResponse">
+            <summary>
+            Filter impulse response samples.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Polarity">
+            <summary>
+            Filter polarity, true if positive.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.Delay">
+            <summary>
+            Response delay in seconds.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.SampleRate">
+            <summary>
+            Sample rate used for measurements and in <see cref="F:Cavern.QuickEQ.Utilities.FilterAnalyzer.filter"/> if it's sample rate-dependent.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.FilterAnalyzer.filter">
+            <summary>
+            Filter to measure.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.#ctor(Cavern.Filters.Filter,System.Int32)">
+            <summary>
+            Copy a filter for measurements.
+            </summary>
+            <param name="filter">Filter to measure</param>
+            <param name="sampleRate">Sample rate used for measurements and in <paramref name="filter"/>
+            if it's sample rate-dependent</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.Reset(Cavern.Filters.Filter)">
+            <summary>
+            Change the filter while keeping the sample rate.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.Reset(Cavern.Filters.Filter,System.Int32)">
+            <summary>
+            Change the filter and the sample rate.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.GetFrequencyResponse">
+            <summary>
+            Get the frequency response of the filter.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.GetFrequencyResponseReadonly">
+            <summary>
+            Get the frequency response of the filter.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.GetSpectrum">
+            <summary>
+            Get the absolute of <see cref="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.FrequencyResponse"/> up to half the sample rate.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.GetSpectrumReadonly">
+            <summary>
+            Get the absolute of <see cref="P:Cavern.QuickEQ.Utilities.FilterAnalyzer.FrequencyResponse"/> up to half the sample rate.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.ToEqualizer(System.Double,System.Double)">
+            <summary>
+            Render an approximate <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> by the analyzed filter's frequency response
+            with a 1/3 octave resolution, without oversampling.
+            </summary>
+            <param name="startFreq">Start of the rendered range</param>
+            <param name="endFreq">End of the rendered range</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.ToEqualizer(System.Double,System.Double,System.Double)">
+            <summary>
+            Render an approximate <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> by the analyzed filter's frequency response
+            with a custom resolution, without oversampling.
+            </summary>
+            <param name="startFreq">Start of the rendered range</param>
+            <param name="endFreq">End of the rendered range</param>
+            <param name="resolution">Band diversity in octaves</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.ToEqualizer(System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Render an approximate <see cref="T:Cavern.QuickEQ.Equalization.Equalizer"/> by the analyzed filter's frequency response
+            with a custom resolution and oversampling.
+            </summary>
+            <param name="startFreq">Start of the rendered range</param>
+            <param name="endFreq">End of the rendered range</param>
+            <param name="resolution">Band diversity in octaves</param>
+            <param name="oversampling">Detail increase factor</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.FilterAnalyzer.Dispose">
+            <summary>
+            Free the resources used by this analyzer.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Utilities.GraphUtils">
+            <summary>
+            Functions for graph processing and iterations.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Utilities.GraphUtils.FrequencyFunction`1">
+            <summary>
+            Action performed at a given frequency-value pair.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ForEachLin``1(``0[],System.Double,System.Double,Cavern.QuickEQ.Utilities.GraphUtils.FrequencyFunction{``0})">
+            <summary>
+            Perform an action for each frequency value on a linearly scaled graph or spectrum band.
+            </summary>
+            <param name="source">Sample array or spectrum</param>
+            <param name="startFreq">Frequency at the first element of the array</param>
+            <param name="endFreq">Frequency at the last element of the array</param>
+            <param name="action">Performed action</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ForEachLog``1(``0[],System.Double,System.Double,Cavern.QuickEQ.Utilities.GraphUtils.FrequencyFunction{``0})">
+            <summary>
+            Perform an action for each frequency value on a logarithmically scaled graph or spectrum band.
+            </summary>
+            <param name="source">Sample array or spectrum</param>
+            <param name="startFreq">Frequency at the first element of the array</param>
+            <param name="endFreq">Frequency at the last element of the array</param>
+            <param name="action">Performed action</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.AddSlope(System.Single[],System.Single)">
+            <summary>
+            Apply a slope (in decibels from start to finish) to an existing curve.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertFromDecibels(System.Single[])">
+            <summary>
+            Convert a response curve back from decibel scale.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToDecibels(System.Single[])">
+            <summary>
+            Convert a response curve to decibel scale.
+            </summary>
+            <remarks>The minimum value will be -100 to prevent NaNs.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToDecibels(System.Single[],System.Single)">
+            <summary>
+            Convert a response curve to decibel scale.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToGraph(Cavern.Utilities.Complex[],System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Convert a response to logarithmically scaled frequency range.
+            </summary>
+            <param name="response">Source response</param>
+            <param name="startFreq">Frequency at the first position of the output</param>
+            <param name="endFreq">Frequency at the last position of the output</param>
+            <param name="sampleRate">Sample rate of the measurement that generated the curve</param>
+            <param name="resultSize">Length of the resulting array</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Convert a response to logarithmically scaled cut frequency range.
+            </summary>
+            <param name="response">Source response</param>
+            <param name="startFreq">Frequency at the first position of the output</param>
+            <param name="endFreq">Frequency at the last position of the output</param>
+            <param name="sampleRate">Sample rate of the measurement that generated the curve</param>
+            <param name="resultSize">Length of the resulting array</param>
+            <remarks>Requires a response that is half the FFT size (only extends to <paramref name="sampleRate"/> Hz),
+            for example the result of <see cref="M:Cavern.Utilities.Measurements.GetSpectrum(Cavern.Utilities.Complex[])"/>.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.Correlation(System.Single[],System.Single[])">
+            <summary>
+            Get the correlation between two curves.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.Correlation(System.Single[],System.Single[],System.Int32,System.Int32)">
+            <summary>
+            Get the correlation between a <paramref name="start"/> and <paramref name="end"/> index.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.GetLimits(System.Single[])">
+            <summary>
+            Get both the minimum and maximum values of the graph.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.Max(System.Single[])">
+            <summary>
+            Get the peak value of a graph.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.Normalize(System.Single[])">
+            <summary>
+            Moves a graph's average value to 0.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.Scale(System.Single[],System.Int32)">
+            <summary>
+            Scales a graph to another length, while keeping the local peaks.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.Scale(System.Single[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Scales a partial graph to another length, while keeping the local peaks.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothUniform(System.Single[],System.Int32)">
+            <summary>
+            Smooth any kind of graph with a uniform window size.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single)">
+            <summary>
+            Apply 1/3 octave smoothing on a graph drawn with <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single)">
+            <summary>
+            Apply smoothing (in octaves) on a graph drawn with <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.GraphUtils.SmoothGraph(System.Single[],System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Apply variable smoothing (in octaves) on a graph drawn with
+            <see cref="M:Cavern.QuickEQ.Utilities.GraphUtils.ConvertToGraph(System.Single[],System.Double,System.Double,System.Int32,System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Utilities.PinkNoiseDetector">
+            <summary>
+            Detects pink noise in sequential blocks of samples.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.PinkNoiseDetector.Adaptation">
+            <summary>
+            Number of frames to calculate the probability from. The more frames measured, the better the chance of true positives,
+            but this decreases detection speed.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.PinkNoiseDetector.MinFreq">
+            <summary>
+            Minimum noise detection frequency.
+            </summary>
+        </member>
+        <member name="P:Cavern.QuickEQ.Utilities.PinkNoiseDetector.MaxFreq">
+            <summary>
+            Maximum noise detection frequency.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.reference">
+            <summary>
+            Power spectral density of pink noise for the used block size.
+            </summary>
+            <remarks>It will be half the block size, as FFT is symmetric.</remarks>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.nyquistFrequency">
+            <summary>
+            Half sample rate of the continuous signal that arrives block by block.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.cache">
+            <summary>
+            FFT preallocation for performance.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.history">
+            <summary>
+            The probabilities of the last <see cref="P:Cavern.QuickEQ.Utilities.PinkNoiseDetector.Adaptation"/> frames.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.startIndex">
+            <summary>
+            Index of the minimum frequency band in <see cref="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.reference"/>.
+            </summary>
+        </member>
+        <member name="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.endIndex">
+            <summary>
+            Index of the maximum frequency band in <see cref="F:Cavern.QuickEQ.Utilities.PinkNoiseDetector.reference"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.PinkNoiseDetector.#ctor(System.Int32,System.Int32,Cavern.Utilities.FFTCache,System.Single,System.Single)">
+            <summary>
+            Detects pink noise in sequential blocks of samples.
+            </summary>
+            <param name="blockSize">Size of the sequential audio blocks that will be supplied to
+            <see cref="M:Cavern.QuickEQ.Utilities.PinkNoiseDetector.GetProbability(System.Single[])"/></param>
+            <param name="sampleRate">Sample rate of the continuous signal that arrives block by block</param>
+            <param name="cache">FFT preallocation for performance</param>
+            <param name="minFreq">Minimum noise detection frequency</param>
+            <param name="maxFreq">Maximum noise detection frequency</param>
+            <remarks>All sample blocks have to match the block size set here. The block size has to be a power of 2 for FFT.</remarks>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.PinkNoiseDetector.GetProbability(System.Single[])">
+            <summary>
+            Get the likeliness that the next block is pink noise.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Utilities.PinkNoiseDetector.GetProbabilityOfSpectrum(System.Single[])">
+            <summary>
+            Get the likeliness that the next block (in the form of |FFT|) is pink noise.
             </summary>
         </member>
         <member name="T:Cavern.QuickEQ.VerboseImpulseResponse">
@@ -1248,12 +2079,12 @@
             Representation of a peak in the impulse response.
             </summary>
         </member>
-        <member name="F:Cavern.QuickEQ.VerboseImpulseResponse.Peak.Position">
+        <member name="P:Cavern.QuickEQ.VerboseImpulseResponse.Peak.Position">
             <summary>
             Peak time offset in samples.
             </summary>
         </member>
-        <member name="F:Cavern.QuickEQ.VerboseImpulseResponse.Peak.Size">
+        <member name="P:Cavern.QuickEQ.VerboseImpulseResponse.Peak.Size">
             <summary>
             Gain at that position.
             </summary>
@@ -1275,14 +2106,167 @@
             Represents a nonexisting peak.
             </summary>
         </member>
+        <member name="M:Cavern.QuickEQ.VerboseImpulseResponse.Peak.Equals(Cavern.QuickEQ.VerboseImpulseResponse.Peak)">
+            <summary>
+            Check if two peaks are equal.
+            </summary>
+        </member>
         <member name="M:Cavern.QuickEQ.VerboseImpulseResponse.GetPeak(System.Int32)">
             <summary>
             Get the <paramref name="position"/>th peak in the impulse response.
             </summary>
         </member>
+        <member name="T:Cavern.QuickEQ.Windowing">
+            <summary>
+            FFT windowing functions.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Single[],Cavern.QuickEQ.Window)">
+            <summary>
+            Apply a predefined window function on a signal.
+            </summary>
+            <param name="samples">Signal to window</param>
+            <param name="function">Windowing function applied</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Single[],Cavern.QuickEQ.Window,Cavern.QuickEQ.Window,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Apply a custom window function on part of a mono signal.
+            </summary>
+            <param name="samples">Signal to window</param>
+            <param name="left">Window function left from the marker</param>
+            <param name="right">Window function right from the marker</param>
+            <param name="start">Beginning of the window in samples</param>
+            <param name="splitter">The point where the two window functions change</param>
+            <param name="end">End of the window in samples</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Single[],System.Int32,Cavern.QuickEQ.Window,Cavern.QuickEQ.Window,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Apply a custom window function on part of a multichannel signal.
+            </summary>
+            <param name="samples">Signal to window</param>
+            <param name="channels">Channel count</param>
+            <param name="left">Window function left from the marker</param>
+            <param name="right">Window function right from the marker</param>
+            <param name="start">Beginning of the window in samples</param>
+            <param name="splitter">The point where the two window functions change</param>
+            <param name="end">End of the window in samples</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyHalfWindow(System.Single[],System.Int32,System.Int32,System.Int32,Cavern.QuickEQ.Window)">
+            <summary>
+            Apply half of a window on part of a signal. To make the window fade out instead of fading in,
+            switch <paramref name="from"/> and <paramref name="to"/>.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(Cavern.Utilities.Complex[],Cavern.QuickEQ.Window)">
+            <summary>
+            Apply a predefined window function on a signal.
+            </summary>
+            <param name="samples">Measurement to window</param>
+            <param name="function">Windowing function applied</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(Cavern.Utilities.Complex[],Cavern.QuickEQ.Window,Cavern.QuickEQ.Window,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Apply a custom window function on part of a signal.
+            </summary>
+            <param name="samples">Measurement to window</param>
+            <param name="left">Window function left from the marker</param>
+            <param name="right">Window function right from the marker</param>
+            <param name="start">Beginning of the window in samples</param>
+            <param name="splitter">The point where the two window functions change</param>
+            <param name="end">End of the window in samples</param>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Collections.Generic.List{Cavern.QuickEQ.Equalization.Band},Cavern.QuickEQ.Window,System.Double,System.Double)">
+            <summary>
+            Add windowing on the right of the curve. Windowing is applied logarithmically.
+            </summary>
+        </member>
+        <member name="T:Cavern.QuickEQ.Windowing.WindowFunction">
+            <summary>
+            Window function format.
+            </summary>
+            <param name="x">The position in the signal from 0 to 2 * pi</param>
+            <returns>The multiplier for the sample at x</returns>
+        </member>
+        <member name="T:Cavern.QuickEQ.Windowing.WindowFunctionDouble">
+            <summary>
+            Window function format in double precision.
+            </summary>
+            <param name="x">The position in the signal from 0 to 2 * pi</param>
+            <returns>The multiplier for the sample at x</returns>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.GetWindowFunction(Cavern.QuickEQ.Window)">
+            <summary>
+            Get the corresponding window function for each <see cref="T:Cavern.QuickEQ.Window"/> value.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.GetWindowFunctionDouble(Cavern.QuickEQ.Window)">
+            <summary>
+            Get the corresponding double precision window function for each <see cref="T:Cavern.QuickEQ.Window"/> value.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.SineWindow(System.Single)">
+            <summary>
+            sin(x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.SineWindow(System.Double)">
+            <summary>
+            sin(x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.HammingWindow(System.Single)">
+            <summary>
+            0.54 - 0.46 * cos(x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.HammingWindow(System.Double)">
+            <summary>
+            0.54 - 0.46 * cos(x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.HannWindow(System.Single)">
+            <summary>
+            0.5 * (1 - cos(x))
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.HannWindow(System.Double)">
+            <summary>
+            0.5 * (1 - cos(x))
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.BlackmanWindow(System.Single)">
+            <summary>
+            0.42 - 0.5 * cos(x) + 0.08 * cos(2 * x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.BlackmanWindow(System.Double)">
+            <summary>
+            0.42 - 0.5 * cos(x) + 0.08 * cos(2 * x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.BlackmanHarrisWindow(System.Single)">
+            <summary>
+            0.35875 - 0.48829 * cos(x) + 0.14128 * cos(2 * x) - 0.01168 * cos(3 * x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.BlackmanHarrisWindow(System.Double)">
+            <summary>
+            0.35875 - 0.48829 * cos(x) + 0.14128 * cos(2 * x) - 0.01168 * cos(3 * x)
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.TukeyWindow(System.Single)">
+            <summary>
+            A window for impulse response trimming, with a precompiled alpha.
+            </summary>
+        </member>
+        <member name="M:Cavern.QuickEQ.Windowing.TukeyWindow(System.Double)">
+            <summary>
+            A window for impulse response trimming, with a precompiled alpha.
+            </summary>
+        </member>
         <member name="T:Cavern.QuickEQ.Window">
             <summary>
-            Available FFT windows.
+            Available FFT windowing functions.
             </summary>
         </member>
         <member name="F:Cavern.QuickEQ.Window.Disabled">
@@ -1323,161 +2307,6 @@
         <member name="F:Cavern.QuickEQ.Window.Tukey">
             <summary>
             A window for impulse response trimming, with a precompiled alpha.
-            </summary>
-        </member>
-        <member name="T:Cavern.QuickEQ.Windowing">
-            <summary>
-            FFT windowing functions.
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Single[],Cavern.QuickEQ.Window)">
-            <summary>
-            Apply a predefined window function on a signal.
-            </summary>
-            <param name="samples">Signal to window</param>
-            <param name="function">Windowing function applied</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Single[],Cavern.QuickEQ.Window,Cavern.QuickEQ.Window,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Apply a custom window function on part of a signal.
-            </summary>
-            <param name="samples">Signal to window</param>
-            <param name="left">Window function left from the marker</param>
-            <param name="right">Window function right from the marker</param>
-            <param name="start">Beginning of the window in samples</param>
-            <param name="splitter">The point where the two window functions change</param>
-            <param name="end">End of the window in samples</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(System.Single[],System.Int32,Cavern.QuickEQ.Window,Cavern.QuickEQ.Window,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Apply a custom window function on part of a multichannel signal.
-            </summary>
-            <param name="samples">Signal to window</param>
-            <param name="channels">Channel count</param>
-            <param name="left">Window function left from the marker</param>
-            <param name="right">Window function right from the marker</param>
-            <param name="start">Beginning of the window in samples</param>
-            <param name="splitter">The point where the two window functions change</param>
-            <param name="end">End of the window in samples</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(Cavern.Utilities.Complex[],Cavern.QuickEQ.Window)">
-            <summary>
-            Apply a predefined window function on a signal.
-            </summary>
-            <param name="samples">Measurement to window</param>
-            <param name="function">Windowing function applied</param>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.ApplyWindow(Cavern.Utilities.Complex[],Cavern.QuickEQ.Window,Cavern.QuickEQ.Window,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Apply a custom window function on part of a signal.
-            </summary>
-            <param name="samples">Measurement to window</param>
-            <param name="left">Window function left from the marker</param>
-            <param name="right">Window function right from the marker</param>
-            <param name="start">Beginning of the window in samples</param>
-            <param name="splitter">The point where the two window functions change</param>
-            <param name="end">End of the window in samples</param>
-        </member>
-        <member name="T:Cavern.QuickEQ.Windowing.WindowFunction">
-            <summary>
-            Window function format.
-            </summary>
-            <param name="x">The position in the signal from 0 to 2 * pi</param>
-            <returns>The multiplier for the sample at x</returns>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.GetWindowFunction(Cavern.QuickEQ.Window)">
-            <summary>
-            Get the corresponding window function for each <see cref="T:Cavern.QuickEQ.Window"/> value.
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.SineWindow(System.Single)">
-            <summary>
-            sin(x)
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.HammingWindow(System.Single)">
-            <summary>
-            0.54 - 0.46 * cos(x)
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.HannWindow(System.Single)">
-            <summary>
-            0.5 * (1 - cos(x))
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.BlackmanWindow(System.Single)">
-            <summary>
-            0.42 - 0.5 * cos(x) + 0.08 * cos(2 * x)
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.BlackmanHarrisWindow(System.Single)">
-            <summary>
-            0.35875 - 0.48829 * cos(x) + 0.14128 * cos(2 * x) - 0.01168 * cos(3 * x)
-            </summary>
-        </member>
-        <member name="M:Cavern.QuickEQ.Windowing.TukeyWindow(System.Single)">
-            <summary>
-            A window for impulse response trimming, with a precompiled alpha.
-            </summary>
-        </member>
-        <member name="T:Cavern.Format.FilterSet.MultEQXpander">
-            <summary>
-            Adds a set of <see cref="T:Cavern.Filters.PeakingEQ"/> filters to selected channels in an Audyssey MultEQ-X configuration file.
-            </summary>
-        </member>
-        <member name="F:Cavern.Format.FilterSet.MultEQXpander.entry">
-            <summary>
-            A filter entry in a MultEQ-X configuration file, prepared for a single channel.
-            </summary>
-        </member>
-        <member name="M:Cavern.Format.FilterSet.MultEQXpander.FilterTypeID(Cavern.Filters.BiquadFilter)">
-            <summary>
-            Translates Cavern filter classes to MultEQ-X filter IDs.
-            </summary>
-        </member>
-        <member name="P:Cavern.Format.FilterSet.MultEQXpander.Valid">
-            <summary>
-            This instance is based on a valid configuration file and a modified version can be exported.
-            </summary>
-        </member>
-        <member name="F:Cavern.Format.FilterSet.MultEQXpander.fileContents">
-            <summary>
-            The entire loaded configuration file.
-            </summary>
-        </member>
-        <member name="F:Cavern.Format.FilterSet.MultEQXpander.guids">
-            <summary>
-            In-file channel GUIDs.
-            </summary>
-        </member>
-        <member name="F:Cavern.Format.FilterSet.MultEQXpander.filters">
-            <summary>
-            Applied filter sets for each channel in the configuration file.
-            </summary>
-        </member>
-        <member name="M:Cavern.Format.FilterSet.MultEQXpander.#ctor(System.String)">
-            <summary>
-            Create an instance of MultEQ-Xpander by loading an existing MultEQ-X configuration file.
-            </summary>
-        </member>
-        <member name="M:Cavern.Format.FilterSet.MultEQXpander.SetFilters(Cavern.Remapping.ReferenceChannel,Cavern.Filters.BiquadFilter[])">
-            <summary>
-            Apply a filter set on the target system's selected channel.
-            </summary>
-        </member>
-        <member name="M:Cavern.Format.FilterSet.MultEQXpander.Export(System.String)">
-            <summary>
-            Export the modified version of the loaded configuration file containing all applied filters.
-            </summary>
-        </member>
-        <member name="T:Cavern.Format.FilterSet.InvalidSourceException">
-            <summary>
-            Represents that this filter set was incorrectly initialized as a nonexistent or invalid file was read.
-            </summary>
-        </member>
-        <member name="T:Cavern.Format.FilterSet.UnsupportedFilterException">
-            <summary>
-            The target system does not support the applied filter.
             </summary>
         </member>
     </members>

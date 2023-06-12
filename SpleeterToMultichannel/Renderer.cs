@@ -2,6 +2,7 @@
 using Cavern.Format;
 using Cavern.QuickEQ;
 using Cavern.Utilities;
+using SpleeterToMultichannel.Properties;
 using System;
 using System.IO;
 using System.Windows;
@@ -81,7 +82,7 @@ namespace SpleeterToMultichannel {
             engine.UpdateStatus(string.Format("Mixing {0} (100%)...", instrument));
         }
 
-        public void Process(Spleet spleet, int file = 0, int of = 1) {
+        public void Process(Spleet spleet, int file, int of) {
             double progressStart = file / (double)of;
             engine.UpdateProgressBar(progressStart);
             engine.UpdateStatus("Reading headers...");
@@ -143,6 +144,15 @@ namespace SpleeterToMultichannel {
                     engine.UpdateProgressBar((.9 + .1 * progress) * progressMul + progressStart);
                     engine.UpdateStatusLazy(string.Format("Exporting to render.wav ({0})...", progress.ToString("0.00%")));
                 }
+            }
+
+            spleet.Dispose();
+            if (Settings.Default.stemCleanup) {
+                File.Delete(spleet.Bass.Path);
+                File.Delete(spleet.Drums.Path);
+                File.Delete(spleet.Other.Path);
+                File.Delete(spleet.Piano.Path);
+                File.Delete(spleet.Vocals.Path);
             }
 
 #pragma warning disable IDE0059 // Unnecessary assignment of a value

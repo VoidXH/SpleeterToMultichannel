@@ -15,12 +15,12 @@ namespace SpleeterToMultichannel {
         string path = null;
         Scheduler scheduler;
         readonly FolderBrowserDialog browser = new();
-        readonly TaskEngine task;
+        readonly TaskEngine engine;
 
         public MainWindow() {
             InitializeComponent();
-            task = new TaskEngine();
-            task.SetProgressReporting(progress, progressLabel);
+            engine = new TaskEngine();
+            engine.SetProgressReporting(progress, progressLabel);
             while (!Directory.Exists(Settings.Default.Path)) {
                 try {
                     Settings.Default.Path = Path.GetDirectoryName(Settings.Default.Path);
@@ -54,6 +54,8 @@ namespace SpleeterToMultichannel {
                 lfeLowpass.IsChecked = Settings.Default.lfeLowpass;
                 lfeLowpassFreq.Value = Settings.Default.lfeLowpassFreq;
             }
+            stemCleanup.IsChecked = Settings.Default.stemCleanup;
+            renderCleanup.IsChecked = Settings.Default.renderCleanup;
         }
 
         protected override void OnClosed(EventArgs e) {
@@ -111,7 +113,7 @@ namespace SpleeterToMultichannel {
         void OtherGainChanged(object sender, RoutedPropertyChangedEventArgs<double> e) =>
             otherGainDisplay.Text = ((Slider)sender).Value.ToString("0 dB");
 
-        void Reset(object sender, RoutedEventArgs e) {
+        void Reset(object _, RoutedEventArgs e) {
             vocals.SelectedIndex = (int)UpmixOption.MidSideScreen;
             vocalsLFE.IsChecked = false;
             vocalsGain.Value = 0;
@@ -132,6 +134,14 @@ namespace SpleeterToMultichannel {
             lfeLowpassFreq.Value = 80;
         }
 
+        void SplitSource(object _, RoutedEventArgs e) => Splitter.SplitSource(engine);
+
+        void CombineSplitResult(object _, RoutedEventArgs e) => Splitter.CombineSplitResult(engine);
+
+        void StemCleanupChanged(object sender, RoutedEventArgs e) => Settings.Default.stemCleanup = stemCleanup.IsChecked.Value;
+
+        void RenderCleanupChanged(object sender, RoutedEventArgs e) => Settings.Default.renderCleanup = renderCleanup.IsChecked.Value;
+
         void Ad(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("http://en.sbence.hu");
 
         void Process(object sender, RoutedEventArgs e) {
@@ -143,7 +153,7 @@ namespace SpleeterToMultichannel {
                     folder.Text = PathDisplay(path);
                 }
             }
-            scheduler = new Scheduler(this, task);
+            scheduler = new Scheduler(this, engine);
             scheduler.Run(path);
         }
     }

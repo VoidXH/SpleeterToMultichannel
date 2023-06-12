@@ -56,8 +56,7 @@ namespace SpleeterToMultichannel {
         }
 
         public void Dispose() {
-            if (reader != null)
-                reader.Dispose();
+            reader?.Dispose();
             GC.SuppressFinalize(this);
         }
     }

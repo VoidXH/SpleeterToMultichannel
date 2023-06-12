@@ -10,13 +10,7 @@ namespace SpleeterToMultichannel {
         public Instrument Piano { get; private set; }
         public Instrument Vocals { get; private set; }
 
-        public string RenderPath {
-            get {
-                if (renderPath == null)
-                    renderPath = Path.Combine(path, "render.wav");
-                return renderPath;
-            }
-        }
+        public string RenderPath => renderPath ??= Path.Combine(path, "render.wav");
         string renderPath;
 
         public long Length => Vocals.Length;

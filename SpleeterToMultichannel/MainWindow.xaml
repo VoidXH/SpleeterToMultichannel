@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpleeterToMultichannel"
         mc:Ignorable="d"
-        Title="Spleeter to Multichannel" Height="390" Width="450">
+        Title="Spleeter to Multichannel" Height="600" Width="450">
     <Window.Resources>
         <local:UpmixOptionDisplay x:Key="UpmixConverter"/>
         <Style TargetType="local:UpmixComboBox">
@@ -44,7 +44,8 @@
     </Window.Resources>
     <Grid>
         <Button Content="by VoidX" Margin="0,31,10,0" VerticalAlignment="Top" Click="Ad" HorizontalAlignment="Right" Width="60"/>
-        <Button Content="Open Spleeter output folder" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="175" Click="OpenSpleeterOutput"/>
+        <Button Margin="10,31,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175"
+                Content="Open Spleeter output folder" Click="OpenSpleeterOutput"/>
         <TextBlock x:Name="folder" Text="Please open a 4- or 5-stem Spleeter output." Margin="10,10,0,0"/>
         <GroupBox Header="Channel mapping" Margin="10,64,35,0" Height="170" VerticalAlignment="Top" Padding="0,8,0,0">
             <Grid>
@@ -79,19 +80,39 @@
                 <TextBlock x:Name="otherGainDisplay" Margin="338,113,0,0" Text="0 dB"/>
             </Grid>
         </GroupBox>
-        <Button Content="Reset" Margin="0,63,10,0" HorizontalAlignment="Right" Width="50" Click="Reset" Height="20" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Process" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Click="Process" Height="20" VerticalAlignment="Bottom"/>
-        <ProgressBar x:Name="progress" Margin="90,0,10,10" Maximum="1" Height="20" VerticalAlignment="Bottom"/>
-        <Label x:Name="progressLabel" Margin="90,0,10,10" Padding="5,2,5,0" Height="20" VerticalAlignment="Bottom"/>
-        <GroupBox Header="Renderer" Margin="10,239,35,35">
+        <GroupBox Header="Renderer" Margin="10,239,35,0" Height="75" VerticalAlignment="Top">
             <Grid>
                 <RadioButton x:Name="multichannel" IsChecked="True" Content="Multichannel" Margin="10,10,0,0"/>
                 <RadioButton x:Name="recombiner" Content="Recombiner (stereo)" Margin="10,30,0,0"/>
-                <TextBlock Margin="180,10,0,0" TextWrapping="Wrap" Text="Lowpass for LFE:"/>
+                <TextBlock Margin="180,10,0,0" Text="Lowpass for LFE:"/>
                 <CheckBox x:Name="lfeLowpass" Content="Enabled" Margin="271,11,0,0"/>
                 <Slider x:Name="lfeLowpassFreq" Margin="176,31,0,0" Width="144" Minimum="20" Value="80" LargeChange="10" Maximum="120"/>
                 <TextBlock x:Name="otherGainDisplay_Copy" Margin="325,32,0,0" Text="80 Hz"/>
             </Grid>
         </GroupBox>
+        <GroupBox Header="Splitter" Margin="10,319,35,0" Height="120" VerticalAlignment="Top">
+            <Grid>
+                <TextBlock Margin="10,10,10,0" HorizontalAlignment="Stretch" TextWrapping="Wrap"
+                           Text="Spleeter requires a lot more memory, but by chunking to smaller files, more can be processed.
+This feature lets you split longer content, and they're separated and rendered, recombine them."/>
+                <Button Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Height="20"
+                        Content="Split up source" Click="SplitSource"/>
+                <Button Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="20"
+                        Content="Recombine results" Click="CombineSplitResult"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Other settings" Margin="10,444,35,0" Height="78" VerticalAlignment="Top">
+            <Grid>
+                <CheckBox x:Name="stemCleanup" Margin="10,10,0,0" Checked="StemCleanupChanged"
+                          Content="Delete stems after a successful render"/>
+                <CheckBox x:Name="renderCleanup" Margin="10,30,0,0" Checked="RenderCleanupChanged"
+                          Content="Delete already merged chunks while recombining"/>
+            </Grid>
+        </GroupBox>
+        <Button Content="Reset" Margin="0,63,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="20" Click="Reset"/>
+        <Button x:Name="button" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Height="20"
+                Content="Process" Click="Process"/>
+        <ProgressBar x:Name="progress" Margin="90,0,10,10" VerticalAlignment="Bottom" Height="20" Maximum="1"/>
+        <Label x:Name="progressLabel" Margin="90,0,10,10" Padding="5,2,5,0" VerticalAlignment="Bottom" Height="20"/>
     </Grid>
 </Window>
