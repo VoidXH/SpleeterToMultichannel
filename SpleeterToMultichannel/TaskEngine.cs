@@ -8,8 +8,8 @@ namespace SpleeterToMultichannel {
     /// Progress reporter and job handler.
     /// </summary>
     public class TaskEngine {
-        readonly static TimeSpan lazyStatusDelta = new TimeSpan(0, 0, 1);
-        readonly static TimeSpan progressUpdateRate = new TimeSpan(0, 0, 0, 0, 16); // About 60 FPS
+        static readonly TimeSpan lazyStatusDelta = new(0, 0, 1);
+        static readonly TimeSpan progressUpdateRate = new(0, 0, 0, 0, 16); // About 60 FPS
 
         Task operation;
         ProgressBar progressBar;
@@ -28,8 +28,7 @@ namespace SpleeterToMultichannel {
         public double Progress {
             get {
                 double val = -1;
-                if (progressBar != null)
-                    progressBar.Dispatcher.Invoke(() => val = progressBar.Value);
+                progressBar?.Dispatcher.Invoke(() => val = progressBar.Value);
                 return val;
             }
         }

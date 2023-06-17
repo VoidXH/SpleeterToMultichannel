@@ -47,10 +47,10 @@ namespace SpleeterToMultichannel {
                     for (long gained = lastSample; gained < sample; ++gained)
                         read[gained] *= Gain;
                 engine.UpdateProgressBar(progressSrc + progressGap * progress);
-                engine.UpdateStatusLazy(string.Format("Reading {0} ({1})...", Name, progress.ToString("0.00%")));
+                engine.UpdateStatusLazy($"Reading {Name} ({progress:0.00%})...");
             }
             engine.UpdateProgressBar(progressSrc + progressGap);
-            engine.UpdateStatus(string.Format("Reading {0} (100%)...", Name));
+            engine.UpdateStatus($"Reading {Name} (100%)...");
             reader.Dispose();
             return read;
         }

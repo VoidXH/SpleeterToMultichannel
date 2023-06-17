@@ -93,8 +93,8 @@
         <GroupBox Header="Splitter" Margin="10,319,35,0" Height="120" VerticalAlignment="Top">
             <Grid>
                 <TextBlock Margin="10,10,10,0" HorizontalAlignment="Stretch" TextWrapping="Wrap"
-                           Text="Spleeter requires a lot more memory, but by chunking to smaller files, more can be processed.
-This feature lets you split longer content, and they're separated and rendered, recombine them."/>
+                           Text="Spleeter requires a lot of memory, but by chunking to smaller files, longer content can be processed.
+This feature lets you split them, and after they're separated and rendered, recombine them."/>
                 <Button Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="120" Height="20"
                         Content="Split up source" Click="SplitSource"/>
                 <Button Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="20"

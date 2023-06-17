@@ -7,6 +7,9 @@ using System;
 using System.Windows.Forms;
 
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using System.Xml.Linq;
+using System.Diagnostics;
+using Cavern;
 
 namespace SpleeterToMultichannel {
     /// <summary>
@@ -37,8 +40,9 @@ namespace SpleeterToMultichannel {
             }
         }
 
-        // TODO: progress bar + UpdateProgressBarLazy for both
         static void SplitSourceProc(TaskEngine engine, string sourceFile) {
+            engine.UpdateStatus("Allocating output...");
+            engine.UpdateProgressBar(0);
             using AudioReader source = AudioReader.Open(sourceFile);
             source.ReadHeader();
             int idx = sourceFile.LastIndexOf('.');
@@ -54,10 +58,19 @@ namespace SpleeterToMultichannel {
                 WaveformUtils.Gain(samples, .5f); // Less noticeable global volume oscillation as any split could get clipping prevention
                 target.WriteBlock(samples, 0, nextSecond * source.ChannelCount);
                 remains -= nextSecond;
+
+                double progress = (source.Length - remains) / (double)source.Length;
+                engine.UpdateStatusLazy($"Splitting source ({progress:0.00%})...");
+                engine.UpdateProgressBar(progress);
             }
+            engine.UpdateStatus("Finished!");
+            engine.UpdateProgressBar(1);
         }
 
         static void CombineSplitResultProc(TaskEngine engine, string sourceFolder) {
+            engine.UpdateStatus("Collecting chunks...");
+            engine.UpdateProgressBar(0);
+
             List<AudioReader> splits = new();
             for (int i = 0; ; i++) {
                 string currentSplit = $"{sourceFolder}{i}\\render.wav";
@@ -84,6 +97,10 @@ namespace SpleeterToMultichannel {
             float[] mainSamples = new float[(splits[0].Length - splits[0].SampleRate) * splits[0].ChannelCount],
                 fadeSamples = new float[splits[0].SampleRate * splits[0].ChannelCount];
             for (int i = 0, c = splits.Count; i < c; i++) {
+                double progress = i / (double)c;
+                engine.UpdateStatusLazy($"Recombining chunk {i + 1} of {c} ({progress:0.00%})...");
+                engine.UpdateProgressBar(progress);
+
                 if (i + 1 != c) {
                     splits[i].ReadBlock(mainSamples, 0, mainSamples.Length);
                     if (i != 0) {
@@ -103,6 +120,9 @@ namespace SpleeterToMultichannel {
                     File.Delete(path);
                 }
             }
+
+            engine.UpdateStatus("Finished!");
+            engine.UpdateProgressBar(1);
         }
 
         /// <summary>
